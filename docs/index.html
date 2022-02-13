@@ -16,6 +16,8 @@
 
 <script>
     var lang_flag = 1;
+
+
 </script>
 
 <body>
@@ -24,16 +26,16 @@
 <div class="section">
     <!-- === Title Starts === -->
     <div class="header">
-<!--        <div class="logo">-->
-<!--            <a href="https://decisionforce.github.io/" target="_blank">-->
-<!--                <img src="images/deciforce.png">-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div style="padding-top: 30pt; margin: 0 50pt;" class="title" id="lang">-->
-<!--            Safe Driving via Expert Guided Policy Optimization-->
-<!--        </div>-->
+        <!--        <div class="logo">-->
+        <!--            <a href="https://decisionforce.github.io/" target="_blank">-->
+        <!--                <img src="images/deciforce.png">-->
+        <!--            </a>-->
+        <!--        </div>-->
+        <!--        <div style="padding-top: 30pt; margin: 0 50pt;" class="title" id="lang">-->
+        <!--            Safe Driving via Expert Guided Policy Optimization-->
+        <!--        </div>-->
 
-                <table>
+        <table>
             <tr>
                 <td>
 
@@ -78,17 +80,18 @@
     <!-- === Title Ends === -->
     <div class="author">
         <p style="text-align:center">International Conference on Learning Representations (ICLR) 2022</p>
-        <a href="https://pengzhenghao.github.io">Quanyi Li</a><sup>2</sup>*,&nbsp;
-        <a href="https://pengzhenghao.github.io" target="_blank">Zhenghao Peng</a><sup>1</sup>*,&nbsp;&nbsp;
-<!--        <a href="#">Chunxiao Liu</a><sup>2</sup>,&nbsp;-->
-        <a href="http://bzhou.ie.cuhk.edu.hk" target="_blank">Bolei Zhou</a><sup>1</sup>&nbsp;
+        <a href="https://pengzhenghao.github.io">Quanyi Li</a><sup>1</sup>*,&nbsp;
+        <a href="https://pengzhenghao.github.io" target="_blank">Zhenghao Peng</a><sup>2</sup>*,&nbsp;&nbsp;
+        <!--        <a href="#">Chunxiao Liu</a><sup>2</sup>,&nbsp;-->
+        <a href="http://bzhou.ie.cuhk.edu.hk" target="_blank">Bolei Zhou</a><sup>3</sup>&nbsp;
     </div>
 
     <div class="institution" style="font-size: 11pt;">
         <div>
-            <sup>1</sup>The Chinese University of Hong Kong,
-<!--            <sup>2</sup>SenseTime Research <br>-->
-            <sup>2</sup>Centre for Perceptual and Interactive Intelligence<br>
+            <sup>2</sup>The Chinese University of Hong Kong,
+            <!--            <sup>2</sup>SenseTime Research <br>-->
+            <sup>1</sup>Centre for Perceptual and Interactive Intelligence<br>
+            <sup>3</sup>University of California, Los Angeles<br>
         </div>
     </div>
     <table border="0" align="center">
@@ -96,9 +99,9 @@
             <td align="center" style="padding: 0pt 0 15pt 0">
                 <a class="bar" href="https://decisionforce.github.io/HACO"><b>Webpage</b></a> |
                 <a class="bar" href="https://github.com/decisionforce/HACO"><b>Code</b></a> |
-<!--                <a class="bar" href="images/egpo_poster.png"><b>Poster</b></a> |-->
-<!--                <a class="bar" href="https://www.youtube.com/embed/mu2WO--B5C8"><b>Video</b></a> |-->
-<!--                <a class="bar" href="https://arxiv.org/pdf/2110.06831.pdf"><b>Paper</b></a>-->
+                <!--                <a class="bar" href="images/egpo_poster.png"><b>Poster</b></a> |-->
+                                <a class="bar" href="#video"><b>Video</b></a> |
+                                <a class="bar" href="https://openreview.net/pdf?id=0cgU-BZp2ky"><b>Paper</b></a>
             </td>
         </tr>
     </table>
@@ -184,17 +187,45 @@
 <!--</div>-->
 <!--&lt;!&ndash; === Result Section Ends === &ndash;&gt;-->
 
-<!--<div class="section">-->
-<!--    <div class="title" id="lang">Demo Video</div>-->
-<!--    <div class="body">-->
-<!--        <div class="vedio" style="position: relative; padding-top: 50%; margin: 20pt auto; text-align: center;">-->
-<!--            <iframe src="https://www.youtube.com/embed/mu2WO&#45;&#45;B5C8" frameborder=0-->
-<!--                    style="position: absolute; top: 2.5%; left: 2.5%; width: 95%; height: 100%;"-->
-<!--                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"-->
-<!--                    allowfullscreen></iframe>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="section">
+    <div class="title" id="video">Demo Video</div>
+    <div class="text">
+        <br>
+        <p>
+            HACO is tested on <a href="https://github.com/decisionforce/metadrive">MetaDrive Simulator</a>, which is
+            efficient and allows generating various scenarios. Here, we provide the full training process of HACO and
+            compare it with RL, IL and Offline RL baselines. As a result, HACO achieves superior sample efficiency
+            with safety guarantee and outperform all baselines.
+        </p>
+    </div>
+    <div class="body">
+        <div class="vedio" style="position: relative; padding-top: 10%; margin: 0pt auto; text-align: center;">
+            <iframe width="900" height="506" src="https://www.youtube.com/embed/Mp37zErSXwk"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="title" id="video_carla">Benchmark HACO on CARLA</div>
+    <div class="text">
+        <br>
+        <p>
+            Furthermore, we benchmark HACO on <a href=https://github.com/carla-simulator/carla>CARLA Simulator</a>,
+            where agent takes semantic top-down view as observation. Equipped with 3-layer convolution neural network,
+            HACO agent learns not only the feature extractor but the driving policy with human involvement in 10 minutes.
+        </p>
+    </div>
+    <div class="body">
+        <div class="vedio" style="position: relative; padding-top: 10%; margin: 0pt auto; text-align: center;">
+            <iframe width="900" height="506" src="https://www.youtube.com/embed/vm-Cog-9feY"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
 
 <!-- === Reference Section Starts === -->
 <div class="section">
