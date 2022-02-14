@@ -109,9 +109,6 @@
 
 </div>
 <!-- === Home Section Ends === -->
-<div class="section">
-  <div class="title" id="lang">To be updated</div>
-</div>
 
 <!--<div class="section">-->
 <!--    &lt;!&ndash;    <div class="title" id="lang">Demonstrative Videos</div>&ndash;&gt;-->
@@ -150,45 +147,68 @@
 <!--</div>-->
 
 
-<!--&lt;!&ndash; === Overview Section Starts === &ndash;&gt;-->
-<!--<div class="section">-->
-<!--    <div class="title" id="lang">Expert Guided Policy Optimization (EGPO)</div>-->
-<!--    <div class="body">-->
-<!--        <div class="teaser">-->
-<!--            <img src="images/framework1.png">-->
-<!--        </div>-->
+<!-- === Overview Section Starts === -->
+<div class="section">
+    <div class="title" id="lang">Human-AI Copilot Optimization (HACO)</div>
+    <div class="body">
+        <div class="teaser">
+            <img src="images/framework.jpg">
+            <div class="text">
+                <br>
+                Fig. 1 Framework </div>
+        </div>
+        <div class="text">
 
-<!--        <div class="text">-->
-<!--            <br>-->
-<!--            <p>-->
-<!--                We develop a novel <b>Expert Guided Policy Optimization-->
-<!--                (EGPO)</b> method, integrating the guardian in the loop of RL, which contains an expert policy and a-->
-<!--                switch function to decide when to intervene.-->
-<!--                We utilize constrained optimization and offline RL techniques to tackle trivial solutions-->
-<!--                and improve the learning on expert's demonstrations.-->
-<!--                Safe driving experiments show that our method achieves superior training and-->
-<!--                test-time safety, sample efficiency, and generalizability.-->
-<!--            </p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+            <p>
+                We develop an efficient <b>Human-AI Copilot Optimization method (HACO)</b>, which incorporate human into
+                the Reinforcement Learning (RL) training loop to boost the learning efficiency and ensure the safety.
+                Sidestepping the requirement of complex reward engineering, HACO injects the human knowledge extracted
+                from partial demonstration into the proxy value function by Offline RL technique. On the other hand,
+                entropy regularization and intervention minimization are used for encouraging exploration and saving
+                human budget respectively.
+                The comprehensive experiments show the superior sample efficiency and safety guarantee of the proposed
+                method.
+            </p>
+        </div>
+    </div>
+</div>
 
 
-<!--&lt;!&ndash; === Result Section Starts === &ndash;&gt;-->
-<!--<div class="section">-->
-<!--    <div class="title" id="lang">Experiment Result</div>-->
-<!--    <div class="body">-->
-<!--        <div class="text">-->
-<!--            We show that the proposed framework can achieve superior training efficiency and performance-->
-<!--            as well as extremely low training safety violations in the safe driving tasks of-->
-<!--            <a href="https://github.com/decisionforce/metadrive">MetaDrive Simulator</a>.-->
-<!--        </div>-->
-<!--        <div class="teaser"><img-->
-<!--                src="images/result.png">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--&lt;!&ndash; === Result Section Ends === &ndash;&gt;-->
+<!-- === Result Section Starts === -->
+<div class="section">
+    <div class="title" id="lang">Experiment Result</div>
+    <div class="body">
+                <div class="teaser"><img
+                src="images/haco_exp.jpg">
+                        <div class="text">
+                <br>
+                Fig. 2 Learning Dynamics </div>
+        </div>
+        <div class="text">
+            The experiments conducted on <a href="https://github.com/decisionforce/metadrive">MetaDrive Simulator</a>
+            show the efficient training as well as the low safety violation, when compared with RL, Offline RL,
+            Imitation Learning and human-in-the-loop baselines. Results are reported in the Table 1.
+            Compared to other data-hungry baselines, HACO utilizes less transitions and achieve highest success rate.
+            Also, with the human protection, HACO yields only 30.14 total safety violations in the whole
+            training process, two orders of magnitude less than other RL baselines, even though HACO access neither
+            the cost or reward signal.
+            In the human-in-the-loop paradigm, another concern is the expensive human budget consuming.
+            As shown in Fig. 2 <b>B</b>., expensive human budget decreases along with the training.
+        </div>
+        <div class="teaser">
+                     <div class="text">
+
+                Table. 1 Comparison results
+                          <br>
+                     </div>
+            <img
+                src="images/exp_table.png">
+        </div>
+
+        </div>
+    </div>
+</div>
+<!-- === Result Section Ends === -->
 
 <div class="section">
     <div class="title" id="video">Demo Video</div>
