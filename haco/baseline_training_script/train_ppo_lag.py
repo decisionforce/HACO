@@ -3,8 +3,9 @@ import copy
 from haco.utils.callback import HACOCallbacks
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.config import baseline_eval_config
-from drivingforce.safety.ppo_lag import PPOLag
-from drivingforce.train import train, get_train_parser
+from haco.ppo_lag.ppo_lag import PPOLag
+from haco.utils.train_utils import get_train_parser
+from haco.utils.train import train
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 
@@ -35,7 +36,7 @@ if __name__ == '__main__':
         grad_clip=10.0,
         rollout_fragment_length=200,
         sgd_minibatch_size=100,
-        train_batch_size=tune.grid_search([4000, 8000]),
+        train_batch_size=4000,
         num_gpus=0.2 if args.num_gpus != 0 else 0,
         num_cpus_per_worker=0.1,
         num_cpus_for_driver=0.5,
@@ -50,8 +51,7 @@ if __name__ == '__main__':
         stop=stop,
         config=config,
         num_gpus=args.num_gpus,
-        # num_seeds=2,
-        num_seeds=10,
+        num_seeds=5,
         custom_callback=HACOCallbacks,
         # test_mode=True,
         # local_mode=True
