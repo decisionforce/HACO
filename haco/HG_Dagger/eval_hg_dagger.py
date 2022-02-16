@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.HG_Dagger.model import Ensemble
+from haco.HG_Dagger.model import Ensemble
 from haco.utils.config import baseline_eval_config
-from drivingforce.human_in_the_loop.eval.utils import pretty_print, RecorderEnv
+from haco.utils.eval_IWR_HG_Dagger import pretty_print, RecorderEnv
 
 EVAL_ENV_START = 1000
 

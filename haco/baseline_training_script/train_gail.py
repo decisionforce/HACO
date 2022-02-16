@@ -17,9 +17,9 @@ from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from easydict import EasyDict
-from drivingforce.expert_in_the_loop.gail.exp_saver import Experiment
+from haco.gail.exp_saver import Experiment
 
-from drivingforce.expert_in_the_loop.gail.mlp import Policy, Value
+from haco.gail.mlp import Policy, Value
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 import datetime
@@ -30,7 +30,6 @@ import os
 # create -n gail python version=3.6
 # 1. pip install loguru imageio easydict tensorboardX pyyaml  stable_baselines3 pickle5
 # 2. conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
-# 3. pip install drivingforce
 # PPO in this implement didn't use Advantage
 
 

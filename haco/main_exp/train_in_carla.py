@@ -10,7 +10,8 @@ from ray.rllib.policy import Policy
 from core.haco_env import HACOEnv
 
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
-from drivingforce.train import train, get_train_parser
+from haco.utils.train import train
+from haco.utils.train_utils import get_train_parser
 
 from ray.rllib.agents.callbacks import DefaultCallbacks
 
