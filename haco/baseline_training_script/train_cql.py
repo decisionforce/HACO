@@ -1,23 +1,26 @@
 import copy
 import os
-from ray import tune
+
 import ray
-from drivingforce.offline_rl.cql.cql import CQLTrainer
+from haco.cql.cql import CQLTrainer
+from ray import tune
 from ray.rllib.offline.shuffled_input import ShuffledInput
 
-from drivingforce.expert_in_the_loop.common import ILCallBack
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.baselines.input_reader import HumanDataInputReader
+from haco.utils.callback import ILCallBack
 from haco.utils.config import baseline_eval_config
-from haco.utils.train_utils import get_train_parser
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.input_reader import HumanDataInputReader
 from haco.utils.train import train
+from haco.utils.train_utils import get_train_parser
 
 data_set_file_path = expert_value_weights = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
-                                                         "human_traj_100.json")
+                                                         "human_traj_100_new.json")
 
 eval_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 eval_config["input"] = "sampler"  # important to use pgdrive online evaluation
 eval_config["env_config"]["random_spawn"] = tune.grid_search([True, False])
+
+
 def get_data_sampler_func(ioctx):
     return ShuffledInput(HumanDataInputReader(data_set_file_path))
 
