@@ -1,7 +1,7 @@
 from ray import tune
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
 from drivingforce.expert_in_the_loop.expert_guided_env import ExpertGuidedEnv
-from drivingforce.expert_in_the_loop.common import SaverCallbacks, evaluation_config
+from haco.utils.callback import HACOCallbacks, evaluation_config
 from drivingforce.train import train, get_train_parser
 import os
 

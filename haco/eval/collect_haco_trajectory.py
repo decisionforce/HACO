@@ -1,4 +1,4 @@
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from metadrive.policy.env_input_policy import EnvInputPolicy
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
 from drivingforce.safety.ppo_lag import PPOLag

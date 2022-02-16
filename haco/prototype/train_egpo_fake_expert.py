@@ -2,7 +2,7 @@ import datetime
 
 from ray import tune
 
-from drivingforce.expert_in_the_loop.common import SaverCallbacks
+from haco.utils.callback import HACOCallbacks
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
 from drivingforce.human_in_the_loop.prototype.prototype_env import PrototypeEnv
 from drivingforce.train import train, get_train_parser

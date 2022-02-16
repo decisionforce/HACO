@@ -5,9 +5,9 @@ import time
 import numpy as np
 import pandas as pd
 
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from drivingforce.human_in_the_loop.HG_Dagger.model import Ensemble
-from drivingforce.human_in_the_loop.common import baseline_eval_config
+from haco.utils.config import baseline_eval_config
 from drivingforce.human_in_the_loop.eval.utils import pretty_print, RecorderEnv
 
 EVAL_ENV_START = 1000

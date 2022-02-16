@@ -1,8 +1,8 @@
 import copy
 
-from drivingforce.expert_in_the_loop.common import SaverCallbacks
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.common import baseline_eval_config
+from haco.utils.callback import HACOCallbacks
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.config import baseline_eval_config
 from drivingforce.safety.ppo_lag import PPOLag
 from drivingforce.train import train, get_train_parser
 

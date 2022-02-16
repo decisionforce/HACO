@@ -11,8 +11,8 @@ import torch
 import torch.nn as nn
 from metadrive.envs.safe_metadrive_env import SafeMetaDriveEnv
 
-from drivingforce.human_in_the_loop.common import baseline_eval_config, baseline_train_config
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.config import baseline_eval_config, baseline_train_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))

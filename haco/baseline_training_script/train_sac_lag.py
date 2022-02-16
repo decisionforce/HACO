@@ -1,11 +1,11 @@
 import copy
 
-from drivingforce.expert_in_the_loop.common import SaverCallbacks
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.common import baseline_eval_config
+from haco.utils.callback import HACOCallbacks
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.config import baseline_eval_config
 from drivingforce.safety.sac_pid.sac_pid import SACPIDTrainer
-from drivingforce.train import get_train_parser
-from drivingforce.train.train import train
+from haco.utils.train_utils import get_train_parser
+from haco.utils.train import train
 from ray import tune
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}

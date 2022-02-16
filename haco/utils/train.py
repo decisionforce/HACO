@@ -3,7 +3,7 @@ import os
 import pickle
 
 import numpy as np
-from egpo_utils.train.utils import initialize_ray
+from haco.utils.train_utils import initialize_ray
 from ray import tune
 from ray.tune import CLIReporter
 

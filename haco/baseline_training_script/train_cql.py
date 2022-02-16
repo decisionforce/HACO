@@ -6,11 +6,11 @@ from drivingforce.offline_rl.cql.cql import CQLTrainer
 from ray.rllib.offline.shuffled_input import ShuffledInput
 
 from drivingforce.expert_in_the_loop.common import ILCallBack
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from drivingforce.human_in_the_loop.baselines.input_reader import HumanDataInputReader
-from drivingforce.human_in_the_loop.common import baseline_eval_config
-from drivingforce.train import get_train_parser
-from drivingforce.train.train import train
+from haco.utils.config import baseline_eval_config
+from haco.utils.train_utils import get_train_parser
+from haco.utils.train import train
 
 data_set_file_path = expert_value_weights = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
                                                          "human_traj_100.json")

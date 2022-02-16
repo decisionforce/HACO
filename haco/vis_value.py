@@ -10,7 +10,7 @@ from metadrive.component.static_object.traffic_object import TrafficBarrier
 from metadrive.component.blocks.first_block import FirstPGBlock
 from panda3d.core import BitMask32
 
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
 FirstPGBlock.ENTRANCE_LENGTH = 10
 # Navigation.FORCE_CALCULATE = True

@@ -6,7 +6,7 @@ import time
 from core.haco_env import HACOEnv
 import numpy as np
 import pandas as pd
-from drivingforce.human_in_the_loop.common import baseline_eval_config
+from haco.utils.config import baseline_eval_config
 from drivingforce.human_in_the_loop.eval.get_policy_function import VisionPolicyFunction
 from drivingforce.human_in_the_loop.eval.utils import pretty_print, RecorderEnv
 from drivingforce.train.utils import initialize_ray

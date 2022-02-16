@@ -7,8 +7,8 @@ import time
 import numpy as np
 import pandas as pd
 
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.common import baseline_eval_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.config import baseline_eval_config
 from drivingforce.human_in_the_loop.eval.get_policy_function import PolicyFunction
 from drivingforce.human_in_the_loop.eval.utils import pretty_print, RecorderEnv
 

@@ -1,6 +1,6 @@
-from drivingforce.expert_in_the_loop.common import SaverCallbacks
+from haco.utils.callback import HACOCallbacks
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from drivingforce.train import train, get_train_parser
 import datetime
 

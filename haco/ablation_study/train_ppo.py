@@ -1,7 +1,7 @@
 from ray.rllib.agents.ppo.ppo import PPOTrainer
 from ray import tune
-from drivingforce.expert_in_the_loop.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.expert_in_the_loop.common import SaverCallbacks, evaluation_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.callback import HACOCallbacks, evaluation_config
 from drivingforce.train import train, get_train_parser
 
 if __name__ == '__main__':
