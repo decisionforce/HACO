@@ -13,7 +13,7 @@ def get_time_str():
 if __name__ == '__main__':
     args = get_train_parser().parse_args()
 
-    exp_name = args.exp_name or "EGPO_{}".format(get_time_str())
+    exp_name = args.exp_name or "HACO_{}".format(get_time_str())
     stop = {"timesteps_total": 8_0000}
 
     config = dict(

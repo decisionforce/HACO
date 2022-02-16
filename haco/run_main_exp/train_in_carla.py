@@ -118,7 +118,7 @@ if __name__ == '__main__':
     os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
     args = get_train_parser().parse_args()
 
-    exp_name = args.exp_name or "EGPO_CARLA_{}".format(get_time_str())
+    exp_name = args.exp_name or "HACO_CARLA_{}".format(get_time_str())
     stop = {"timesteps_total": 8_0000}
 
     config = dict(
