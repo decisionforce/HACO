@@ -5,10 +5,9 @@ import os
 from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.HG_Dagger.exp_saver import Experiment
-from drivingforce.human_in_the_loop.HG_Dagger.model import Ensemble
+from algo.HG_Dagger.exp_saver import Experiment
+from algo.HG_Dagger import Ensemble
 from haco.utils.config import baseline_eval_config, baseline_train_config
-from utils import *
 
 # requirement:
 # conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch

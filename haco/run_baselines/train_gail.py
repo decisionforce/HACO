@@ -9,7 +9,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
-from metadrive.envs.safe_metadrive_env import SafeMetaDriveEnv
 
 from haco.utils.config import baseline_eval_config, baseline_train_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
@@ -17,9 +16,9 @@ from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from easydict import EasyDict
-from haco.gail.exp_saver import Experiment
+from algo.gail.exp_saver import Experiment
 
-from haco.gail.mlp import Policy, Value
+from algo.gail.mlp import Policy, Value
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 import datetime

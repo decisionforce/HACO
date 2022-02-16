@@ -17,7 +17,7 @@ from ray.rllib.utils.error import UnsupportedSpaceException
 from ray.rllib.utils.framework import try_import_tf, \
     try_import_tfp
 
-from haco.sac_lag.sac_lag_model import ConstrainedSACModel
+from algo.sac_lag.sac_lag_model import ConstrainedSACModel
 
 tf, _, _ = try_import_tf()
 tf1 = tf

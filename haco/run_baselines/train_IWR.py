@@ -3,10 +3,9 @@ from __future__ import print_function
 from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from drivingforce.human_in_the_loop.IWR.exp_saver import Experiment
-from drivingforce.human_in_the_loop.IWR.model import Ensemble
+from algo.IWR import Experiment
+from algo.IWR import Ensemble
 from haco.utils.config import baseline_eval_config, baseline_train_config
-from utils import *
 
 
 # requirement:

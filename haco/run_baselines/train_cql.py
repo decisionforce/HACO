@@ -2,7 +2,7 @@ import copy
 import os
 
 import ray
-from haco.cql.cql import CQLTrainer
+from algo.cql.cql import CQLTrainer
 from ray import tune
 from ray.rllib.offline.shuffled_input import ShuffledInput
 

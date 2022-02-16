@@ -22,7 +22,7 @@ from ray.rllib.utils.typing import AgentID, TensorType, TrainerConfigDict
 from ray.tune.utils.util import merge_dicts
 from ray.util.iter import LocalIterator
 
-from haco.ppo_lag.ppo_lag_model import CostValueNetwork, CostValueNetworkMixin
+from algo.ppo_lag.ppo_lag_model import CostValueNetwork, CostValueNetworkMixin
 
 if hasattr(rllib_post, "discount_cumsum"):
     discount = rllib_post.discount_cumsum
