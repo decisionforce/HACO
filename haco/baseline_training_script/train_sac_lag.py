@@ -1,19 +1,18 @@
 import copy
 
+from haco.sac_lag.sac_lag import SACLagTrainer
 from haco.utils.callback import HACOCallbacks
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.config import baseline_eval_config
-from drivingforce.safety.sac_pid.sac_pid import SACPIDTrainer
-from haco.utils.train_utils import get_train_parser
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.train import train
-from ray import tune
+from haco.utils.train_utils import get_train_parser
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 
 if __name__ == '__main__':
     args = get_train_parser().parse_args()
 
-    exp_name = args.exp_name or "SAC_PID_native"
+    exp_name = args.exp_name or "SAC_Lag"
     stop = int(100_0000)
 
     config = dict(
@@ -56,16 +55,15 @@ if __name__ == '__main__':
     )
 
     train(
-        SACPIDTrainer,
+        SACLagTrainer,
         exp_name=exp_name,
         keep_checkpoints_num=5,
         stop=stop,
         config=config,
         num_gpus=args.num_gpus,
         # num_seeds=args.num_seeds,
-        num_seeds=12,
+        num_seeds=5,
         custom_callback=HACOCallbacks,
-        # num_seeds=1,
         # test_mode=True,
         # local_mode=True
     )
