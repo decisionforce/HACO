@@ -64,10 +64,8 @@ if __name__ == '__main__':
         num_gpus=args.num_gpus,
         # num_seeds=args.num_seeds,
         num_seeds=12,
-        custom_callback=SaverCallbacks,
+        custom_callback=HACOCallbacks,
         # num_seeds=1,
         # test_mode=True,
         # local_mode=True
-        wandb_key_file="~/wandb_api_key_file.txt",
-        wandb_project="iclr22",
     )

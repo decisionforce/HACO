@@ -81,8 +81,4 @@ if __name__ == '__main__':
         custom_callback=ILCallBack,
         # test_mode=True,
         # local_mode=True
-
-        wandb_key_file="~/wandb_api_key_file.txt",
-        wandb_project="iclr22",
-
     )
