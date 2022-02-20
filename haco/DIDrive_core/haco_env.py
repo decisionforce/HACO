@@ -39,7 +39,7 @@ train_config = dict(
                 dict(
                     name='birdview',
                     type='bev',
-                    size=[42, 42],
+                    size=[84, 84],
                     pixels_per_meter=2,
                     pixels_ahead_vehicle=16,
                 ),

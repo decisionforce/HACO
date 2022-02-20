@@ -1,4 +1,5 @@
 import logging
+from ray.rllib.models.modelv2 import restore_original_dimensions
 # from pgdrive.scene_creator.vehicle_module import PIDController
 from collections import deque
 
@@ -177,10 +178,12 @@ def get_distribution_inputs_and_class(policy,
                                       **kwargs):
     # Get base-model output.
     model_out, state_out = model({
-        "obs": obs_batch,
-        "is_training": policy._get_is_training_placeholder(),
-    }, [], None)
+            "obs": obs_batch,
+            "is_training": policy._get_is_training_placeholder(),
+        }, [], None)
     # Get action model output from base-model output.
+    if policy.config["image_obs"]:
+        model_out = restore_original_dimensions(obs_batch,model.obs_space)
     distribution_inputs = model.get_policy_output(model_out)
     action_dist_class = get_dist_class(policy.config, policy.action_space)
     return distribution_inputs, action_dist_class, state_out
@@ -525,12 +528,13 @@ class UpdatePenaltyMixin:
                 # new_lambda = np.exp(-self.pid_controller.get_result(self.new_error))[0]
 
                 pid_result = self.pid_controller.get_result(self.new_error)
-                print("PIDRESULT: {}, Error {}, P {}, I {}, D {}".format(pid_result,
-                                                                         self.new_error,
-                                                                         self.pid_controller.p_error,
-                                                                         self.pid_controller.i_error,
-                                                                         self.pid_controller.d_error,
-                                                                         ))
+                pid_result = np.clip(pid_result, -300, 300)
+                # print("PIDRESULT: {}, Error {}, P {}, I {}, D {}".format(pid_result,
+                #         self.new_error,
+                #         self.pid_controller.p_error,
+                #         self.pid_controller.i_error,
+                #         self.pid_controller.d_error,
+                #     ))
 
                 new_lambda = np.log(np.exp(-pid_result)[0] + 1)
                 assign_op = self.lambda_value.assign(new_lambda)
@@ -542,45 +546,6 @@ def gradients_fn(policy, optimizer, loss):
     # Eager: Use GradientTape.
     if policy.config["framework"] in ["tf2", "tfe"]:
         raise ValueError()
-        tape = optimizer.tape
-        pol_weights = policy.model.policy_variables()
-        actor_grads_and_vars = list(
-            zip(tape.gradient(policy.actor_loss, pol_weights), pol_weights))
-        q_weights = policy.model.q_variables()
-        c_q_weights = policy.model.cost_q_variables()
-        if policy.config["twin_q"]:
-            half_cutoff = len(q_weights) // 2
-            grads_1 = tape.gradient(policy.critic_loss[0],
-                                    q_weights[:half_cutoff])
-            grads_2 = tape.gradient(policy.critic_loss[1],
-                                    q_weights[half_cutoff:])
-
-            critic_grads_and_vars = \
-                list(zip(grads_1, q_weights[:half_cutoff])) + \
-                list(zip(grads_2, q_weights[half_cutoff:]))
-
-        else:
-            critic_grads_and_vars = list(
-                zip(
-                    tape.gradient(policy.critic_loss[0], q_weights),
-                    q_weights))
-
-        if policy.config["twin_cost_q"]:
-            c_half_cutoff = len(c_q_weights) // 2
-            grads_3 = tape.gradient(policy.critic_loss[-2],
-                                    c_q_weights[:c_half_cutoff])
-            grads_4 = tape.gradient(policy.critic_loss[-1],
-                                    c_q_weights[c_half_cutoff:])
-
-            c_critic_grads_and_vars = \
-                list(zip(grads_3, c_q_weights[:c_half_cutoff])) + \
-                list(zip(grads_4, c_q_weights[c_half_cutoff:]))
-        else:
-            c_critic_grads_and_vars = list(zip(tape.gradient(policy.critic_loss[-1], c_q_weights), c_q_weights))
-
-        alpha_vars = [policy.model.log_alpha]
-        alpha_grads_and_vars = list(
-            zip(tape.gradient(policy.alpha_loss, alpha_vars), alpha_vars))
     # Tf1.x: Use optimizer.compute_gradients()
     else:
         actor_grads_and_vars = policy._actor_optimizer.compute_gradients(
