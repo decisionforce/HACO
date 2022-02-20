@@ -16,9 +16,9 @@ from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from easydict import EasyDict
-from algo.gail.exp_saver import Experiment
+from haco.algo.gail.exp_saver import Experiment
 
-from algo.gail.mlp import Policy, Value
+from haco.algo.gail.mlp import Policy, Value
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 import datetime
@@ -26,17 +26,17 @@ import datetime
 
 import os
 
-# create -n gail python version=3.6
-# 1. pip install loguru imageio easydict tensorboardX pyyaml  stable_baselines3 pickle5
-# 2. conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
-# PPO in this implement didn't use Advantage
-
+"""
+create -n gail python version=3.6
+1. pip install loguru imageio easydict tensorboardX pyyaml  stable_baselines3 pickle5
+2. conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
+PPO in this implement didn't use Advantage
+"""
 
 def get_time_str():
     return datetime.datetime.now().strftime("%y%m%d-%H%M%S")
 
 exp_log = Experiment()
-BACKBONE = 'resnet18'
 N_STEP = 5
 dtype = torch.float32
 torch.set_default_dtype(dtype)
@@ -328,11 +328,6 @@ if __name__ == '__main__':
             'n_step': N_STEP,
             'max_frames': parsed.max_frames,
             'cmd_biased': parsed.cmd_biased,
-        },
-        'model_args': {
-            'model': 'birdview_dian',
-            'input_channel': 7,
-            'backbone': BACKBONE,
         },
     })
     tm = time.localtime(time.time())

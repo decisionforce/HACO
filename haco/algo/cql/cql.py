@@ -4,7 +4,7 @@ from typing import Optional, Type
 
 from ray.rllib.agents.sac.sac import SACTrainer, \
     DEFAULT_CONFIG as SAC_CONFIG
-from algo.cql.cql_torch_policy import CQLTorchPolicy
+from haco.algo.cql.cql_torch_policy import CQLTorchPolicy
 from ray.rllib.utils.typing import TrainerConfigDict
 from ray.rllib.policy.policy import Policy
 from ray.rllib.utils import merge_dicts

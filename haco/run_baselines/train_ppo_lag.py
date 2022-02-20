@@ -3,15 +3,16 @@ import copy
 from haco.utils.callback import HACOCallbacks
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.config import baseline_eval_config
-from algo.ppo_lag import PPOLag
+from haco.algo.ppo_lag.ppo_lag import PPOLag
 from haco.utils.train_utils import get_train_parser
 from haco.utils.train import train
+import ray
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 
 if __name__ == '__main__':
     args = get_train_parser().parse_args()
-
+    assert ray.__version__ == "1.0.0", "ray 1.0.0 is required for PPO-Lag"
     exp_name = args.exp_name or "PPO_LAG"
     stop = {"timesteps_total": 1000_0000}
 

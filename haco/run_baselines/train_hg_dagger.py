@@ -1,17 +1,18 @@
 from __future__ import print_function
 
-import os
-
 from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from algo.HG_Dagger.exp_saver import Experiment
-from algo.HG_Dagger import Ensemble
+from haco.algo.HG_Dagger.exp_saver import Experiment
+from haco.algo.HG_Dagger.model import Ensemble
+from haco.algo.HG_Dagger.utils import *
 from haco.utils.config import baseline_eval_config, baseline_train_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
+"""
 # requirement:
 # conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
 # pip install loguru imageio easydict tensorboardX pyyaml stable_baselines3 pickle5 evdev
+"""
 
 # hyperpara
 BC_WARMUP_DATA_USAGE = 30000  # use human data to do warm up

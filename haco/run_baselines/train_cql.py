@@ -2,7 +2,7 @@ import copy
 import os
 
 import ray
-from algo.cql.cql import CQLTrainer
+from haco.algo.cql.cql import CQLTrainer
 from ray import tune
 from ray.rllib.offline.shuffled_input import ShuffledInput
 
@@ -27,7 +27,7 @@ def get_data_sampler_func(ioctx):
 
 if __name__ == '__main__':
     print(data_set_file_path)
-    assert ray.__version__ == "1.3.0" or ray.__version__ == "1.2.0", "ray 1.3.0 is required"
+    assert ray.__version__ == "1.2.0", "ray 1.2.0 is required for CQL"
     args = get_train_parser().parse_args()
 
     exp_name = args.exp_name or "CQL"

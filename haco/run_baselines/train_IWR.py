@@ -2,15 +2,17 @@ from __future__ import print_function
 
 from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from algo.IWR import Experiment
-from algo.IWR import Ensemble
+from haco.algo.IWR.exp_saver import Experiment
+from haco.algo.IWR.model import Ensemble
+from haco.algo.IWR.utils import *
 from haco.utils.config import baseline_eval_config, baseline_train_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
-
-# requirement:
-# conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
-# pip install loguru imageio easydict tensorboardX pyyaml stable_baselines3 pickle5 evdev
+"""
+requirement:
+conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
+pip install loguru imageio easydict tensorboardX pyyaml stable_baselines3 pickle5 evdev
+"""
 
 
 def IWR_balance_sample(agent_samples, human_samples):

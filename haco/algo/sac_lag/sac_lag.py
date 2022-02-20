@@ -18,7 +18,7 @@ from ray.rllib.policy.policy import LEARNER_STATS_KEY
 from ray.rllib.utils.typing import TrainerConfigDict
 from ray.util.iter import LocalIterator
 
-from algo.sac_lag.sac_lag_policy import SACPIDConfig, SACPIDPolicy, UpdatePenalty
+from haco.algo.sac_lag.sac_lag_policy import SACPIDConfig, SACPIDPolicy, UpdatePenalty
 
 logger = logging.getLogger(__name__)
 
