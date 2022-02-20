@@ -30,7 +30,7 @@ setup(
         'pygame==1.9.6',
         #'di-engine==0.2.0',
         'scikit-image',
-        'setuptools==50',
+        #'setuptools==50',
         'shapely',
         'terminaltables',
         'tqdm',
