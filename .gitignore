@@ -1,0 +1,4 @@
+/haco.egg-info/
+**/__pycache__/**
+.idea/
+**/human_traj_100.json
