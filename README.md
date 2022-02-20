@@ -1,6 +1,6 @@
 # Human-AI Copilot Optimization (HACO)
 
-[ICLR 22] Official implementation of ICLR 2022 paper: Efficient Learning of Safe Driving Policy via Human-AI Copilot Optimization
+[ICLR 22] Official implementation paper: Efficient Learning of Safe Driving Policy via Human-AI Copilot Optimization
 
 [**Webpage**](https://decisionforce.github.io/HACO/) | 
 [**Code**](https://github.com/decisionforce/HACO) | 
