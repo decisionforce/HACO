@@ -39,7 +39,7 @@ train_config = dict(
                 dict(
                     name='birdview',
                     type='bev',
-                    size=[84, 84],
+                    size=[42, 42],
                     pixels_per_meter=2,
                     pixels_ahead_vehicle=16,
                 ),
@@ -145,11 +145,11 @@ class KeyboardController:
     STEERING_INCREMENT = 0.02
     STEERING_DECAY = 0.2
 
-    THROTTLE_INCREMENT = 0.005
-    THROTTLE_DECAY = 0.
+    THROTTLE_INCREMENT = 0.01
+    THROTTLE_DECAY = 0.05
 
-    BRAKE_INCREMENT = 0.005
-    BRAKE_DECAY = 0.
+    BRAKE_INCREMENT = 0.01
+    BRAKE_DECAY = 0.05
 
     def __init__(self, pygame_control=True):
         assert pygame_control
@@ -265,7 +265,7 @@ class HACOEnv(ContinuousBenchmarkEnvWrapper):
             if not self.keyboard_control:
                 takeover = self.controller.left_shift_paddle or self.controller.right_shift_paddle
             else:
-                takeover = True if  abs(sum(human_action)) > 1e-2 else False
+                takeover = True if any(list(self.controller.last_press.values())) else False
         else:
             human_action = [0, 0]
             takeover = False
