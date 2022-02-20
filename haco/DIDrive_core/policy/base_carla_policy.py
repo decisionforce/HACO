@@ -1,8 +1,8 @@
-from collections import deque
-from typing import List, Dict, Optional, Any, NamedTuple
+from collections import namedtuple, deque
+from typing import List, Dict, Optional, Union, Any, NamedTuple
 
-from ding.policy import Policy
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
+from ding.policy import Policy
 
 
 class BaseCarlaPolicy(Policy):

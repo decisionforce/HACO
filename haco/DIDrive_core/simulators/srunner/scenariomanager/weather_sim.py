@@ -14,9 +14,10 @@ import datetime
 import math
 import operator
 
-import carla
 import ephem
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
 
@@ -58,7 +59,7 @@ class Weather(object):
         self._observer_location.lon = str(geo_location.longitude)
         self._observer_location.lat = str(geo_location.latitude)
 
-        # @TODO This requires the time to be in UTC to be accurate
+        #@TODO This requires the time to be in UTC to be accurate
         self.datetime = dtime
         if self.datetime:
             self._observer_location.date = self.datetime

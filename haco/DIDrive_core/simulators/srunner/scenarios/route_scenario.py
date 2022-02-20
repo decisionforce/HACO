@@ -13,17 +13,42 @@ from __future__ import print_function
 import math
 import traceback
 import xml.etree.ElementTree as ET
+import numpy.random as random
+
+import py_trees
 
 import carla
-import numpy.random as random
-import py_trees
+
+from haco.DIDrive_core.utils.planner import RoadOption
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import convert_waypoint_to_transform
+
+# # pylint: disable=line-too-long
+from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ScenarioConfiguration, ActorConfigurationData
 # pylint: enable=line-too-long
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-# # pylint: disable=line-too-long
-from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ScenarioConfiguration, \
-    ActorConfigurationData
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import Idle, \
-    ScenarioTriggerer
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import Idle, ScenarioTriggerer
+from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
+from haco.DIDrive_core.simulators.srunner.tools.route_parser import RouteParser, TRIGGER_THRESHOLD, TRIGGER_ANGLE_THRESHOLD
+from haco.DIDrive_core.simulators.srunner.tools.route_manipulation import interpolate_trajectory, downsample_route
+from haco.DIDrive_core.simulators.srunner.tools.py_trees_port import oneshot_behavior
+
+from haco.DIDrive_core.simulators.srunner.scenarios.control_loss_new import ControlLossNew
+from haco.DIDrive_core.simulators.srunner.scenarios.control_loss import ControlLoss
+from haco.DIDrive_core.simulators.srunner.scenarios.follow_leading_vehicle_new import FollowLeadingVehicleNew
+from haco.DIDrive_core.simulators.srunner.scenarios.follow_leading_vehicle import FollowLeadingVehicle
+from haco.DIDrive_core.simulators.srunner.scenarios.change_lane import ChangeLane
+from haco.DIDrive_core.simulators.srunner.scenarios.cut_in import CutIn
+from haco.DIDrive_core.simulators.srunner.scenarios.opposite_direction import OppositeDirection
+from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_left_turn import SignalizedJunctionLeftTurn
+from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_right_turn import SignalizedJunctionRightTurn
+from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_straight import SignalizedJunctionStraight
+from haco.DIDrive_core.simulators.srunner.scenarios.object_crash_vehicle import DynamicObjectCrossing
+from haco.DIDrive_core.simulators.srunner.scenarios.object_crash_intersection import VehicleTurningRoute
+from haco.DIDrive_core.simulators.srunner.scenarios.other_leading_vehicle import OtherLeadingVehicle
+from haco.DIDrive_core.simulators.srunner.scenarios.junction_crossing_route import SignalJunctionCrossingRoute, \
+                                                                        NoSignalJunctionCrossingRoute
+from haco.DIDrive_core.simulators.srunner.scenarios.maneuver_opposite_direction import ManeuverOppositeDirection
+
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import \
     (CollisionTest,
      InRouteTest,
@@ -31,28 +56,6 @@ from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic
      OutsideRouteLanesTest,
      RunningRedLightTest,
      ActorSpeedAboveThresholdTest)
-from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
-from haco.DIDrive_core.simulators.srunner.scenarios.change_lane import ChangeLane
-from haco.DIDrive_core.simulators.srunner.scenarios.control_loss import ControlLoss
-from haco.DIDrive_core.simulators.srunner.scenarios.control_loss_new import ControlLossNew
-from haco.DIDrive_core.simulators.srunner.scenarios.cut_in import CutIn
-from haco.DIDrive_core.simulators.srunner.scenarios.follow_leading_vehicle import FollowLeadingVehicle
-from haco.DIDrive_core.simulators.srunner.scenarios.follow_leading_vehicle_new import FollowLeadingVehicleNew
-from haco.DIDrive_core.simulators.srunner.scenarios.junction_crossing_route import NoSignalJunctionCrossingRoute
-from haco.DIDrive_core.simulators.srunner.scenarios.maneuver_opposite_direction import ManeuverOppositeDirection
-from haco.DIDrive_core.simulators.srunner.scenarios.object_crash_intersection import VehicleTurningRoute
-from haco.DIDrive_core.simulators.srunner.scenarios.object_crash_vehicle import DynamicObjectCrossing
-from haco.DIDrive_core.simulators.srunner.scenarios.opposite_direction import OppositeDirection
-from haco.DIDrive_core.simulators.srunner.scenarios.other_leading_vehicle import OtherLeadingVehicle
-from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_left_turn import SignalizedJunctionLeftTurn
-from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_right_turn import SignalizedJunctionRightTurn
-from haco.DIDrive_core.simulators.srunner.scenarios.signalized_junction_straight import SignalizedJunctionStraight
-from haco.DIDrive_core.simulators.srunner.tools.py_trees_port import oneshot_behavior
-from haco.DIDrive_core.simulators.srunner.tools.route_manipulation import interpolate_trajectory, downsample_route
-from haco.DIDrive_core.simulators.srunner.tools.route_parser import RouteParser, TRIGGER_THRESHOLD, \
-    TRIGGER_ANGLE_THRESHOLD
-from haco.DIDrive_core.utils.planner import RoadOption
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import convert_waypoint_to_transform
 
 SECONDS_GIVEN_PER_METERS = 0.5
 
@@ -225,9 +228,9 @@ class RouteScenario(BasicScenario):
         print('[SCENARIO] provided scenarios: ', len(world_annotations[config.town]))
         print('[SCENARIO] find scenarios in route: ', len(potential_scenarios_definitions))
 
-        # CarlaDataProvider.set_hero_vehicle_route(convert_transform_to_location(self.route))
+        #CarlaDataProvider.set_hero_vehicle_route(convert_transform_to_location(self.route))
 
-        # config.agent.set_global_plan(gps_route, self.route)
+        #config.agent.set_global_plan(gps_route, self.route)
 
         # Sample the scenarios to be used for this route instance.
         self.sampled_scenarios_definitions = self._scenario_sampling(potential_scenarios_definitions)
@@ -351,7 +354,7 @@ class RouteScenario(BasicScenario):
             definition['name'] = NUMBER_CLASS_DICT[definition['name']]
 
     def _build_scenario_instances(
-            self, world, ego_vehicle, scenario_definitions, scenarios_per_tick=5, timeout=300, debug_mode=False
+        self, world, ego_vehicle, scenario_definitions, scenarios_per_tick=5, timeout=300, debug_mode=False
     ):
         """
         Based on the parsed route and possible scenarios, build all the scenario classes.

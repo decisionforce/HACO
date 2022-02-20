@@ -1,13 +1,16 @@
 import os
 
-import cv2
+from torchvision.transforms.transforms import ToTensor
+from haco.DIDrive_core.demo.cict_demo.post import Sensor, params
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision.transforms as transforms
-from haco.DIDrive_core.demo.cict_demo.collect_pm import InversePerspectiveMapping
-from haco.DIDrive_core.demo.cict_demo.post import Sensor, params
 from torch.autograd import grad
+import torchvision.transforms as transforms
+import cv2
+from haco.DIDrive_core.demo.cict_demo.collect_pm import InversePerspectiveMapping
+import carla
+import numpy as np
 
 
 def weights_init(m):
@@ -61,7 +64,7 @@ class GeneratorUNet(nn.Module):
 
         self.params = params
         self.down_layers = nn.ModuleList()
-        # print(self.params)
+        #print(self.params)
         for i in range(len(self.params['down_channels']) - 1):
             self.down_layers.append(
                 UNetDown(
@@ -103,7 +106,7 @@ class GeneratorUNet(nn.Module):
         d = []
         temp = x
         for down_layer in self.down_layers:
-            # print(temp.shape)
+            #print(temp.shape)
             temp = down_layer(temp)
             d.append(temp)
 
@@ -194,7 +197,7 @@ class CNN(nn.Module):
 
     def forward(self, x):
         x = self.conv1(x)
-        # x = self.bn1(x)
+        #x = self.bn1(x)
         x = F.leaky_relu(x)
         x = F.max_pool2d(x, 2, 2)
         x = self.conv2(x)
@@ -206,7 +209,7 @@ class CNN(nn.Module):
         x = F.leaky_relu(x)
         x = F.max_pool2d(x, 2, 2)
         x = self.conv4(x)
-        # x = F.leaky_relu(x)
+        #x = F.leaky_relu(x)
         x = self.bn4(x)
         x = x.view(-1, self.out_dim)
         return x
@@ -232,24 +235,24 @@ class MLP_COS(nn.Module):
         v0 = v0.unsqueeze(1).expand(B, T, 1)
         t = t.unsqueeze(-1)
         x = torch.cat([x, t, v0], dim=-1)
-        # x = torch.cat([x, v0], dim=1)
+        #x = torch.cat([x, v0], dim=1)
         x = self.linear1(x)
-        # x = F.leaky_relu(x)
+        #x = F.leaky_relu(x)
         x = torch.tanh(x)
-        # x = F.dropout(x, p=0.5, training=self.training)
+        #x = F.dropout(x, p=0.5, training=self.training)
         x = self.linear2(x)
-        # x = F.leaky_relu(x)
+        #x = F.leaky_relu(x)
         x = torch.tanh(x)
-        # x = F.dropout(x, p=0.5, training=self.training)
+        #x = F.dropout(x, p=0.5, training=self.training)
         x = self.linear3(x)
-        # x = F.leaky_relu(x)
+        #x = F.leaky_relu(x)
         x = torch.tanh(x)
-        # x = F.dropout(x, p=0.5, training=self.training)
+        #x = F.dropout(x, p=0.5, training=self.training)
 
         x = self.linear4(x)
-        # x = F.leaky_relu(x)
+        #x = F.leaky_relu(x)
         x = torch.cos(self.rate * x)
-        # x = F.dropout(x, p=0.5, training=self.training)
+        #x = F.dropout(x, p=0.5, training=self.training)
         x = self.linear5(x)
         return x
 
@@ -279,7 +282,7 @@ class CICTModel():
     def run_step(self, observation):
         img = observation['rgb'].float()
         dest = observation['dest'].float()
-        # print(img.shape, dest.shape)
+        #print(img.shape, dest.shape)
         branch = torch.LongTensor([0]).unsqueeze(0)
         pm = self._generator(torch.cat([img, dest], dim=1), branch)
 
@@ -288,12 +291,12 @@ class CICTModel():
         lidar = observation['lidar']
         ipm = self._inverse_perspective_mapping.getIPM(pm)
         ipm = self._inverse_perspective_mapping.get_cost_map(ipm, lidar)
-        ipm_transforms = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+        ipm_transforms = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, ), (0.5, ))])
         ipm = ipm_transforms(ipm)
 
-        # index = (self._cfg.PRED_T / self._cfg.MAX_T) // self._cfg.DT
+        #index = (self._cfg.PRED_T / self._cfg.MAX_T) // self._cfg.DT
         t = torch.arange(0, self._cfg.PRED_LEN).float() * self._cfg.DT + self._cfg.DT
-        # t = torch.FloatTensor([self._cfg.PRED_T / self._cfg.MAX_T]).cuda()
+        #t = torch.FloatTensor([self._cfg.PRED_T / self._cfg.MAX_T]).cuda()
         t = t.unsqueeze(0) / self._cfg.MAX_T
         t.requires_grad = True
 
@@ -317,11 +320,11 @@ class CICTModel():
         pred_vy = grad(pred_xy[:, :, 1].sum(), t, create_graph=True)[0] * (self._cfg.MAX_DIST / self._cfg.MAX_T)
 
         pred_vxy = torch.cat([pred_vx.unsqueeze(-1), pred_vy.unsqueeze(-1)], dim=-1)
-        # print(pred_vxy)
+        #print(pred_vxy)
 
         pred_ax = grad(pred_vx.sum(), t, create_graph=True)[0] / self._cfg.MAX_T
         pred_ay = grad(pred_vy.sum(), t, create_graph=True)[0] / self._cfg.MAX_T
-        # print(pred_ax.shape)
+        #print(pred_ax.shape)
         pred_axy = torch.cat([pred_ax.unsqueeze(-1), pred_ay.unsqueeze(-1)], dim=-1)
 
         pred_xy = pred_xy * self._cfg.MAX_DIST

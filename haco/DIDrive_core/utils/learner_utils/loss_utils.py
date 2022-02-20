@@ -35,6 +35,7 @@ def normalize(x, dim):
 
 
 def weight_decay_l1(loss, model, intention_factors, alpha, gating):
+
     wdecay = 0
     for w in model.parameters():
         if w.requires_grad:
@@ -56,6 +57,7 @@ def weight_decay_l1(loss, model, intention_factors, alpha, gating):
 
 
 def weight_decay_l2(loss, model, intention_factors, alpha, gating):
+
     wdecay = 0
     for w in model.parameters():
         if w.requires_grad:
@@ -233,7 +235,7 @@ def branched_loss(loss_function, params):
     speed_loss = loss_branches_vec[-1] / (params['branches'][0].shape[0])
 
     return torch.sum(loss_function) / (params['branches'][0].shape[0]
-    ) + torch.sum(speed_loss) / (params['branches'][0].shape[0]), plotable_params
+                                       ) + torch.sum(speed_loss) / (params['branches'][0].shape[0]), plotable_params
 
 
 def Loss(loss_name):

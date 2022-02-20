@@ -11,6 +11,7 @@ This module provides an example control for pedestrians
 import math
 
 import carla
+
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
 
 

@@ -7,16 +7,14 @@ waypoints and avoiding other vehicles. The agent also responds to traffic lights
 traffic signs, and has different possible configurations. """
 
 import random
-
-import carla
 import numpy as np
+import carla
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.agent import Agent
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner_behavior import LocalPlanner, RoadOption
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import \
-    GlobalRoutePlannerDAO
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner_behavior import LocalPlanner, \
-    RoadOption
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.types_behavior import Cautious, Aggressive, Normal
+
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import get_speed, positive
 
 

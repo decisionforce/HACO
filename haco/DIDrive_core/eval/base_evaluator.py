@@ -3,16 +3,20 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
+import os
+import sys
+
 import copy
 from abc import abstractmethod
-from typing import Any, Optional
-
-from ding.utils import EasyTimer, build_logger
+from typing import Any, Dict, Optional
 from easydict import EasyDict
+
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
+from ding.utils import EasyTimer, build_logger
 
 
 class BaseEvaluator(object):
+
     config = dict()
 
     def __init__(

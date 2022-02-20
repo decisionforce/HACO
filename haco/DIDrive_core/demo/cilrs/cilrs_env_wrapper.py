@@ -1,11 +1,14 @@
-from typing import Any
-
-import PIL
+import torch
 import numpy as np
+from typing import Dict, Any
+import PIL
+
 from haco.DIDrive_core.envs import CarlaEnvWrapper
+from haco.DIDrive_core.utils.model_utils import common
 
 
 class CILRSEnvWrapper(CarlaEnvWrapper):
+
     config = dict(
         scale=1,
         crop=256,

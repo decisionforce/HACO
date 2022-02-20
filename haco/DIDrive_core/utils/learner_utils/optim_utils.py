@@ -3,6 +3,7 @@ import scipy.stats
 
 
 def decreasing_probability(values: np.ndarray) -> float:
+
     n_steps = len(values)
     steps = np.arange(n_steps)
     A = np.vstack([steps, np.ones(n_steps)]).T
@@ -14,6 +15,7 @@ def decreasing_probability(values: np.ndarray) -> float:
 
 
 def steps_without_decrease(values: np.ndarray, robust: bool = False) -> int:
+
     if robust:
         values = np.array(values)[values < np.percentile(values, 90)]
     steps_without_decrease = 0
@@ -47,7 +49,7 @@ def adjust_learning_rate(optimizer, num_iters, LEARNING_RATE, LEARNING_RATE_DECA
 
 
 def adjust_learning_rate_auto(
-        optimizer, loss_window, LEARNING_RATE, LEARNING_RATE_THRESHOLD, LEARNING_RATE_DECAY_LEVEL
+    optimizer, loss_window, LEARNING_RATE, LEARNING_RATE_THRESHOLD, LEARNING_RATE_DECAY_LEVEL
 ):
     """
     Adjusts the learning rate every epoch based on the selected schedule

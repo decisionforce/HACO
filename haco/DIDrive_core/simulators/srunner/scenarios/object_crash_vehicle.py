@@ -10,9 +10,9 @@ moving along the road and encountering a cyclist ahead.
 from __future__ import print_function
 
 import math
-
-import carla
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, ActorDestroy, AccelerateToVelocity, HandBrakeVehicle, KeepVelocity, StopVehicle
@@ -37,7 +37,7 @@ class StationaryObjectCrossing(BasicScenario):
     """
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario
@@ -135,15 +135,15 @@ class DynamicObjectCrossing(BasicScenario):
     """
 
     def __init__(
-            self,
-            world,
-            ego_vehicles,
-            config,
-            randomize=False,
-            debug_mode=False,
-            criteria_enable=True,
-            adversary_type=False,
-            timeout=60
+        self,
+        world,
+        ego_vehicles,
+        config,
+        randomize=False,
+        debug_mode=False,
+        criteria_enable=True,
+        adversary_type=False,
+        timeout=60
     ):
         """
         Setup all relevant parameters and create scenario

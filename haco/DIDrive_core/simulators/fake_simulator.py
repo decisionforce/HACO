@@ -3,7 +3,11 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
+import os
+import sys
 from .base_simulator import BaseSimulator
+from typing import Any
+from collections import defaultdict
 
 
 class FakeSimulator(BaseSimulator):

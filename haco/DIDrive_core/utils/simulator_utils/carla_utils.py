@@ -3,10 +3,10 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:carla utils for DI-drive
 '''
 
+import numpy as np
 import math
 
 import carla
-import numpy as np
 
 BACKGROUND = [0, 0, 0]
 
@@ -121,7 +121,7 @@ def lane_mid_distance(waypoint_location_list, location):
     num = min(len(waypoint_location_list), 5)  # use next 4 lines for lane mid esitimation
     if num <= 1:
         return 0
-    # waypoint_location_list = 0.99 * waypoint_location_list[:-1] + 0.01 * waypoint_location_list[1:]
+    #waypoint_location_list = 0.99 * waypoint_location_list[:-1] + 0.01 * waypoint_location_list[1:]
     start = waypoint_location_list[:num - 1, :2]  # start points of the 4 lines
     end = waypoint_location_list[1:num, :2]  # end   points of the 4 lines
     rotate = np.array([[0.0, -1.0], [1.0, 0.0]])

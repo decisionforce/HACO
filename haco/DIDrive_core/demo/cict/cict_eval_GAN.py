@@ -1,17 +1,18 @@
 import os
 
-import cv2
 import numpy as np
+import cv2
 import torch
 import torchvision.transforms as transforms
-from PIL import Image
 from easydict import EasyDict
-from haco.DIDrive_core.data.cict_dataset import CictDataset
-from haco.DIDrive_core.demo.cict_demo.cict_model import GeneratorUNet
-from haco.DIDrive_core.demo.cict_demo.post import Sensor, params, InversePerspectiveMapping
-from haco.DIDrive_core.utils.others.checkpoint_helper import get_latest_saved_checkpoint
+from PIL import Image
 from torch.utils.data import DataLoader
 from torchvision.utils import save_image
+
+from haco.DIDrive_core.data.cict_dataset import CictDataset
+from haco.DIDrive_core.utils.others.checkpoint_helper import get_latest_saved_checkpoint
+from haco.DIDrive_core.demo.cict_demo.cict_model import GeneratorUNet
+from haco.DIDrive_core.demo.cict_demo.post import Sensor, params, InversePerspectiveMapping
 
 eval_config = dict(
     NUMBER_OF_LOADING_WORKERS=1,
@@ -77,7 +78,7 @@ def execute(cfg):
     pm_transforms = [
         transforms.Resize((cfg.IMG_HEIGHT, cfg.IMG_WIDTH), Image.BICUBIC),
         transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))
+        transforms.Normalize((0.5, ), (0.5, ))
     ]
 
     img_transforms = [

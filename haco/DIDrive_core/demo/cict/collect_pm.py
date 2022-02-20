@@ -1,8 +1,8 @@
-import carla
-import cv2
 import numpy as np
-from camera.coordinate_transformation import CoordinateTransformation, rotationMatrix3D
+import cv2
+import carla
 from camera.parameters import CameraParams, IntrinsicParams, ExtrinsicParams
+from camera.coordinate_transformation import CoordinateTransformation, rotationMatrix3D
 
 
 def rad_lim(rad):
@@ -87,7 +87,7 @@ class CollectPerspectiveImage(object):
         pixel_vec = pixel_vec[::-1, :]
         x_pixel = pixel_vec.astype(int)[0, 0]
         y_pixel = pixel_vec.astype(int)[1, 0]
-        # print(dest_vec,pixel_vec)
+        #print(dest_vec,pixel_vec)
         x_pixel = np.clip(x_pixel, 10, self.img_height - 10)
         y_pixel = np.clip(y_pixel, 10, self.img_width - 10)
         x_pixel, y_pixel = np.meshgrid(
@@ -100,7 +100,7 @@ class CollectPerspectiveImage(object):
         return cv2.resize(empty_image, (self.img_width, self.img_height), interpolation=cv2.INTER_CUBIC)
 
     def drawLineInImage(self, traj_pose, vehicle_transform):
-        # traj_position = traj_pose.location
+        #traj_position = traj_pose.location
         traj_vec = np.array([traj_pose.location.x, traj_pose.location.y, traj_pose.location.z]).reshape(3, 1)
         rotation = vehicle_transform.rotation
         location = vehicle_transform.location
@@ -206,7 +206,7 @@ class InversePerspectiveMapping(object):
         new_image_y_pixel = new_image_vec[0, :].astype(int)
         new_image_x_pixel = new_image_vec[1, :].astype(int)
 
-        # self.empty_image[new_image_y_pixel, new_image_x_pixel] = 255
+        #self.empty_image[new_image_y_pixel, new_image_x_pixel] = 255
 
         mask = np.where((new_image_x_pixel >= 0) & (new_image_x_pixel < self.img_width))[0]
         new_image_x_pixel = new_image_x_pixel[mask]
@@ -220,7 +220,7 @@ class InversePerspectiveMapping(object):
         self.empty_image[np.clip(new_image_y_pixel + 1, 0, self.img_height - 1), new_image_x_pixel] = 255
         self.empty_image[np.clip(new_image_y_pixel - 1, 0, self.img_height - 1), new_image_x_pixel] = 255
 
-        # self.empty_image = cv2.GaussianBlur(self.empty_image, (self.ksize, self.ksize), 25)
+        #self.empty_image = cv2.GaussianBlur(self.empty_image, (self.ksize, self.ksize), 25)
         return self.empty_image
 
     def get_cost_map(self, ipm, lidar):
@@ -245,7 +245,7 @@ class InversePerspectiveMapping(object):
         v = v[mask]
 
         img2[u, v] = 0
-        # print(u,v)
+        #print(u,v)
 
         kernel = np.ones((17, 17), np.uint8)
         img2 = cv2.erode(img2, kernel, iterations=1)
@@ -259,8 +259,8 @@ class InversePerspectiveMapping(object):
         u = mask[0]
         v = mask[1]
         img[u, v] = 0
-        # kernel_size = (17, 17)
-        # kernel_size = (9, 9)
-        # sigma = 9#21
-        # img = cv2.GaussianBlur(img, kernel_size, sigma)
+        #kernel_size = (17, 17)
+        #kernel_size = (9, 9)
+        #sigma = 9#21
+        #img = cv2.GaussianBlur(img, kernel_size, sigma)
         return img

@@ -1,12 +1,12 @@
 from typing import Dict, List, Optional, Any
-
+from collections import namedtuple
 import numpy as np
 import torch
 import torch.nn.functional as F
-from ding.torch_utils import to_device
-from ding.utils.data import default_collate, default_decollate
-from haco.DIDrive_core.models import CILRSModel
 
+from ding.utils.data import default_collate, default_decollate
+from ding.torch_utils import to_device
+from haco.DIDrive_core.models import CILRSModel
 from .base_carla_policy import BaseCarlaPolicy
 
 

@@ -1,11 +1,11 @@
-import glob
-import os
-import random
-
-import lmdb
-import numpy as np
 import torch
+import lmdb
+import random
+import os
+import glob
+import numpy as np
 from PIL import Image
+
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
@@ -159,11 +159,11 @@ def _dataloader(data, batch_size, num_workers, shuffle=True):
 
 
 def get_dataloader(
-        dataset_dir,
-        crop_sky=True,
-        batch_size=32,
-        num_workers=32,
-        shuffle=True,
+    dataset_dir,
+    crop_sky=True,
+    batch_size=32,
+    num_workers=32,
+    shuffle=True,
 ):
     '''
     Prepare the dataloader

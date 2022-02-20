@@ -1,6 +1,6 @@
 import numpy as np
 
-from .coordinate_transformation import rotationMatrix3D, intrinsicMatrix
+from .coordinate_transformation import CoordinateTransformation, rotationMatrix3D, intrinsicMatrix
 
 
 class IntrinsicParams(object):

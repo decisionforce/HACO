@@ -1,11 +1,11 @@
+import os
 import torch
-from typing import Any, Dict, Optional
-
 import numpy as np
-import torch
-from ding.torch_utils.data_helper import to_tensor
+from typing import Any, Dict, List, Optional
 
 from .base_evaluator import BaseEvaluator
+from ding.torch_utils.data_helper import to_tensor
+from ding.utils import build_logger
 
 
 class SingleCarlaEvaluator(BaseEvaluator):

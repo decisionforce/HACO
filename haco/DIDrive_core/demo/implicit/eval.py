@@ -1,14 +1,15 @@
+import os
 import argparse
+from easydict import EasyDict
 from functools import partial
 
+from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
+from eval_policy import ImplicitPolicy
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
 from ding.envs import SyncSubprocessEnvManager
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-from easydict import EasyDict
-from eval_policy import ImplicitPolicy
-from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
-from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 eval_config = dict(
     env=dict(
@@ -108,7 +109,7 @@ if __name__ == '__main__':
         action="store_true",
         default=False,
         help="if using CARLA challenge model, let sky, we cropped "
-             "it for the models trained only on Town01/train weather",
+        "it for the models trained only on Town01/train weather",
     )
     args = parser.parse_args()
     main(main_config, args)

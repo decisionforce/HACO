@@ -1,14 +1,14 @@
 import random
-
-import carla
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, ActorDestroy, StopVehicle, LaneChange, WaypointFollower, Idle
 )
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import \
-    DriveDistance, InTriggerDistanceToVehicle, WaitUntilInFront
+    DriveDistance, InTriggerDistanceToVehicle, StandStill, WaitUntilInFront
 from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_waypoint_in_distance
 
@@ -16,7 +16,7 @@ from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_waypo
 class ChangeLane(BasicScenario):
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         self.timeout = timeout
         self._map = CarlaDataProvider.get_map()

@@ -10,10 +10,12 @@ weather conditions, at a non-junction and encroaches into another
 vehicle traveling in the opposite direction.
 """
 
-import math
+from six.moves.queue import Queue  # pylint: disable=relative-import
 
-import carla
+import math
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, ActorDestroy, ActorSource, ActorSink, WaypointFollower
@@ -22,7 +24,6 @@ from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import DriveDistance
 from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_waypoint_in_distance
-from six.moves.queue import Queue  # pylint: disable=relative-import
 
 
 class ManeuverOppositeDirection(BasicScenario):
@@ -32,15 +33,15 @@ class ManeuverOppositeDirection(BasicScenario):
     """
 
     def __init__(
-            self,
-            world,
-            ego_vehicles,
-            config,
-            randomize=False,
-            debug_mode=False,
-            criteria_enable=True,
-            obstacle_type='barrier',
-            timeout=120
+        self,
+        world,
+        ego_vehicles,
+        config,
+        randomize=False,
+        debug_mode=False,
+        criteria_enable=True,
+        obstacle_type='barrier',
+        timeout=120
     ):
         """
         Setup all relevant parameters and create scenario

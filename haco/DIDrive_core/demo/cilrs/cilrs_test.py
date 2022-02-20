@@ -1,11 +1,12 @@
-import torch
-from ding.utils import set_pkg_seed
 from easydict import EasyDict
-from haco.DIDrive_core.demo.cilrs.cilrs_env_wrapper import CILRSEnvWrapper
+import torch
+
 from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from haco.DIDrive_core.policy import CILRSPolicy
+from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from ding.utils import set_pkg_seed
+from haco.DIDrive_core.demo.cilrs.cilrs_env_wrapper import CILRSEnvWrapper
 
 cilrs_config = dict(
     env=dict(
@@ -44,7 +45,7 @@ cilrs_config = dict(
         ),
         eval=dict(
             evaluator=dict(
-                # render=True,
+                #render=True,
                 transform_obs=True,
             ),
         )

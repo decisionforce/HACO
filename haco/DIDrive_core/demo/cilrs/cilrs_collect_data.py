@@ -7,11 +7,12 @@ import numpy as np
 from ding.envs import SyncSubprocessEnvManager
 from ding.utils.default_helper import deep_merge_dicts
 from easydict import EasyDict
+from tqdm import tqdm
+
 from haco.DIDrive_core.data import CarlaBenchmarkCollector, BenchmarkDatasetSaver
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.policy import AutoPIDPolicy
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from tqdm import tqdm
 
 config = dict(
     env=dict(
@@ -96,11 +97,9 @@ def post_process(config):
     all_mea_list = []
 
     for item in tqdm(epi_folder):
-        lmdb_file = lmdb.open(os.path.join(config.policy.collect.dir_path, item, 'measurements.lmdb')).begin(
-            write=False)
+        lmdb_file = lmdb.open(os.path.join(config.policy.collect.dir_path, item, 'measurements.lmdb')).begin(write=False)
         png_files = [
-            x for x in os.listdir(os.path.join(config.policy.collect.dir_path, item)) if
-            (x.endswith('png') and x.startswith('rgb'))
+            x for x in os.listdir(os.path.join(config.policy.collect.dir_path, item)) if (x.endswith('png') and x.startswith('rgb'))
         ]
         png_files.sort()
         for png_file in png_files:

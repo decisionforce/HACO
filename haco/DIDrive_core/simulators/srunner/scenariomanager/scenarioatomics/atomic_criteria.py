@@ -14,13 +14,14 @@ actors or environmental parameters. Hence, a termination is not required.
 The atomic criteria are implemented with py_trees.
 """
 
-import math
 import weakref
-
-import carla
+import math
 import numpy as np
 import py_trees
 import shapely
+
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
 from haco.DIDrive_core.simulators.srunner.scenariomanager.traffic_events import TrafficEvent, TrafficEventType
@@ -42,13 +43,13 @@ class Criterion(py_trees.behaviour.Behaviour):
     """
 
     def __init__(
-            self,
-            name,
-            actor,
-            expected_value_success,
-            expected_value_acceptable=None,
-            optional=False,
-            terminate_on_failure=False
+        self,
+        name,
+        actor,
+        expected_value_success,
+        expected_value_acceptable=None,
+        optional=False,
+        terminate_on_failure=False
     ):
         super(Criterion, self).__init__(name)
         self.logger.debug("%s.__init__()" % (self.__class__.__name__))
@@ -204,7 +205,7 @@ class AverageVelocityTest(Criterion):
     """
 
     def __init__(
-            self, actor, avg_velocity_success, avg_velocity_acceptable=None, optional=False, name="CheckAverageVelocity"
+        self, actor, avg_velocity_success, avg_velocity_acceptable=None, optional=False, name="CheckAverageVelocity"
     ):
         """
         Setup actor and average velovity expected
@@ -283,13 +284,13 @@ class CollisionTest(Criterion):
     MAX_ID_TIME = 5  # Amount of time the last collision if is remembered
 
     def __init__(
-            self,
-            actor,
-            other_actor=None,
-            other_actor_type=None,
-            optional=False,
-            name="CollisionTest",
-            terminate_on_failure=False
+        self,
+        actor,
+        other_actor=None,
+        other_actor_type=None,
+        optional=False,
+        name="CollisionTest",
+        terminate_on_failure=False
     ):
         """
         Construction with sensor setup
@@ -439,12 +440,12 @@ class ActorSpeedAboveThresholdTest(Criterion):
     """
 
     def __init__(
-            self,
-            actor,
-            speed_threshold,
-            below_threshold_max_time,
-            name="ActorSpeedAboveThresholdTest",
-            terminate_on_failure=False
+        self,
+        actor,
+        speed_threshold,
+        below_threshold_max_time,
+        name="ActorSpeedAboveThresholdTest",
+        terminate_on_failure=False
     ):
         """
         Class constructor.
@@ -852,8 +853,8 @@ class OnSidewalkTest(Criterion):
 
             # Case 2.1) Not quite outside yet
             if bbox_wp[0].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking) \
-                    or bbox_wp[1].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking) \
-                    or bbox_wp[2].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking) \
+                or bbox_wp[1].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking) \
+                or bbox_wp[2].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking) \
                     or bbox_wp[3].lane_type == (carla.LaneType.Driving or carla.LaneType.Parking):
 
                 self._onsidewalk_active = False
@@ -861,8 +862,8 @@ class OnSidewalkTest(Criterion):
 
             # Case 2.2) At the mini Shoulders between Driving and Sidewalk
             elif bbox_wp[0].lane_type == carla.LaneType.Sidewalk \
-                    or bbox_wp[1].lane_type == carla.LaneType.Sidewalk \
-                    or bbox_wp[2].lane_type == carla.LaneType.Sidewalk \
+                or bbox_wp[1].lane_type == carla.LaneType.Sidewalk \
+                or bbox_wp[2].lane_type == carla.LaneType.Sidewalk \
                     or bbox_wp[3].lane_type == carla.LaneType.Sidewalk:
 
                 if not self._onsidewalk_active:
@@ -931,6 +932,7 @@ class OnSidewalkTest(Criterion):
 
         # Register the sidewalk event
         if not self._onsidewalk_active and self._wrong_sidewalk_distance > 0:
+
             self.actual_value += 1
 
             onsidewalk_event = TrafficEvent(event_type=TrafficEventType.ON_SIDEWALK_INFRACTION)
@@ -943,6 +945,7 @@ class OnSidewalkTest(Criterion):
 
         # Register the outside of a lane event
         if not self._outside_lane_active and self._wrong_outside_lane_distance > 0:
+
             self.actual_value += 1
 
             outsidelane_event = TrafficEvent(event_type=TrafficEventType.OUTSIDE_LANE_INFRACTION)
@@ -967,6 +970,7 @@ class OnSidewalkTest(Criterion):
         """
         # If currently at a sidewalk, register the event
         if self._onsidewalk_active:
+
             self.actual_value += 1
 
             onsidewalk_event = TrafficEvent(event_type=TrafficEventType.ON_SIDEWALK_INFRACTION)
@@ -979,6 +983,7 @@ class OnSidewalkTest(Criterion):
 
         # If currently outside of our lane, register the event
         if self._outside_lane_active:
+
             self.actual_value += 1
 
             outsidelane_event = TrafficEvent(event_type=TrafficEventType.OUTSIDE_LANE_INFRACTION)
@@ -1189,6 +1194,7 @@ class OutsideRouteLanesTest(Criterion):
         """
 
         if self._wrong_distance > 0:
+
             percentage = self._wrong_distance / self._total_distance * 100
 
             outside_lane = TrafficEvent(event_type=TrafficEventType.OUTSIDE_ROUTE_LANES_INFRACTION)
@@ -1306,6 +1312,7 @@ class WrongLaneTest(Criterion):
                 )
 
                 if vehicle_lane_angle > self.MAX_ALLOWED_ANGLE:
+
                     self.test_status = "FAILURE"
                     self._in_lane = False
                     self.actual_value += 1
@@ -1323,6 +1330,7 @@ class WrongLaneTest(Criterion):
 
         # Register the event
         if self._in_lane and self._wrong_distance > 0:
+
             wrong_way_event = TrafficEvent(event_type=TrafficEventType.WRONG_WAY_INFRACTION)
             self._set_event_message(
                 wrong_way_event, self._wrong_lane_start_location, self._wrong_distance, current_road_id, current_lane_id
@@ -1348,6 +1356,7 @@ class WrongLaneTest(Criterion):
         If there is currently an event running, it is registered
         """
         if not self._in_lane:
+
             lane_waypoint = self._map.get_waypoint(self._actor.get_location())
             current_lane_id = lane_waypoint.lane_id
             current_road_id = lane_waypoint.road_id
@@ -1561,7 +1570,7 @@ class InRouteTest(Criterion):
 
                 self.test_status = "FAILURE"
                 self.actual_value += 1
-                # new_status = py_trees.common.Status.FAILURE
+                #new_status = py_trees.common.Status.FAILURE
 
         self.logger.debug("%s.update()[%s->%s]" % (self.__class__.__name__, self.status, new_status))
 
@@ -1638,7 +1647,7 @@ class RouteCompletionTest(Criterion):
                     # good! segment completed!
                     self._current_index = index
                     self._percentage_route_completed = 100.0 * float(self._accum_meters[self._current_index]) \
-                                                       / float(self._accum_meters[-1])
+                        / float(self._accum_meters[-1])
                     self._traffic_event.set_dict({'route_completed': self._percentage_route_completed})
                     self._traffic_event.set_message(
                         "Agent has completed > {:.2f}% of the route".format(self._percentage_route_completed)
@@ -1783,6 +1792,7 @@ class RunningRedLightTest(Criterion):
 
                     # Is the vehicle traversing the stop line?
                     if self.is_vehicle_crossing_line((tail_close_pt, tail_far_pt), (lft_lane_wp, rgt_lane_wp)):
+
                         self.test_status = "FAILURE"
                         self.actual_value += 1
                         location = traffic_light.get_transform().location

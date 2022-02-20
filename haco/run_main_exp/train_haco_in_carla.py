@@ -121,7 +121,9 @@ if __name__ == '__main__':
 
     config = dict(
         env=HACOEnv,
-        env_config={},
+        env_config={
+            "keyboard_control":True
+        },
 
         # ===== Training =====
         alpha=10,

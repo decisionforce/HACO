@@ -1,3 +1,5 @@
+import os
+import numpy as np
 from functools import partial
 from easydict import EasyDict
 import copy
@@ -14,22 +16,7 @@ from ding.worker import BaseLearner, SampleSerialCollector, NaiveReplayBuffer
 from ding.utils import set_pkg_seed
 from haco.DIDrive_core.demo.simple_rl.model import DDPGRLModel
 from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
-import copy
-from functools import partial
 
-from ding.envs import SyncSubprocessEnvManager, BaseEnvManager
-from ding.policy import DDPGPolicy
-from ding.utils import set_pkg_seed
-from ding.worker import BaseLearner, SampleSerialCollector, NaiveReplayBuffer
-from easydict import EasyDict
-from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
-from haco.DIDrive_core.demo.simple_rl.model import DDPGRLModel
-from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.eval import SerialEvaluator
-from haco.DIDrive_core.utils.data_utils.bev_utils import unpack_birdview
-from haco.DIDrive_core.utils.others.ding_utils import compile_config
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from tensorboardX import SummaryWriter
 
 train_config = dict(
     exp_name='ddpg2_bev32_buf4e5_lr1e4_bs128_ns3000_update4_train_ft',
@@ -150,15 +137,14 @@ def main(cfg, seed=0):
     assert len(tcp_list) >= collector_env_num + evaluator_env_num, \
         "Carla server not enough! Need {} servers but only found {}.".format(
             collector_env_num + evaluator_env_num, len(tcp_list)
-        )
+    )
 
     collector_env = SyncSubprocessEnvManager(
         env_fn=[partial(wrapped_env, cfg.env, cfg.env.wrapper.collect, *tcp_list[i]) for i in range(collector_env_num)],
         cfg=cfg.env.manager.collect,
     )
     evaluate_env = BaseEnvManager(
-        env_fn=[partial(wrapped_env, cfg.env, cfg.env.wrapper.eval, *tcp_list[collector_env_num + i]) for i in
-                range(evaluator_env_num)],
+        env_fn=[partial(wrapped_env, cfg.env, cfg.env.wrapper.eval, *tcp_list[collector_env_num + i]) for i in range(evaluator_env_num)],
         cfg=cfg.env.manager.eval,
     )
     # Uncomment this to add save replay when evaluation
@@ -172,10 +158,8 @@ def main(cfg, seed=0):
 
     tb_logger = SummaryWriter('./log/{}/'.format(cfg.exp_name))
     learner = BaseLearner(cfg.policy.learn.learner, policy.learn_mode, tb_logger, exp_name=cfg.exp_name)
-    collector = SampleSerialCollector(cfg.policy.collect.collector, collector_env, policy.collect_mode, tb_logger,
-                                      exp_name=cfg.exp_name)
-    evaluator = SerialEvaluator(cfg.policy.eval.evaluator, evaluate_env, policy.eval_mode, tb_logger,
-                                exp_name=cfg.exp_name)
+    collector = SampleSerialCollector(cfg.policy.collect.collector, collector_env, policy.collect_mode, tb_logger, exp_name=cfg.exp_name)
+    evaluator = SerialEvaluator(cfg.policy.eval.evaluator, evaluate_env, policy.eval_mode, tb_logger, exp_name=cfg.exp_name)
     replay_buffer = NaiveReplayBuffer(cfg.policy.other.replay_buffer, tb_logger, exp_name=cfg.exp_name)
 
     learner.call_hook('before_run')

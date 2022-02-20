@@ -4,11 +4,10 @@
 # For a copy, see <https://opensource.org/licenses/MIT>.
 """ This module contains PID controllers to perform lateral and longitudinal control. """
 
-import math
 from collections import deque
-
-import carla
+import math
 import numpy as np
+import carla
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import get_speed
 
 

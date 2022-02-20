@@ -1,17 +1,17 @@
-import copy
-from itertools import product
-from typing import Any, Dict, Optional
-
 import gym
+import copy
 import numpy as np
-from ding.envs.env.base_env import BaseEnvTimestep, BaseEnvInfo
-from ding.torch_utils.data_helper import to_ndarray
+from typing import Any, Dict, Optional
 from easydict import EasyDict
+from itertools import product
+
 from haco.DIDrive_core.data.benchmark import ALL_SUITES
 from haco.DIDrive_core.eval.carla_benchmark_evaluator import get_suites_list, read_pose_txt, get_benchmark_dir
-from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
-
 from .base_carla_env import BaseCarlaEnv
+from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
+from ding.envs.env.base_env import BaseEnvTimestep, BaseEnvInfo
+from ding.envs.common.env_element import EnvElementInfo
+from ding.torch_utils.data_helper import to_ndarray
 
 
 class CarlaEnvWrapper(gym.Wrapper):
@@ -215,6 +215,7 @@ class BenchmarkEnvWrapper(CarlaEnvWrapper):
 
 # TODO: complete scenario env wrapper
 class ScenarioEnvWrapper(CarlaEnvWrapper):
+
     config = dict()
 
     def __init__(self, env: BaseCarlaEnv, cfg: Dict, **kwargs) -> None:

@@ -11,14 +11,15 @@ This module provide BasicScenario, the basic class of all the scenarios.
 from __future__ import print_function
 
 import operator
+import py_trees
 
 import carla
-import py_trees
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics import atomic_trigger_conditions as conditions
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import UpdateAllActorControls
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import TimeOut
 from haco.DIDrive_core.simulators.srunner.scenariomanager.weather_sim import WeatherBehavior
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import UpdateAllActorControls
 
 
 class BasicScenario(object):
@@ -27,7 +28,7 @@ class BasicScenario(object):
     """
 
     def __init__(
-            self, name, ego_vehicles, config, world, debug_mode=False, terminate_on_failure=False, criteria_enable=False
+        self, name, ego_vehicles, config, world, debug_mode=False, terminate_on_failure=False, criteria_enable=False
     ):
         """
         Setup all relevant parameters and create scenario

@@ -8,9 +8,8 @@
 """ Module with auxiliary functions. """
 
 import math
-
-import carla
 import numpy as np
+import carla
 
 
 def draw_waypoints(world, waypoints, z=0.5):

@@ -18,6 +18,7 @@ import os
 import sys
 
 import carla
+
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.external_control import ExternalControl
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.npc_vehicle_control import NpcVehicleControl
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.pedestrian_control import PedestrianControl

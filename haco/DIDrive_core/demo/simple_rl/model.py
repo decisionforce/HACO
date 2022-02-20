@@ -1,9 +1,9 @@
-from typing import List, Tuple, Union, Dict, Optional
-
 import torch
 import torch.nn as nn
-from ding.model.common.head import DuelingHead, RegressionHead, ReparameterizationHead, MultiHead, DiscreteHead
+from typing import List, Tuple, Union, Dict, Optional
+
 from haco.DIDrive_core.models import BEVSpeedConvEncoder
+from ding.model.common.head import DuelingHead, RegressionHead, ReparameterizationHead, MultiHead, DiscreteHead
 
 
 class DQNRLModel(nn.Module):
@@ -94,8 +94,7 @@ class DDPGRLModel(nn.Module):
         self.twin_critic = twin_critic
         if self.twin_critic:
             if not self.share_encoder:
-                self._twin_encoder = BEVSpeedConvEncoder(self._obs_shape, encoder_hidden_size_list,
-                                                         encoder_embedding_size, [3, 3, 3], [2, 2, 2])
+                self._twin_encoder = BEVSpeedConvEncoder(self._obs_shape, encoder_hidden_size_list, encoder_embedding_size, [3, 3, 3], [2, 2, 2])
             else:
                 self._twin_encoder = self.actor_encoder
             self.critic_head = [
@@ -230,8 +229,7 @@ class SACRLModel(nn.Module):
             if self.share_encoder:
                 self._twin_encoder = self.actor_encoder
             else:
-                self._twin_encoder = BEVSpeedConvEncoder(self._obs_shape, encoder_hidden_size_list,
-                                                         encoder_embedding_size, [3, 3, 3], [2, 2, 2])
+                self._twin_encoder = BEVSpeedConvEncoder(self._obs_shape, encoder_hidden_size_list, encoder_embedding_size, [3, 3, 3], [2, 2, 2])
             self.critic = nn.ModuleList()
             for _ in range(2):
                 self.critic.append(

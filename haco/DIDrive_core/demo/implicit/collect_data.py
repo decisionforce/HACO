@@ -1,17 +1,18 @@
 import os
-from functools import partial
+from easydict import EasyDict
 from pathlib import Path
+from functools import partial
 
 import lmdb
-import numpy as np
 from PIL import Image
-from ding.envs import SyncSubprocessEnvManager
-from ding.utils.default_helper import deep_merge_dicts
-from easydict import EasyDict
+import numpy as np
+
 from haco.DIDrive_core.data import CarlaBenchmarkCollector
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.policy import AutoPIDPolicy
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from ding.envs import BaseEnvManager, SyncSubprocessEnvManager
+from ding.utils.default_helper import deep_merge_dicts
 
 config = dict(
     env=dict(

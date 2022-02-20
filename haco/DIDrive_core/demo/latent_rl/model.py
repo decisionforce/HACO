@@ -1,9 +1,10 @@
-from typing import List, Dict, Optional
-
 import torch
 import torch.nn as nn
-from ding.model.common import DiscreteHead, DuelingHead, MultiHead
+from typing import List, Tuple, Union, Dict, Optional
+from torch.distributions import Normal, Independent
+
 from haco.DIDrive_core.models import VanillaVAE
+from ding.model.common import DiscreteHead, DuelingHead, MultiHead
 
 
 class LatentDQNRLModel(nn.Module):

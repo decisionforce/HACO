@@ -8,15 +8,17 @@
 This module provides a parser for scenario configuration files based on OpenSCENARIO
 """
 
+from distutils.util import strtobool
 import copy
 import datetime
 import math
 import operator
-from distutils.util import strtobool
 
-import carla
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.simulators.srunner.scenariomanager.weather_sim import Weather
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     TrafficLightStateSetter, ActorTransformSetterToOSCPosition, RunScript, ChangeWeather, ChangeAutoPilot,
     ChangeRoadFriction, ChangeActorTargetSpeed, ChangeActorControl, ChangeActorWaypoints,
@@ -25,7 +27,9 @@ from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic
 # pylint: disable=unused-import
 # For the following includes the pylint check is disabled, as these are accessed via globals()
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import (
-    CollisionTest, OffRoadTest, EndofRoadTest
+    CollisionTest, MaxVelocityTest, DrivenDistanceTest, AverageVelocityTest, KeepLaneTest, ReachedRegionTest,
+    OnSidewalkTest, WrongLaneTest, InRadiusRegionTest, InRouteTest, RouteCompletionTest, RunningRedLightTest,
+    RunningStopTest, OffRoadTest, EndofRoadTest
 )
 # pylint: enable=unused-import
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import (
@@ -34,7 +38,6 @@ from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic
     TimeOfDayComparison, TriggerVelocity, WaitForTrafficLightState
 )
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import TimeOut, SimulationTimeCondition
-from haco.DIDrive_core.simulators.srunner.scenariomanager.weather_sim import Weather
 from haco.DIDrive_core.simulators.srunner.tools.py_trees_port import oneshot_behavior
 
 

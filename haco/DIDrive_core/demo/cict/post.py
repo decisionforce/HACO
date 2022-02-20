@@ -1,14 +1,13 @@
-import copy
-import os
-
-import PIL.Image as Image
-import carla
-import cv2
-import lmdb
 import numpy as np
+import copy
+import cv2
+import os
+import PIL.Image as Image
 from PIL import ImageDraw
-from collect_pm import CollectPerspectiveImage, InversePerspectiveMapping
+import lmdb
 from tqdm import tqdm
+import carla
+from collect_pm import CollectPerspectiveImage, InversePerspectiveMapping
 
 config = dict(
     env=dict(
@@ -109,7 +108,7 @@ params = Param()
 
 def get_map():
     origin_map = np.zeros((6000, 6000, 3), dtype="uint8")
-    # origin_map.fill(255)
+    #origin_map.fill(255)
     origin_map = Image.fromarray(origin_map)
     return origin_map
 
@@ -124,12 +123,13 @@ def draw_point(waypoint_list, origin_map):
 
     draw = ImageDraw.Draw(origin_map)
     draw.point(route_list, fill=(255, 255, 255))
-    # print(route_list)
-    # print(waypoint_list)
+    #print(route_list)
+    #print(waypoint_list)
     return origin_map
 
 
 def draw_route(waypoint_list, origin_map):
+
     route_list = []
     for waypoint in waypoint_list:
         x = scale * waypoint[0] + x_offset
@@ -139,8 +139,8 @@ def draw_route(waypoint_list, origin_map):
 
     draw = ImageDraw.Draw(origin_map)
     draw.line(route_list, 'red', width=30)
-    # print(route_list)
-    # print(waypoint_list)
+    #print(route_list)
+    #print(waypoint_list)
     return origin_map
 
 
@@ -155,12 +155,12 @@ def find_dest_with_fix_length(start, waypoint_list):
 
 def draw_destination(location, waypoint_list, origin_map):
     start = np.linalg.norm(waypoint_list[0][:2] - location[:2])
-    # print(location, waypoint_list[0], start)
+    #print(location, waypoint_list[0], start)
     dest, _ = find_dest_with_fix_length(start, waypoint_list)
 
     x = scale * dest[0] + x_offset
     y = scale * dest[1] + y_offset
-    # print(dest, x, y)
+    #print(dest, x, y)
 
     draw = ImageDraw.Draw(origin_map)
     draw.ellipse((x - 15, y - 15, x + 15, y + 15), fill='red', outline='red', width=30)
@@ -177,11 +177,11 @@ def get_nav(location, rotation, plan_map, town=1):
 
     x = int(scale * location[0] + x_offset)
     y = int(scale * location[1] + y_offset)
-    # print(x, y, plan_map)
+    #print(x, y, plan_map)
     _nav = plan_map.crop((x - 400, y - 400, x + 400, y + 400))
     im_rotate = _nav.rotate(rotation[1] + 90)
     nav = im_rotate.crop((_nav.size[0] // 2 - 320, _nav.size[1] // 2 - 360, _nav.size[0] // 2 + 320, _nav.size[1] // 2))
-    # print(nav)
+    #print(nav)
     nav = cv2.cvtColor(np.asarray(nav), cv2.COLOR_BGR2RGB)
 
     return nav
@@ -228,7 +228,7 @@ def destination(save_dir, episode_path):
     ]
 
     waypoint_file.sort()
-    # print(waypoint_file)
+    #print(waypoint_file)
     for k in tqdm(waypoint_file):
         index = k.split('_')[1].split('.')[0]
         measurements = np.frombuffer(lmdb_file.get(('measurements_%05d' % int(index)).encode()), np.float32)
@@ -274,7 +274,7 @@ def destination2(save_dir, episode_path):
     ]
 
     waypoint_file.sort()
-    # print(waypoint_file)
+    #print(waypoint_file)
     sensor = Sensor(params.sensor_config['rgb'])
     collect_perspective = CollectPerspectiveImage(params, sensor)
     commands = []
@@ -285,20 +285,20 @@ def destination2(save_dir, episode_path):
         rotation = np.array([measurements[18], measurements[19], measurements[20]]).astype(np.float32)
         waypoint_list = np.load(os.path.join(save_dir, episode_path, k))
         start = np.linalg.norm(waypoint_list[0][:2] - location[:2])
-        # print(location, waypoint_list[0], start)
+        #print(location, waypoint_list[0], start)
         dest, _ = find_dest_with_fix_length(start, waypoint_list)
-        # if location[0] - dest[0] > 0.5:
+        #if location[0] - dest[0] > 0.5:
         #    commands.append(1)
-        # elif location[0] - dest[0] < -0.5:
+        #elif location[0] - dest[0] < -0.5:
         #    commands.append(2)
-        # else:
+        #else:
         #    commands.append(0)
         zero = np.zeros((3, 1))
         zero[:2, 0] = dest
         dest_map = collect_perspective.drawDestInImage(zero, location, rotation)
         cv2.imwrite(os.path.join(save_dir, episode_path, 'dest2_%05d.png' % int(index)), dest_map)
 
-    # np.save(os.path.join(save_dir, episode_path, 'commands.npy'), np.array(commands))
+    #np.save(os.path.join(save_dir, episode_path, 'commands.npy'), np.array(commands))
 
 
 def get_potential_map(save_dir, episode_path, measurements, img_file):
@@ -310,6 +310,7 @@ def get_potential_map(save_dir, episode_path, measurements, img_file):
     pose_list = []
     loc_list = []
     for measurement in measurements:
+
         transform = carla.Transform()
         transform.location.x = float(measurement['location'][0])
         transform.location.y = float(measurement['location'][1])
@@ -336,7 +337,7 @@ def get_potential_map(save_dir, episode_path, measurements, img_file):
             traj_pose_list.append((i, pose_list[i]))
             traj_list.append(loc_list[i])
 
-        # t1 = time.time()
+        #t1 = time.time()
         '''
         bezier_list, bezier_coff = get_bezier(traj_list[0], np.stack(traj_list[1:], axis=0))
         measurements[index]['bezier_coff'] = bezier_coff
@@ -348,10 +349,10 @@ def get_potential_map(save_dir, episode_path, measurements, img_file):
         '''
 
         empty_image = collect_perspective.getPM(traj_pose_list, vehicle_transform)
-        # t2 = time.time()
+        #t2 = time.time()
 
-        # cv2.imshow('empty_image', empty_image)
-        # cv2.waitKey(3)
+        #cv2.imshow('empty_image', empty_image)
+        #cv2.waitKey(3)
         cv2.imwrite(os.path.join(pm_dir, '%05d.png' % index), empty_image)
 
     return measurements
@@ -386,6 +387,7 @@ def get_option(option_name, end_ind):
 
 
 def save_as_npy(save_dir, episode_path):
+
     lmdb_file = lmdb.open(os.path.join(save_dir, episode_path, 'measurements.lmdb')).begin()
     dest_file = [
         x for x in os.listdir(os.path.join(save_dir, episode_path)) if (x.endswith('png') and x.startswith('dest_'))
@@ -399,7 +401,7 @@ def save_as_npy(save_dir, episode_path):
         x for x in os.listdir(os.path.join(save_dir, episode_path)) if (x.endswith('png') and x.startswith('rgb'))
     ]
     img_file.sort()
-    # print(waypoint_file)
+    #print(waypoint_file)
     measurements_list = []
 
     for k in tqdm(img_file):
@@ -428,7 +430,7 @@ def save_as_npy(save_dir, episode_path):
         _, end_ind = find_dest_with_fix_length(start, waypoint_list)
         data['option'] = get_option(os.path.join(save_dir, episode_path, 'direction_%05d.npy' %
                                                  int(index)), end_ind) if data['direction'] == 3 else data['direction']
-        # print(episode_path, int(index), data['option'], data['command'])
+        #print(episode_path, int(index), data['option'], data['command'])
 
         measurements_list.append(data)
 
@@ -469,8 +471,8 @@ def save_as_npy(save_dir, episode_path):
 if __name__ == '__main__':
     save_dir = config['policy']['collect']['dir_path']
     epi_folder = [x for x in os.listdir(save_dir) if x.startswith('epi')]
-    # epi_folder = ['episode_00038','episode_00039']
-    # epi_folder = ['episode_00037']
+    #epi_folder = ['episode_00038','episode_00039']
+    #epi_folder = ['episode_00037']
 
     for episode_path in tqdm(epi_folder):
         destination(save_dir, episode_path)

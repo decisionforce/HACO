@@ -17,8 +17,10 @@ vehicle stopped close enough to the leading vehicle
 
 import random
 
-import carla
 import py_trees
+
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, ActorDestroy, KeepVelocity, StopVehicle, WaypointFollower
@@ -43,7 +45,7 @@ class FollowLeadingVehicle(BasicScenario):
     timeout = 120  # Timeout of scenario in seconds
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario

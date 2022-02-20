@@ -10,12 +10,12 @@ It must not be modified and is for reference only!
 """
 
 from __future__ import print_function
-
 import sys
 import time
 
 import py_trees
-# from haco.DIDrive_core.simulators.srunner.autoagents.agent_wrapper import AgentWrapper
+
+#from haco.DIDrive_core.simulators.srunner.autoagents.agent_wrapper import AgentWrapper
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.result_writer import ResultOutputProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
@@ -118,7 +118,7 @@ class ScenarioManager(object):
         end_game_time = GameTime.get_time()
 
         self.scenario_duration_system = self.end_system_time - \
-                                        self.start_system_time
+            self.start_system_time
         self.scenario_duration_game = end_game_time - self.start_game_time
 
         if self.scenario_tree.status == py_trees.common.Status.FAILURE:

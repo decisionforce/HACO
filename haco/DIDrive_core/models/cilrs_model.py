@@ -1,3 +1,7 @@
+import importlib
+
+import numpy as np
+import torch
 import torch.nn as nn
 from torchvision import models
 
@@ -5,16 +9,16 @@ from torchvision import models
 class CILRSModel(nn.Module):
 
     def __init__(
-            self,
-            backbone='resnet18',
-            pretrained=True,
-            normalize=True,
-            num_branch=6,
-            speed_dim=1,
-            embedding_dim=512,
-            hidden_size=256,
-            input_speed=True,
-            predict_speed=True
+        self,
+        backbone='resnet18',
+        pretrained=True,
+        normalize=True,
+        num_branch=6,
+        speed_dim=1,
+        embedding_dim=512,
+        hidden_size=256,
+        input_speed=True,
+        predict_speed=True
     ):
         super().__init__()
         self._normalize = normalize

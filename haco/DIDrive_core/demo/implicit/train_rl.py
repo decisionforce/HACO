@@ -1,18 +1,23 @@
+import os
 import argparse
 import copy
 from functools import partial
+from easydict import EasyDict
+
+import torch
+from tensorboardX import SummaryWriter
+import numpy as np
 
 from carla_env import ImplicitCarlaEnv
-from ding.envs import SyncSubprocessEnvManager
-from ding.policy import DQNPolicy
-from ding.rl_utils import get_epsilon_greedy_fn
-from ding.utils import set_pkg_seed
-from ding.worker import BaseLearner, SampleSerialCollector, AdvancedReplayBuffer
-from easydict import EasyDict
+from models import ImplicitDQN
 from haco.DIDrive_core.utils.others.ding_utils import compile_config
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from models import ImplicitDQN
-from tensorboardX import SummaryWriter
+from ding.envs import SyncSubprocessEnvManager, BaseEnvManager
+from ding.policy import DQNPolicy
+from ding.worker import BaseLearner, SampleSerialCollector, AdvancedReplayBuffer
+from ding.rl_utils import get_epsilon_greedy_fn
+from ding.utils import set_pkg_seed
+from ding.utils.default_helper import deep_merge_dicts
 
 
 def get_args():
@@ -49,7 +54,7 @@ def get_args():
         action="store_true",
         default=True,
         help="if using CARLA challenge model, let sky, we cropped "
-             "it for the models trained only on Town01/train weather",
+        "it for the models trained only on Town01/train weather",
     )
 
     args = parser.parse_known_args()[0]
@@ -196,8 +201,7 @@ def main(cfg, env_args, seed=0):
 
     tb_logger = SummaryWriter('./log/{}/'.format(cfg.exp_name))
     learner = BaseLearner(cfg.policy.learn.learner, policy.learn_mode, tb_logger, exp_name=cfg.exp_name)
-    collector = SampleSerialCollector(cfg.policy.collect.collector, collector_env, policy.collect_mode, tb_logger,
-                                      exp_name=cfg.exp_name)
+    collector = SampleSerialCollector(cfg.policy.collect.collector, collector_env, policy.collect_mode, tb_logger, exp_name=cfg.exp_name)
     replay_buffer = AdvancedReplayBuffer(cfg.policy.other.replay_buffer, tb_logger, exp_name=cfg.exp_name)
 
     learner.call_hook('before_run')
@@ -206,7 +210,7 @@ def main(cfg, env_args, seed=0):
     epsilon_greedy = get_epsilon_greedy_fn(eps_cfg.start, eps_cfg.end, eps_cfg.decay, eps_cfg.type)
 
     while True:
-        if (learner.train_iter > cfg.policy.learn.max_iterations):
+        if(learner.train_iter > cfg.policy.learn.max_iterations):
             break
         eps = epsilon_greedy(learner.train_iter)
         # Sampling data from environments
@@ -228,7 +232,6 @@ def main(cfg, env_args, seed=0):
 
 if __name__ == '__main__':
     import multiprocessing as mp
-
     mp.set_start_method('spawn', force=True)
     args = get_args()
     main(main_config, args)

@@ -1,21 +1,21 @@
 import random
-
-import carla
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
-    ActorTransformSetter, ActorDestroy, LaneChange, AccelerateToCatchUp, WaypointFollower
+    ActorTransformSetter, ActorDestroy, Idle, LaneChange, AccelerateToCatchUp, KeepVelocity, WaypointFollower
 )
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import \
-    DriveDistance, WaitUntilInFront
+    InTriggerDistanceToVehicle, DriveDistance, WaitUntilInFront
 from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
 
 
 class CutIn(BasicScenario):
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         self.timeout = timeout
         self._map = CarlaDataProvider.get_map()

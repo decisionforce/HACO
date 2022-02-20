@@ -4,15 +4,21 @@ Description:
 '''
 
 from functools import partial
+import numpy as np
+import torch
+import PIL.Image as Image
+import os
 
+from easydict import EasyDict
 from ding.envs import SyncSubprocessEnvManager
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-from easydict import EasyDict
-from haco.DIDrive_core.demo.cict_demo.cict_policy import CICTPolicy
+
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from ding.torch_utils.data_helper import to_tensor
+from haco.DIDrive_core.demo.cict_demo.cict_policy import CICTPolicy
 
 eval_config = dict(
     env=dict(
@@ -168,4 +174,4 @@ def main(cfg, seed=0):
 
 if __name__ == '__main__':
     main(main_config)
-    # dataset_test()
+    #dataset_test()

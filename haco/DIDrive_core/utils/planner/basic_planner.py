@@ -1,18 +1,17 @@
-import copy
-from collections import deque
-from enum import Enum
-from typing import Dict, List, Tuple
-
-import carla
 import numpy as np
+from enum import Enum
+from collections import deque
 from easydict import EasyDict
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
+from typing import Dict, List, Tuple, Union
+import copy
+import carla
+
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import \
-    GlobalRoutePlannerDAO
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import draw_waypoints
+from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 
 
 class AgentState(Enum):

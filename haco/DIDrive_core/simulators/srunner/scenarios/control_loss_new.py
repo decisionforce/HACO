@@ -1,7 +1,7 @@
 import random
-
-import carla
 import py_trees
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import ChangeNoiseParameters, \
     ActorTransformSetter
@@ -16,7 +16,7 @@ from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_locat
 class ControlLossNew(BasicScenario):
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         self._no_of_jitter = 10
         self._noise_mean = 0
@@ -91,6 +91,7 @@ class ControlLossNew(BasicScenario):
         )
         start_condition = InTriggerDistanceToLocation(self.ego_vehicles[0], self.first_location, self._trigger_dist)
         for _ in range(self._no_of_jitter):
+
             # change the current noise to be applied
             turn = ChangeNoiseParameters(
                 self._current_steer_noise, self._current_throttle_noise, self._noise_mean, self._noise_std,

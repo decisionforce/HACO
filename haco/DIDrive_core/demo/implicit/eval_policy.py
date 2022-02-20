@@ -1,9 +1,12 @@
 import os
-from collections import deque, namedtuple
-from enum import Enum
-
-import numpy as np
+import re
 import torch
+import numpy as np
+import PIL
+from easydict import EasyDict
+from enum import Enum
+from collections import deque, namedtuple
+
 from models import ImplicitDQN, ImplicitSupervisedModel
 from utils import adapt_order, compute_angle
 
@@ -62,7 +65,7 @@ class ImplicitPolicy():
 
             print("we load RL model ", current_model)
             checkpoint = torch.load(current_model)
-            # checkpoint = checkpoint['model']
+            #checkpoint = checkpoint['model']
 
             # 1. filter out unnecessary keys
             pretrained_dict = {k: v for k, v in checkpoint.items() if k in current_RL_model_dict}

@@ -8,19 +8,21 @@ Collection of traffic scenarios where the ego vehicle (hero)
 is making a left turn
 """
 
-import carla
 import numpy as np
 import py_trees
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
-    ActorTransformSetter, ActorDestroy, TrafficLightStateSetter, WaypointFollower
-)
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import DriveDistance
-from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
-from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import generate_target_waypoint
+import carla
 from haco.DIDrive_core.utils.planner import RoadOption
 from six.moves.queue import Queue  # pylint: disable=relative-import
+
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
+    ActorTransformSetter, ActorDestroy, ActorSource, ActorSink, TrafficLightStateSetter, WaypointFollower, StopVehicle
+)
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import DriveDistance, \
+    InTriggerDistanceToLocation
+from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
+from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import generate_target_waypoint
 
 
 class SignalizedJunctionLeftTurn(BasicScenario):
@@ -33,7 +35,7 @@ class SignalizedJunctionLeftTurn(BasicScenario):
     """
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario
@@ -153,22 +155,22 @@ class SignalizedJunctionLeftTurn(BasicScenario):
 
         move_actor = WaypointFollower(self.other_actors[0], self._target_vel, plan=plan)
         move_free = WaypointFollower(self.other_actors[0], self._target_vel)
-        # stop = StopVehicle(self.other_actors[0], self._brake_value)
+        #stop = StopVehicle(self.other_actors[0], self._brake_value)
 
         # stop other actor
         move_actor_sequence = py_trees.composites.Sequence()
         move_actor_sequence.add_child(move_actor)
         move_actor_sequence.add_child(move_free)
-        # move_actor_sequence.add_child(stop)
-        # move_actor_sequence.add_child(ActorDestroy(self.other_actors[0]))
+        #move_actor_sequence.add_child(stop)
+        #move_actor_sequence.add_child(ActorDestroy(self.other_actors[0]))
 
         # end condition
-        # waypoint_follower_end = InTriggerDistanceToLocation(self.other_actors[0], plan[-1][0].transform.location, 10)
+        #waypoint_follower_end = InTriggerDistanceToLocation(self.other_actors[0], plan[-1][0].transform.location, 10)
         drive = DriveDistance(self.ego_vehicles[0], self._ego_distance)
         end_condition = py_trees.composites.Parallel(
             name='End Condition', policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ONE
         )
-        # end_condition.add_child(waypoint_follower_end)
+        #end_condition.add_child(waypoint_follower_end)
         end_condition.add_child(drive)
 
         behavior = py_trees.composites.Parallel(policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ONE)

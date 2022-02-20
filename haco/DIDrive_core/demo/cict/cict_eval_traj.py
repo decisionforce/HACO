@@ -1,17 +1,20 @@
 import os
+import time
+
+import sys
+#sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 
 import numpy as np
 import torch
+from torch.autograd import grad
 import torchvision.transforms as transforms
-from PIL import Image
 from easydict import EasyDict
+from PIL import Image
+from torch.utils.data import DataLoader
+
 from haco.DIDrive_core.data.cict_dataset import PathDataset
 from haco.DIDrive_core.demo.cict_demo.cict_model import ModelGRU
 from haco.DIDrive_core.utils.others.checkpoint_helper import get_latest_saved_checkpoint
-from torch.autograd import grad
-from torch.utils.data import DataLoader
-
-# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 
 eval_config = dict(
     NUMBER_OF_LOADING_WORKERS=1,
@@ -64,7 +67,7 @@ def execute(cfg):
     ipm_transforms = [
         transforms.Resize((cfg.IMG_HEIGHT, cfg.IMG_WIDTH), Image.BICUBIC),
         transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))
+        transforms.Normalize((0.5, ), (0.5, ))
     ]
 
     dataset = PathDataset(full_dataset, cfg, transform=ipm_transforms)
@@ -114,12 +117,12 @@ def execute(cfg):
 
         pred_vx = grad(pred_xy[:, :, 0].sum(), t, create_graph=True)[0] * (cfg.MAX_DIST / cfg.MAX_T)
         pred_vy = grad(pred_xy[:, :, 1].sum(), t, create_graph=True)[0] * (cfg.MAX_DIST / cfg.MAX_T)
-        # print(pred_vx.shape)
+        #print(pred_vx.shape)
         pred_vxy = torch.cat([pred_vx.unsqueeze(-1), pred_vy.unsqueeze(-1)], dim=-1)
 
         pred_ax = grad(pred_vx.sum(), t, create_graph=True)[0] / cfg.MAX_T
         pred_ay = grad(pred_vy.sum(), t, create_graph=True)[0] / cfg.MAX_T
-        # print(pred_ax.shape)
+        #print(pred_ax.shape)
         pred_axy = torch.cat([pred_ax.unsqueeze(-1), pred_ay.unsqueeze(-1)], dim=-1)
 
         loss_xy = criterion(pred_xy, label_xy)

@@ -1,13 +1,13 @@
 import os
 import re
-from pathlib import Path
-from typing import Union, List
-
 import numpy as np
 import pandas as pd
+from typing import Union, List
+from pathlib import Path
 from terminaltables import DoubleTable
 
 from . import ALL_SUITES, ALL_SUITES_ALIASES
+from haco.DIDrive_core.data import benchmark
 
 
 def get_suites_list(suite_name) -> List:

@@ -1,10 +1,9 @@
-import math
 from enum import Enum
-
+import math
 import torch
-import torchvision.models as models
 from torch import nn
 from torch.nn import functional as F
+import torchvision.models as models
 
 Orders = Enum("Order", "Follow_Lane Straight Right Left ChangelaneLeft ChangelaneRight")
 
@@ -38,13 +37,13 @@ def create_resnet_basic_block(width_output_feature_map, height_output_feature_ma
 class ImplicitSupervisedModel(nn.Module):
 
     def __init__(
-            self,
-            nb_images_input,
-            nb_images_output,
-            hidden_size,
-            nb_class_segmentation,
-            nb_class_dist_to_tl,
-            crop_sky=False,
+        self,
+        nb_images_input,
+        nb_images_output,
+        hidden_size,
+        nb_class_segmentation,
+        nb_class_dist_to_tl,
+        crop_sky=False,
     ):
         super().__init__()
         if crop_sky:
@@ -208,7 +207,7 @@ class NoisyLinear(nn.Module):
 class ImplicitDQN(nn.Module):
 
     def __init__(
-            self, action_space, history_length=4, quantile_embedding_dim=64, crop_sky=False, num_quantile_samples=32
+        self, action_space, history_length=4, quantile_embedding_dim=64, crop_sky=False, num_quantile_samples=32
     ):
         super().__init__()
         self.action_space = action_space
@@ -371,7 +370,7 @@ class ImplicitDQN(nn.Module):
             + a_lane_left * mask_lane_left
         a = a.view(num_quantiles, batch_size, -1)
         a = a.mean(0)
-        return {'logit': a}  # quantiles
+        return {'logit': a}  #quantiles
 
     def reset_noise(self):
         for name, module in self.named_children():

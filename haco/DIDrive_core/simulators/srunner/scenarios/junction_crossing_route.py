@@ -11,8 +11,9 @@ All intersection related scenarios that are part of a route.
 from __future__ import print_function
 
 import py_trees
-from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import \
-    TrafficLightManipulator
+
+from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import TrafficLightManipulator
+
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import \
     CollisionTest, DrivenDistanceTest, MaxVelocityTest
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import \
@@ -37,7 +38,7 @@ class SignalJunctionCrossingRoute(BasicScenario):
     # Depending on the route, decide which traffic lights can be modified
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=180
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=180
     ):
         """
         Setup all relevant parameters and create scenario
@@ -117,7 +118,7 @@ class NoSignalJunctionCrossingRoute(BasicScenario):
     _ego_distance_to_drive = 20  # Allowed distance to drive
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=180
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=180
     ):
         """
         Setup all relevant parameters and create scenario

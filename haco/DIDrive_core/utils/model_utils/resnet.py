@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
@@ -267,6 +268,7 @@ def resnet18(pretrained=False, **kwargs):
     """
     model = ResNetv2(BasicBlock, [2, 2, 2, 2], **kwargs)
     if pretrained:
+
         model_dict = model_zoo.load_url(model_urls['resnet18'])
         # remove the fc layers
         del model_dict['fc.weight']
@@ -285,6 +287,7 @@ def resnet34(pretrained=False, **kwargs):
     """
     model = ResNetv2(BasicBlock, [3, 4, 6, 3], **kwargs)
     if pretrained:
+
         model_dict = model_zoo.load_url(model_urls['resnet34'])
         # remove the fc layers
         del model_dict['fc.weight']

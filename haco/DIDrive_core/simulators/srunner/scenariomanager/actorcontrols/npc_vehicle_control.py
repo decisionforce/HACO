@@ -11,10 +11,11 @@ This module provides an example control for vehicles
 import math
 
 import carla
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.basic_agent import LocalPlanner
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner import RoadOption
+
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
 
 
 class NpcVehicleControl(BasicControl):

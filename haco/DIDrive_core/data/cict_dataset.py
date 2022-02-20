@@ -1,16 +1,19 @@
-import collections
-import copy
 import os
+import collections
+import math
+import copy
 import random
-
-import cv2
 import numpy as np
+
 import torch
-import torchvision.transforms as transforms
+import cv2
 from PIL import Image
-from haco.DIDrive_core.utils.data_utils import splitter
-from scipy.special import comb
+
 from torch.utils.data import Dataset
+import torchvision.transforms as transforms
+from scipy.special import comb
+
+from haco.DIDrive_core.utils.data_utils import splitter
 
 
 class Bezier(object):
@@ -180,7 +183,7 @@ class CictDataset(Dataset):
             dest = Image.open(dest_path).convert("RGB")
             fake_dest = Image.open(fake_dest_path).convert("RGB")
             pm = Image.open(pm_path).convert("L")
-            # print(img.size)
+            #print(img.size)
 
             # Apply the transformation
             img = self.apply_transform(img, self.img_transform)
@@ -193,7 +196,7 @@ class CictDataset(Dataset):
             measurements['fake_dest'] = fake_dest
             measurements['pm'] = pm
             measurements['command'] = torch.LongTensor([0])
-            # measurements['command'] = torch.LongTensor([self.measurements[episode_name][ind]['command']])
+            #measurements['command'] = torch.LongTensor([self.measurements[episode_name][ind]['command']])
 
             self.batch_read_number += 1
         except AttributeError:
@@ -244,10 +247,10 @@ class PathDataset(Dataset):
     """ The conditional imitation learning dataset"""
 
     def __init__(
-            self,
-            root_dir,
-            cfg,
-            transform=None,
+        self,
+        root_dir,
+        cfg,
+        transform=None,
     ):
         # Setting the root directory for this dataset
         self.root_dir = root_dir
@@ -319,7 +322,7 @@ class PathDataset(Dataset):
                     ipm_path[-1] = 'pred_' + ipm_path[-1]
                     ipm_path = '/'.join(ipm_path)
                 ipm_path = os.path.join(self.root_dir, ipm_path)
-                # print(ipm_path)
+                #print(ipm_path)
                 ipm = Image.open(ipm_path).convert('L')
                 ipm = self.apply_transform(ipm, self.transform)
                 ipms.append(ipm)
@@ -338,7 +341,7 @@ class PathDataset(Dataset):
             collision_id = None
             for i in range(cur_id, max_num):
                 t = self.measurements[name][i]['time']
-                # if t - cur_t > self.max_t:
+                #if t - cur_t > self.max_t:
                 if len(time_list) >= self.pred_len:
                     break
 
@@ -352,9 +355,9 @@ class PathDataset(Dataset):
                         collision_flag = True
                         collision_xy = rel_xy
                         collision_id = i
-                        # print(collision_id, collision_xy)
+                        #print(collision_id, collision_xy)
 
-                zero = np.zeros((2,))
+                zero = np.zeros((2, ))
                 if collision_flag:
                     xy_list.append(collision_xy)
                     v_xy_list.append(zero)
@@ -402,8 +405,8 @@ class PathDataset(Dataset):
                     position = bezier.position(time_array)
                     velocity = bezier.velocity(time_array)
                     acceleration = bezier.acceleration(time_array)
-                    # print(collision_id, cur_id, brake_id)
-                    # print(position)
+                    #print(collision_id, cur_id, brake_id)
+                    #print(position)
                     for i in range(brake_id, collision_id - cur_id):
                         xy_list[i] = position[:, i - brake_id]
                         v_xy_list[i] = velocity[:, i - brake_id]
@@ -415,25 +418,25 @@ class PathDataset(Dataset):
             if len(time_list) == 0:
                 continue
             else:
-                # label_id = random.sample(range(len(time_list)), 1)[0]
+                #label_id = random.sample(range(len(time_list)), 1)[0]
                 break
 
-        # label_t = torch.FloatTensor([time_list[label_id] - cur_t]) / self.max_t
+        #label_t = torch.FloatTensor([time_list[label_id] - cur_t]) / self.max_t
         label_t = torch.FloatTensor(time_list) - cur_t / self.max_t
 
         cur_v = self.measurements[name][cur_id]['velocity'][:2]
         cur_v = np.sqrt(np.sum(cur_v ** 2))
         cur_v = torch.FloatTensor([cur_v])
 
-        # label_xy = torch.from_numpy(xy_list[label_id]).float() / self.max_dist
-        # label_vxy = torch.from_numpy(v_xy_list[label_id]).float()
-        # label_axy = torch.from_numpy(a_xy_list[label_id]).float()
-        # label_a = torch.FloatTensor([a_list[label_id]])
+        #label_xy = torch.from_numpy(xy_list[label_id]).float() / self.max_dist
+        #label_vxy = torch.from_numpy(v_xy_list[label_id]).float()
+        #label_axy = torch.from_numpy(a_xy_list[label_id]).float()
+        #label_a = torch.FloatTensor([a_list[label_id]])
         label_xy = torch.from_numpy(np.stack(xy_list, axis=0)).float() / self.max_dist
         label_vxy = torch.from_numpy(np.stack(v_xy_list, axis=0)).float()
         label_axy = torch.from_numpy(np.stack(a_xy_list, axis=0)).float()
         label_a = torch.FloatTensor(a_list)
-        # print(label_xy.shape, label_vxy.shape)
+        #print(label_xy.shape, label_vxy.shape)
         return {
             'ipms': ipms,
             'cur_v': cur_v,

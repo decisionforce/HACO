@@ -3,15 +3,15 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
-import copy
-import math
 import os
-
-import carla
+import math
 import numpy as np
 import pygame
-from carla import TrafficLightState as tls
 from easydict import EasyDict
+import copy
+
+import carla
+from carla import TrafficLightState as tls
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 
 # ==============================================================================
@@ -166,7 +166,7 @@ class MapImage(object):
                 # pygame.draw.lines(surface, COLOR_ORANGE_0, False, points, 2)
                 pygame.draw.lines(surface, COLOR_WHITE, False, points, self._line_width)
             else:
-                broken_lines = [x for n, x in enumerate(zip(*(iter(points),) * 20)) if n % 3 == 0]
+                broken_lines = [x for n, x in enumerate(zip(*(iter(points), ) * 20)) if n % 3 == 0]
                 for line in broken_lines:
                     # pygame.draw.lines(surface, COLOR_ORANGE_0, False, line, 2)
                     pygame.draw.lines(surface, COLOR_WHITE, False, line, self._line_width)
@@ -242,7 +242,7 @@ class MapImage(object):
 class ModuleWorld(object):
 
     def __init__(
-            self, name, client, world, town_map, hero_actor, width, height, pixels_per_meter, pixels_ahead_vehicle
+        self, name, client, world, town_map, hero_actor, width, height, pixels_per_meter, pixels_ahead_vehicle
     ):
 
         self.name = name
@@ -539,15 +539,15 @@ class ModuleWorld(object):
             # pygame.draw.circle(waypoint_surface, pygame.Color(0, 100, 0), (x, y), radius)
 
     def render_actors(
-            self,
-            vehicle_surface,
-            self_surface,
-            walker_surface,
-            traffic_light_surface,
-            vehicles,
-            traffic_lights,
-            walkers,
-            from_snapshot=False
+        self,
+        vehicle_surface,
+        self_surface,
+        walker_surface,
+        traffic_light_surface,
+        vehicles,
+        traffic_lights,
+        walkers,
+        from_snapshot=False
     ):
         # Static actors
 
@@ -638,10 +638,10 @@ class ModuleWorld(object):
 
             offset = [0, 0]
             offset[0] += hero_location_screen[0] - \
-                         self.hero_map_surface.get_width() / 2
+                self.hero_map_surface.get_width() / 2
             offset[0] += hero_front.x * self.pixel_ahead_vehicle
             offset[1] += hero_location_screen[1] - \
-                         self.hero_map_surface.get_height() / 2
+                self.hero_map_surface.get_height() / 2
             offset[1] += hero_front.y * self.pixel_ahead_vehicle
 
             # Apply clipping rect
@@ -713,6 +713,7 @@ class ModuleWorld(object):
 
 
 class BeVWrapper(object):
+
     config = dict(
         size=[320, 320],
         pixels_per_meter=5,

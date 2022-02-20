@@ -4,8 +4,9 @@
 # For a copy, see <https://opensource.org/licenses/MIT>.
 """ This module contains a local planner to perform low-level waypoint following based on PID controllers. """
 
-import random
+from enum import Enum
 from collections import deque
+import random
 
 import carla
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
@@ -71,7 +72,7 @@ class LocalPlanner(object):
 
     def reset_vehicle(self):
         self._vehicle = None
-        # print("Resetting ego-vehicle!")
+        #print("Resetting ego-vehicle!")
 
     def _init_controller(self, opt_dict):
         """

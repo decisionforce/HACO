@@ -1,15 +1,14 @@
 import os
 import time
+import numpy as np
 from datetime import datetime
 from typing import Any, Dict
-
-import numpy as np
 from gym import spaces
+
+from .base_carla_env import BaseCarlaEnv
 from haco.DIDrive_core.simulators import CarlaScenarioSimulator
 from haco.DIDrive_core.utils.others.visualizer import Visualizer
 from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
-
-from .base_carla_env import BaseCarlaEnv
 
 
 class ScenarioCarlaEnv(BaseCarlaEnv):
@@ -89,7 +88,7 @@ class ScenarioCarlaEnv(BaseCarlaEnv):
     def _init_carla_simulator(self) -> None:
         if not self._use_local_carla:
             print("------ Run Carla on Port: %d, GPU: %d ------" % (self._carla_port, 0))
-            # self.carla_process = subprocess.Popen()
+            #self.carla_process = subprocess.Popen()
             self._simulator = CarlaScenarioSimulator(
                 cfg=self._simulator_cfg,
                 client=None,

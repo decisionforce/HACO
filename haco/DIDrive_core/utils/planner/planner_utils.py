@@ -15,11 +15,11 @@ def get_next_until_junction(start_waypoint, max_dis=float('inf')):
 
 
 def generate_change_lane_route(
-        waypoint,
-        change='left',
-        distance_same_lane=10,
-        distance_change_lane=5,
-        distance_other_lane=25,
+    waypoint,
+    change='left',
+    distance_same_lane=10,
+    distance_change_lane=5,
+    distance_other_lane=25,
 ):
     """
     This methods generates a waypoint list which leads the vehicle to a parallel lane.

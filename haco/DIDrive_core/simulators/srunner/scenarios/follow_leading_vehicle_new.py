@@ -1,15 +1,18 @@
 import random
 
-import carla
 import py_trees
+
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
-    ActorTransformSetter, ActorDestroy, WaypointFollower
+    ActorTransformSetter, ActorDestroy, KeepVelocity, StopVehicle, WaypointFollower
 )
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import (
-    DriveDistance
+    InTriggerDistanceToVehicle, DriveDistance, StandStill
 )
+from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import TimeOut
 from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_waypoint_in_distance
 from haco.DIDrive_core.utils.planner import RoadOption
@@ -18,7 +21,7 @@ from haco.DIDrive_core.utils.planner import RoadOption
 class FollowLeadingVehicleNew(BasicScenario):
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         self._map = CarlaDataProvider.get_map()
         self._first_vehicle_location = random.randint(20, 30)

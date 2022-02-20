@@ -3,12 +3,11 @@ import gym
 import numpy as np
 import pygame
 from easydict import EasyDict
+# from evdev import ecodes, InputDevice
+
+from haco.DIDrive_core.envs.simple_carla_env import SimpleCarlaEnv
 from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
 from haco.DIDrive_core.demo.simple_rl.sac_train import compile_config
-from haco.DIDrive_core.envs.simple_carla_env import SimpleCarlaEnv
-
-
-# from evdev import ecodes, InputDevice
 
 
 def safe_clip(array, min_val, max_val):
@@ -33,7 +32,7 @@ train_config = dict(
                 dict(
                     name='rgb',
                     type='rgb',
-                    size=[2400, 1600],
+                    size=[1600, 800],
                     position=[-5.5, 0, 2.8],
                     rotation=[-15, 0, 0],
                 ),
@@ -138,19 +137,124 @@ class SteeringWheelController:
 
         return [-steering * self.STEERING_MAKEUP, (throttle - brake)]
 
+    def reset(self):
+        pass
+
+
+class KeyboardController:
+    STEERING_INCREMENT = 0.02
+    STEERING_DECAY = 0.2
+
+    THROTTLE_INCREMENT = 0.005
+    THROTTLE_DECAY = 0.
+
+    BRAKE_INCREMENT = 0.005
+    BRAKE_DECAY = 0.
+
+    def __init__(self, pygame_control=True):
+        assert pygame_control
+        self.pygame_control = pygame_control
+        pygame.init()
+        pygame.display.init()
+        pygame.joystick.init()
+        self.steering = 0.
+        self.throttle_brake = 0.
+
+        self.last_press = {"w":False, "s":False, "a":False, "d":False}
+        self.np_random = np.random.RandomState(None)
+
+    def process_input(self, vehicle):
+        if self.last_press["a"]:
+            steering= -1
+        elif self.last_press["d"]:
+            steering=1
+        else:
+            steering =0
+
+        if self.last_press["w"]:
+            throttle_brake = 1
+        elif self.last_press["s"]:
+            throttle_brake = -1
+        else:
+            throttle_brake = 0
+
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                throttle_brake=1.
+                self.last_press["w"]=True
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                throttle_brake=-1.
+                self.last_press["s"]=True
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+                steering = -1
+                self.last_press["a"] = True
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
+                steering = 1.
+                self.last_press["d"] = True
+
+            if event.type == pygame.KEYUP and event.key == pygame.K_w:
+                throttle_brake=0.
+                self.last_press["w"]=False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
+                throttle_brake=0
+                self.last_press["s"]=False
+            if event.type == pygame.KEYUP and event.key == pygame.K_a:
+                steering = 0
+                self.last_press["a"] = False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_d:
+                steering = 0.
+                self.last_press["d"] = False
+
+        self.further_process(steering, throttle_brake)
+        return np.array([self.steering, self.throttle_brake], dtype=np.float64)
+
+    def further_process(self, steering, throttle_brake):
+        if steering == 0.:
+            if self.steering > 0.:
+                self.steering -= self.STEERING_DECAY
+                self.steering = max(0., self.steering)
+            elif self.steering < 0.:
+                self.steering += self.STEERING_DECAY
+                self.steering = min(0., self.steering)
+        if throttle_brake == 0.:
+            if self.throttle_brake > 0.:
+                self.throttle_brake -= self.THROTTLE_DECAY
+                self.throttle_brake = max(self.throttle_brake, 0.)
+            elif self.throttle_brake < 0.:
+                self.throttle_brake += self.BRAKE_DECAY
+                self.throttle_brake = min(0., self.throttle_brake)
+
+        if steering > 0.:
+            self.steering += self.STEERING_INCREMENT if self.steering > 0. else self.STEERING_DECAY
+        elif steering < 0.:
+            self.steering -= self.STEERING_INCREMENT if self.steering < 0. else self.STEERING_DECAY
+
+        if throttle_brake > 0.:
+            self.throttle_brake += self.THROTTLE_INCREMENT
+        elif throttle_brake < 0.:
+            self.throttle_brake -= self.BRAKE_INCREMENT
+
+        rand = self.np_random.rand(2, 1) / 10000
+        # self.throttle_brake += rand[0]
+        self.steering += rand[1]
+
+        self.throttle_brake = min(max(-1., self.throttle_brake), 1.)
+        self.steering = min(max(-1., self.steering), 1.)
+
+    def reset(self):
+        self.steering = 0
+        self.throttle_brake=0.
 
 class HACOEnv(ContinuousBenchmarkEnvWrapper):
     def __init__(self, config=None, eval=False, port=9000):
+        self.keyboard_control=config.get("keyboard_control", False)
         main_config = EasyDict(train_config)
         self.eval = eval
         if eval:
             train_config["env"]["wrapper"]["collect"]["suite"] = 'FullTown02-v1'
         cfg = compile_config(main_config)
         super(HACOEnv, self).__init__(SimpleCarlaEnv(cfg.env, "localhost", port, None), cfg.env.wrapper.collect)
-        try:
-            self.controller = SteeringWheelController() if not eval else None
-        except:
-            self.controller = None
+        self.controller = (SteeringWheelController() if not self.keyboard_control else KeyboardController()) if not eval else None
         self.last_takeover = False
         self.total_takeover_cost = 0
         self.episode_reward = 0
@@ -158,7 +262,10 @@ class HACOEnv(ContinuousBenchmarkEnvWrapper):
     def step(self, action):
         if self.controller is not None:
             human_action = self.controller.process_input(self.env._simulator_databuffer['state']['speed'] * 3.6)
-            takeover = self.controller.left_shift_paddle or self.controller.right_shift_paddle
+            if not self.keyboard_control:
+                takeover = self.controller.left_shift_paddle or self.controller.right_shift_paddle
+            else:
+                takeover = True if  abs(sum(human_action)) > 1e-2 else False
         else:
             human_action = [0, 0]
             takeover = False
@@ -215,6 +322,7 @@ class HACOEnv(ContinuousBenchmarkEnvWrapper):
         self.last_takeover = False
         self.total_takeover_cost = 0
         self.episode_reward = 0
+        self.controller.reset()
         return super(HACOEnv, self).reset()
 
     @property
@@ -228,7 +336,7 @@ class HACOEnv(ContinuousBenchmarkEnvWrapper):
 
 
 if __name__ == "__main__":
-    env = HACOEnv()
+    env = HACOEnv(config={"keyboard_control":True})
     o = env.reset()
 
     while True:

@@ -14,8 +14,10 @@ collision and follow the leading car in other lane. The scenario ends
 either via a timeout, or if the ego vehicle drives some distance.
 """
 
-import carla
 import py_trees
+
+import carla
+
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, WaypointFollower, ActorDestroy
@@ -38,7 +40,7 @@ class OtherLeadingVehicle(BasicScenario):
     """
 
     def __init__(
-            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=80
+        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=80
     ):
         """
         Setup all relevant parameters and create scenario

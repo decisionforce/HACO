@@ -11,8 +11,8 @@ import math
 import xml.etree.ElementTree as ET
 
 import carla
-from haco.DIDrive_core.simulators.srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner import RoadOption
+from haco.DIDrive_core.simulators.srunner.scenarioconfigs.route_scenario_configuration import RouteScenarioConfiguration
 
 # TODO  check this threshold, it could be a bit larger but not so large that we cluster scenarios.
 TRIGGER_THRESHOLD = 10.0  # Threshold to say if a trigger position is new or repeated, works for matching positions
@@ -171,7 +171,7 @@ class RouteParser(object):
             dyaw = (float(waypoint1['yaw']) - wtransform.rotation.yaw) % 360
 
             return dpos < TRIGGER_THRESHOLD \
-                   and (dyaw < TRIGGER_ANGLE_THRESHOLD or dyaw > (360 - TRIGGER_ANGLE_THRESHOLD))
+                and (dyaw < TRIGGER_ANGLE_THRESHOLD or dyaw > (360 - TRIGGER_ANGLE_THRESHOLD))
 
         match_position = 0
         # TODO this function can be optimized to run on Log(N) time

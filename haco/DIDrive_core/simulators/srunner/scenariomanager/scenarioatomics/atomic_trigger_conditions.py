@@ -19,21 +19,21 @@ base class
 
 from __future__ import print_function
 
+import operator
 import datetime
 import math
-import operator
-
-import carla
 import py_trees
-from haco.DIDrive_core.simulators import srunner
+import carla
+
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
+
+from .atomic_behaviors import calculate_distance
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import get_distance_along_route
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import \
-    GlobalRoutePlannerDAO
 
-from .atomic_behaviors import calculate_distance
+from haco.DIDrive_core.simulators import srunner
 
 EPSILON = 0.001
 
@@ -91,13 +91,13 @@ class InTriggerDistanceToOSCPosition(AtomicCondition):
     """
 
     def __init__(
-            self,
-            actor,
-            osc_position,
-            distance,
-            along_route=False,
-            comparison_operator=operator.lt,
-            name="InTriggerDistanceToOSCPosition"
+        self,
+        actor,
+        osc_position,
+        distance,
+        along_route=False,
+        comparison_operator=operator.lt,
+        name="InTriggerDistanceToOSCPosition"
     ):
         """
         Setup parameters
@@ -166,13 +166,13 @@ class InTimeToArrivalToOSCPosition(AtomicCondition):
     """
 
     def __init__(
-            self,
-            actor,
-            osc_position,
-            time,
-            along_route=False,
-            comparison_operator=operator.lt,
-            name="InTimeToArrivalToOSCPosition"
+        self,
+        actor,
+        osc_position,
+        time,
+        along_route=False,
+        comparison_operator=operator.lt,
+        name="InTimeToArrivalToOSCPosition"
     ):
         """
         Setup parameters
@@ -580,7 +580,7 @@ class InTriggerDistanceToVehicle(AtomicCondition):
     """
 
     def __init__(
-            self, reference_actor, actor, distance, comparison_operator=operator.lt, name="TriggerDistanceToVehicle"
+        self, reference_actor, actor, distance, comparison_operator=operator.lt, name="TriggerDistanceToVehicle"
     ):
         """
         Setup trigger distance
@@ -627,7 +627,7 @@ class InTriggerDistanceToLocation(AtomicCondition):
     """
 
     def __init__(
-            self, actor, target_location, distance, comparison_operator=operator.lt, name="InTriggerDistanceToLocation"
+        self, actor, target_location, distance, comparison_operator=operator.lt, name="InTriggerDistanceToLocation"
     ):
         """
         Setup trigger distance
@@ -826,7 +826,7 @@ class InTimeToArrivalToVehicle(AtomicCondition):
     _max_time_to_arrival = float('inf')  # time to arrival in seconds
 
     def __init__(
-            self, actor, other_actor, time, along_route=False, comparison_operator=operator.lt, name="TimeToArrival"
+        self, actor, other_actor, time, along_route=False, comparison_operator=operator.lt, name="TimeToArrival"
     ):
         """
         Setup parameters
@@ -903,13 +903,13 @@ class InTimeToArrivalToVehicleSideLane(InTimeToArrivalToLocation):
     _max_time_to_arrival = float('inf')  # time to arrival in seconds
 
     def __init__(
-            self,
-            actor,
-            other_actor,
-            time,
-            side_lane,
-            comparison_operator=operator.lt,
-            name="InTimeToArrivalToVehicleSideLane"
+        self,
+        actor,
+        other_actor,
+        time,
+        side_lane,
+        comparison_operator=operator.lt,
+        name="InTimeToArrivalToVehicleSideLane"
     ):
         """
         Setup parameters
@@ -1204,7 +1204,7 @@ class WaitForBlackboardVariable(AtomicCondition):
     """
 
     def __init__(
-            self, variable_name, variable_value, var_init_value=None, debug=False, name="WaitForBlackboardVariable"
+        self, variable_name, variable_value, var_init_value=None, debug=False, name="WaitForBlackboardVariable"
     ):
         super(WaitForBlackboardVariable, self).__init__(name)
         self._debug = debug

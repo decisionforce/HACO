@@ -2,23 +2,24 @@
 Copyright 2021 OpenDILab. All Rights Reserved:
 Description: Carla simulator.
 '''
-import random
-from collections import defaultdict
-from distutils.version import LooseVersion
-from typing import Optional, Dict
-
-import carla
+import os
 import numpy as np
+import random
+from typing import Any, Union, Optional, Dict, List
+from distutils.version import LooseVersion
 import pkg_resources
-from carla import WeatherParameters
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.utils.others.tcp_helper import find_traffic_manager_port
-from haco.DIDrive_core.utils.planner import BasicPlanner, BehaviorPlanner, LBCPlannerNew
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import control_to_signal, get_birdview
-from haco.DIDrive_core.utils.simulator_utils.map_utils import BeVWrapper
-from haco.DIDrive_core.utils.simulator_utils.sensor_utils import SensorHelper, CollisionSensor, TrafficLightHelper
+from collections import defaultdict
 
 from .base_simulator import BaseSimulator
+from haco.DIDrive_core.utils.simulator_utils.sensor_utils import SensorHelper, CollisionSensor, TrafficLightHelper
+from haco.DIDrive_core.utils.simulator_utils.map_utils import BeVWrapper
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import control_to_signal, get_birdview
+from haco.DIDrive_core.utils.planner import BasicPlanner, BehaviorPlanner, LBCPlannerNew
+from haco.DIDrive_core.utils.others.tcp_helper import find_traffic_manager_port
+
+import carla
+from carla import WeatherParameters
 
 PRESET_WEATHERS = {
     1: WeatherParameters.ClearNoon,
@@ -276,7 +277,7 @@ class CarlaSimulator(BaseSimulator):
             settings.fixed_delta_seconds = delta_seconds
             settings.no_rendering_mode = self._no_rendering
             self._world.apply_settings(settings)
-            # self._tm.set_synchronous_mode(True)
+            #self._tm.set_synchronous_mode(True)
 
     def _set_weather(self, weather_string):
         if self._verbose:
@@ -416,7 +417,7 @@ class CarlaSimulator(BaseSimulator):
 
         for i, controller_id in enumerate(controllers):
             controller = self._world.get_actor(controller_id)
-            # controller = CarlaDataProvider.get_actor_by_id(controller_id)
+            #controller = CarlaDataProvider.get_actor_by_id(controller_id)
             controller.start()
             controller.go_to_location(self._world.get_random_location_from_navigation())
             controller.set_max_speed(float(walker_speed[i]))
@@ -483,8 +484,8 @@ class CarlaSimulator(BaseSimulator):
         for veh in vehicles:
             print('\t', veh[0].id, veh[0].type_id, veh[0].attributes['role_name'])
         print("[SIMULATOR] walkers:", len(walkers))
-        # print("[SIMULATOR] lights:", len(traffic_lights))
-        # print("[SIMULATOR] speed limits:", len(speed_limits))
+        #print("[SIMULATOR] lights:", len(traffic_lights))
+        #print("[SIMULATOR] speed limits:", len(speed_limits))
         print("[SIMULATOR] sensors:")
         for ss in sensors:
             print('\t', ss[0])

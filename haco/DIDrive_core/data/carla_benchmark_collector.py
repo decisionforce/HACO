@@ -1,14 +1,15 @@
-import random
+import os
+import numpy as np
 from collections import deque
-from itertools import product
 from typing import Any, Dict, List, Optional, Union
-
-from ding.envs import BaseEnvManager
-from ding.torch_utils.data_helper import to_ndarray
-from haco.DIDrive_core.data.benchmark import ALL_SUITES
-from haco.DIDrive_core.data.benchmark.benchmark_utils import get_suites_list, read_pose_txt, get_benchmark_dir
+from itertools import product
+import random
 
 from .base_collector import BaseCollector
+from haco.DIDrive_core.data.benchmark import ALL_SUITES
+from haco.DIDrive_core.data.benchmark.benchmark_utils import get_suites_list, read_pose_txt, get_benchmark_dir
+from ding.envs import BaseEnvManager
+from ding.torch_utils.data_helper import to_ndarray
 
 
 class CarlaBenchmarkCollector(BaseCollector):

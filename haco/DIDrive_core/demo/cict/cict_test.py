@@ -3,12 +3,15 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
-from ding.utils import set_pkg_seed
+import numpy as np
+import os
+
 from easydict import EasyDict
-from haco.DIDrive_core.demo.cict_demo.cict_policy import CICTPolicy
+from ding.utils import set_pkg_seed
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from haco.DIDrive_core.demo.cict_demo.cict_policy import CICTPolicy
 
 autoeval_config = dict(
     env=dict(
@@ -103,7 +106,7 @@ def main(cfg, seed=0):
     assert len(tcp_list) > 0, "No Carla server found!"
     host, port = tcp_list[0]
 
-    carla_env = CarlaEnvWrapper(SimpleCarlaEnv(cfg.env, host, port, ), cfg.env.wrapper)
+    carla_env = CarlaEnvWrapper(SimpleCarlaEnv(cfg.env, host, port,), cfg.env.wrapper)
     carla_env.seed(seed)
     set_pkg_seed(seed)
     policy = CICTPolicy(cfg.policy)
@@ -114,4 +117,4 @@ def main(cfg, seed=0):
 
 if __name__ == '__main__':
     main(main_config)
-    # dataset_test()
+    #dataset_test()

@@ -1,13 +1,15 @@
+import os
 import torch
+from easydict import EasyDict
+
+from haco.DIDrive_core.envs import SimpleCarlaEnv
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
+from haco.DIDrive_core.eval import SingleCarlaEvaluator
+from haco.DIDrive_core.demo.simple_rl.model import DDPGRLModel
+from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
 from ding.policy import DDPGPolicy
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-from easydict import EasyDict
-from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
-from haco.DIDrive_core.demo.simple_rl.model import DDPGRLModel
-from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.eval import SingleCarlaEvaluator
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 eval_config = dict(
     env=dict(
@@ -34,7 +36,7 @@ eval_config = dict(
         stuck_is_failure=True,
         ignore_light=True,
         visualize=dict(type='birdview', outputs=['show']),
-        wrapper=dict(suite='FullTown02-v1', ),
+        wrapper=dict(suite='FullTown02-v1',),
     ),
     policy=dict(
         cuda=True,

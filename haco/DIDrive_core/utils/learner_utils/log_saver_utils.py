@@ -1,12 +1,11 @@
 import copy
 import json
-from collections import OrderedDict
-from pathlib import Path
-
 import numpy as np
+from pathlib import Path
+from collections import OrderedDict
+from loguru import logger
 import torch
 import torchvision
-from loguru import logger
 from tensorboardX import SummaryWriter
 
 

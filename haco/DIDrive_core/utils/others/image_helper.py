@@ -1,8 +1,7 @@
 import os
-from pathlib import Path
-
 import cv2
 import imageio
+from pathlib import Path
 import numpy as np
 
 
@@ -79,7 +78,7 @@ class VideoMaker(object):
         cls.video = None
         cls.video_path = str(save_dir.joinpath(save_path))
 
-        # cv2.destroyAllWindows()
+        #cv2.destroyAllWindows()
 
     @classmethod
     def add(cls, image):
@@ -144,6 +143,6 @@ def draw_msra_gaussian(heatmap, center, sigma):
     img_x = max(0, ul[0]), min(br[0], h)
     img_y = max(0, ul[1]), min(br[1], w)
     heatmap[
-    img_y[0]:img_y[1],
-    img_x[0]:img_x[1]] = np.maximum(heatmap[img_y[0]:img_y[1], img_x[0]:img_x[1]], g[g_y[0]:g_y[1], g_x[0]:g_x[1]])
+        img_y[0]:img_y[1],
+        img_x[0]:img_x[1]] = np.maximum(heatmap[img_y[0]:img_y[1], img_x[0]:img_x[1]], g[g_y[0]:g_y[1], g_x[0]:g_x[1]])
     return heatmap

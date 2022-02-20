@@ -35,7 +35,7 @@ cd haco/run_main_exp/
 python train_haco_keyboard_easy.py --num-gpus=1
 ```
 In this task, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to 
-the destination. 
+the destination ("E" can be used to pause simulation). 
 Since there is only one map in this task, 10 minutes or 5000 transitions is enough for HACO agent to learn a policy.
 
 ### Main Experiment
@@ -47,7 +47,7 @@ If steering wheel is not available, set ```controller="keyboard"``` in the scrip
 one hour is required for human to assist HACO agent to learn a generalizable driving policy by training in 50 different maps.
 
 ### CARLA Experimennt
-CARLA used in our experiment is version 0.9.11, so pleas follow the instruction in 
+CARLA used in our experiment is version 0.9.9.4, so pleas follow the instruction in 
 [CARLA offical repo](https://github.com/carla-simulator/carla) to install it.
 After installation, launch CARLA server by:
 ```bash
@@ -63,12 +63,8 @@ conda activate haco-carla
 
 # Install basic dependency
 pip install -e .
-
-# MetaDrive will conflict with DI-Drive
-pip uninstall metadrive-simulator 
-
 # install DI-Engine
-pip install di-engine=0.2.0
+pip install di-engine==0.2.0 markupsafe==2.0.1
 
 conda install cudatoolkit=10.1 cudnn
 # Now you can run the training script of HACO in CARLA Environment.
@@ -77,7 +73,9 @@ After all these steps, launch the CARLA experiment through:
 ```bash
 python train_haco_in_carla.py --num-gpus=1
 ```
-**Note:** Currently, a steering wheel is **necessary** to reproduce the CARLA Experiment. 
+Currently, a steering wheel controller is default to reproduce the CARLA Experiment. 
+We also provide keyboard interface for controlling vehicles in CARLA, which can be truned on by setting
+```keyboard_control:True``` in the training script.
 
 
 ## Training baselines
