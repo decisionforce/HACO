@@ -27,7 +27,7 @@ conda install cudatoolkit=10.1 cudnn
 ```
 ## Training HACO
 
-###Quick Start
+### Quick Start
 Since the main experiment of HACO takes one hour and requires a steering wheel (Logitech G29), we further provide an 
 easy task for users to experience HACO.
 ```bash
