@@ -17,7 +17,7 @@ setup(
         "tensorboardX",
         "pyyaml",
         "gym==0.18.0",
-        "ray[all]==1.0.0",
+        "ray==1.0.0",
         "stable_baselines3",
         'ephem',
         'h5py',
