@@ -1,0 +1,26 @@
+[2021-12-01 14:14:17,857][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 825.2928021889616, current episode: 1
+[2021-12-01 14:14:22,106][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 878.0402118402275, current episode: 2
+[2021-12-01 14:14:26,288][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 790.2815128019759, current episode: 3
+[2021-12-01 14:14:30,411][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 798.3937515721491, current episode: 4
+[2021-12-01 14:14:34,513][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 798.3937515721491, current episode: 5
+[2021-12-01 14:14:38,557][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 778.3392111259817, current episode: 6
+[2021-12-01 14:14:42,644][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 886.7343307414151, current episode: 7
+[2021-12-01 14:14:46,889][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 808.3113526149316, current episode: 8
+[2021-12-01 14:14:51,147][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 878.0402118402275, current episode: 9
+[2021-12-01 14:14:55,364][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 875.4540408103225, current episode: 10
+[2021-12-01 14:14:59,632][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 894.8924380103056, current episode: 11
+[2021-12-01 14:15:03,951][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 870.9182215286913, current episode: 12
+[2021-12-01 14:15:08,178][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 794.9649391981443, current episode: 13
+[2021-12-01 14:15:12,488][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 858.0430154372405, current episode: 14
+[2021-12-01 14:15:16,754][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 858.0430154372405, current episode: 15
+[2021-12-01 14:15:20,991][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 870.8702604322991, current episode: 16
+[2021-12-01 14:15:25,226][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 870.8702604322991, current episode: 17
+[2021-12-01 14:15:29,387][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 794.9649391981443, current episode: 18
+[2021-12-01 14:15:33,469][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 778.3392111259817, current episode: 19
+[2021-12-01 14:15:37,654][serial_evaluator.py][line: 169][    INFO] [EVALUATOR] env 0 finish episode, final reward: 870.9182215286913, current episode: 20
+[2021-12-01 14:15:37,655][serial_evaluator.py][line: 190][    INFO] 
++-------+------------+---------------------+-------------------------+---------------+----------------------+--------------+-------------+------------+
+| Name  | train_iter | ckpt_name           | avg_envstep_per_episode | evaluate_time | avg_time_per_episode | success_rate | reward_mean | reward_std |
++-------+------------+---------------------+-------------------------+---------------+----------------------+--------------+-------------+------------+
+| Value | 0.000000   | iteration_0.pth.tar | 299.000000              | 83.971570     | 4.198579             | 0.000000     | 839.005285  | 40.380993  |
++-------+------------+---------------------+-------------------------+---------------+----------------------+--------------+-------------+------------+

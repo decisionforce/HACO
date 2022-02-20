@@ -6,8 +6,8 @@ from easydict import EasyDict
 # from evdev import ecodes, InputDevice
 
 from haco.DIDrive_core.envs.simple_carla_env import SimpleCarlaEnv
-from demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
-from demo.simple_rl.sac_train import compile_config
+from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
+from haco.DIDrive_core.demo.simple_rl.sac_train import compile_config
 
 
 def safe_clip(array, min_val, max_val):

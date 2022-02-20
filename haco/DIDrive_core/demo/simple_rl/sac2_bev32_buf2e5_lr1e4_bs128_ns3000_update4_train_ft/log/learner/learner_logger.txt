@@ -1,0 +1,108 @@
+[2021-12-01 14:11:45,359][base_learner.py][line: 333][    INFO] [RANK0]: DI-engine DRL Policy
+SACRLModel(
+  (_act): ReLU()
+  (actor_encoder): BEVSpeedConvEncoder(
+    (_relu): ReLU()
+    (_model): Sequential(
+      (0): Conv2d(5, 64, kernel_size=(3, 3), stride=(2, 2))
+      (1): ReLU()
+      (2): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+      (3): ReLU()
+      (4): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2))
+      (5): ReLU()
+      (6): Flatten(start_dim=1, end_dim=-1)
+    )
+    (_mid): Linear(in_features=2304, out_features=256, bias=True)
+  )
+  (critic_encoder): BEVSpeedConvEncoder(
+    (_relu): ReLU()
+    (_model): Sequential(
+      (0): Conv2d(5, 64, kernel_size=(3, 3), stride=(2, 2))
+      (1): ReLU()
+      (2): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+      (3): ReLU()
+      (4): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2))
+      (5): ReLU()
+      (6): Flatten(start_dim=1, end_dim=-1)
+    )
+    (_mid): Linear(in_features=2304, out_features=256, bias=True)
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=512, out_features=512, bias=True)
+    (1): ReLU()
+    (2): ReparameterizationHead(
+      (main): Sequential(
+        (0): Linear(in_features=512, out_features=512, bias=True)
+        (1): ReLU()
+      )
+      (mu): Linear(in_features=512, out_features=2, bias=True)
+      (log_sigma_layer): Linear(in_features=512, out_features=2, bias=True)
+    )
+  )
+  (_twin_encoder): BEVSpeedConvEncoder(
+    (_relu): ReLU()
+    (_model): Sequential(
+      (0): Conv2d(5, 64, kernel_size=(3, 3), stride=(2, 2))
+      (1): ReLU()
+      (2): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+      (3): ReLU()
+      (4): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2))
+      (5): ReLU()
+      (6): Flatten(start_dim=1, end_dim=-1)
+    )
+    (_mid): Linear(in_features=2304, out_features=256, bias=True)
+  )
+  (critic): ModuleList(
+    (0): Sequential(
+      (0): Linear(in_features=514, out_features=512, bias=True)
+      (1): ReLU()
+      (2): RegressionHead(
+        (main): Sequential(
+          (0): Linear(in_features=512, out_features=512, bias=True)
+          (1): ReLU()
+        )
+        (last): Linear(in_features=512, out_features=1, bias=True)
+      )
+    )
+    (1): Sequential(
+      (0): Linear(in_features=514, out_features=512, bias=True)
+      (1): ReLU()
+      (2): RegressionHead(
+        (main): Sequential(
+          (0): Linear(in_features=512, out_features=512, bias=True)
+          (1): ReLU()
+        )
+        (last): Linear(in_features=512, out_features=1, bias=True)
+      )
+    )
+  )
+)
+[2021-12-01 14:16:13,069][base_learner.py][line: 333][    INFO] [RANK0]: === Training Iteration 0 Result ===
+[2021-12-01 14:16:13,070][learner_hook.py][line: 224][    INFO] 
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Name  | cur_lr_avg | total_loss_avg | alpha_loss_avg | policy_loss_avg | critic_loss_avg | cur_lr_q_avg | cur_lr_p_avg | target_q_value_avg | q_value_1_avg | q_value_2_avg | alpha_avg | td_error_avg | target_value_avg | twin_critic_loss_avg |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Value | 0.000000   | 6.518936       | -5.374355      | -0.269380       | 6.082975        | 0.000100     | 0.000100     | 0.000000           | 0.000000      | 0.000000      | 0.199980  | 6.081336     | 0.266969         | 6.079696             |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+[2021-12-01 14:16:13,135][base_learner.py][line: 333][    INFO] [RANK0]: learner save ckpt in ./sac2_bev32_buf2e5_lr1e4_bs128_ns3000_update4_train_ft/ckpt\iteration_0.pth.tar
+[2021-12-01 14:17:53,994][base_learner.py][line: 333][    INFO] [RANK0]: === Training Iteration 100 Result ===
+[2021-12-01 14:17:53,995][learner_hook.py][line: 224][    INFO] 
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Name  | cur_lr_avg | total_loss_avg | alpha_loss_avg | policy_loss_avg | critic_loss_avg | cur_lr_q_avg | cur_lr_p_avg | target_q_value_avg | q_value_1_avg | q_value_2_avg | alpha_avg | td_error_avg | target_value_avg | twin_critic_loss_avg |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Value | 0.000000   | -5.002842      | -5.443749      | -2.106718       | 1.312932        | 0.000100     | 0.000100     | 0.000000           | 0.000000      | 0.000000      | 0.198085  | 1.273813     | 0.315731         | 1.234693             |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+[2021-12-01 14:19:29,294][base_learner.py][line: 333][    INFO] [RANK0]: === Training Iteration 200 Result ===
+[2021-12-01 14:19:29,295][learner_hook.py][line: 224][    INFO] 
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Name  | cur_lr_avg | total_loss_avg | alpha_loss_avg | policy_loss_avg | critic_loss_avg | cur_lr_q_avg | cur_lr_p_avg | target_q_value_avg | q_value_1_avg | q_value_2_avg | alpha_avg | td_error_avg | target_value_avg | twin_critic_loss_avg |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Value | 0.000000   | -8.234623      | -5.483822      | -3.053761       | 0.153395        | 0.000100     | 0.000100     | 0.000000           | 0.000000      | 0.000000      | 0.196111  | 0.151480     | 0.671692         | 0.149565             |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+[2021-12-01 14:21:23,414][base_learner.py][line: 333][    INFO] [RANK0]: === Training Iteration 300 Result ===
+[2021-12-01 14:21:23,415][learner_hook.py][line: 224][    INFO] 
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Name  | cur_lr_avg | total_loss_avg | alpha_loss_avg | policy_loss_avg | critic_loss_avg | cur_lr_q_avg | cur_lr_p_avg | target_q_value_avg | q_value_1_avg | q_value_2_avg | alpha_avg | td_error_avg | target_value_avg | twin_critic_loss_avg |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+
+| Value | 0.000000   | -8.932737      | -5.513946      | -3.674932       | 0.132379        | 0.000100     | 0.000100     | 0.000000           | 0.000000      | 0.000000      | 0.194157  | 0.128070     | 1.320505         | 0.123761             |
++-------+------------+----------------+----------------+-----------------+-----------------+--------------+--------------+--------------------+---------------+---------------+-----------+--------------+------------------+----------------------+

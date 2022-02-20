@@ -28,7 +28,7 @@ setup(
         'pandas',
         'py-trees==0.8.3',
         'pygame==1.9.6',
-        'di-engine==0.2',
+        #'di-engine==0.2.0',
         'scikit-image',
         'setuptools==50',
         'shapely',
