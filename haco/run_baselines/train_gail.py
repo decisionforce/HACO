@@ -27,9 +27,12 @@ import datetime
 import os
 
 """
-create -n gail python version=3.6
+requirement for IWR/HG-Dagger/GAIl:
+
+create -n haco-gail python version=3.7
 1. pip install loguru imageio easydict tensorboardX pyyaml  stable_baselines3 pickle5
 2. conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
+
 PPO in this implement didn't use Advantage
 """
 
@@ -62,7 +65,7 @@ class Learner:
         # self._init_cfg(cfg)
         # self._process_cfg()
         self.cfg = cfg
-        self.env_num = 10
+        self.env_num = 1
 
         # hyper para
         self.g_optim_num = 5

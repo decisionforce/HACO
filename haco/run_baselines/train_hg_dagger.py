@@ -9,9 +9,11 @@ from haco.utils.config import baseline_eval_config, baseline_train_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
 """
-# requirement:
-# conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
-# pip install loguru imageio easydict tensorboardX pyyaml stable_baselines3 pickle5 evdev
+requirement for IWR/HG-Dagger/GAIl:
+
+create -n haco-hg-dagger python version=3.7
+1. pip install loguru imageio easydict tensorboardX pyyaml  stable_baselines3 pickle5
+2. conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=9.2 -c pytorch
 """
 
 # hyperpara

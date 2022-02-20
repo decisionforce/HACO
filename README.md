@@ -40,7 +40,7 @@ If you wish to run  CQL/BC, some extra environmental, extra setting is required 
 # ray needs to be updated to 1.2.0
 pip install ray==1.2.0
 
-# To run GAIL/DAgger, please install GPU-version of torch:
+# To run GAIL/HG-DAgger/IWR, please install GPU-version of torch:
 conda install pytorch==1.5.0 torchvision==0.6.0 -c pytorch
 conda install condatoolkit==9.2
 ```
