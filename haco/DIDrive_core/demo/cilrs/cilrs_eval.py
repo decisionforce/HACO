@@ -1,14 +1,14 @@
-from easydict import EasyDict
-import torch
 from functools import partial
 
-from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.policy import CILRSPolicy
-from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from ding.utils import set_pkg_seed, deep_merge_dicts
+import torch
 from ding.envs import AsyncSubprocessEnvManager
+from ding.utils import set_pkg_seed, deep_merge_dicts
+from easydict import EasyDict
 from haco.DIDrive_core.demo.cilrs.cilrs_env_wrapper import CILRSEnvWrapper
+from haco.DIDrive_core.envs import SimpleCarlaEnv
+from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
+from haco.DIDrive_core.policy import CILRSPolicy
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 cilrs_config = dict(
     env=dict(

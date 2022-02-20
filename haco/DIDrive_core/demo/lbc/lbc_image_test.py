@@ -1,13 +1,11 @@
-from easydict import EasyDict
 import torch
-
-from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.policy import LBCImagePolicy
-from haco.DIDrive_core.eval import SingleCarlaEvaluator
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 from ding.utils import set_pkg_seed
+from easydict import EasyDict
 from haco.DIDrive_core.demo.lbc.lbc_env_wrapper import LBCEnvWrapper
-
+from haco.DIDrive_core.envs import SimpleCarlaEnv
+from haco.DIDrive_core.eval import SingleCarlaEvaluator
+from haco.DIDrive_core.policy import LBCImagePolicy
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 lbc_config = dict(
     env=dict(

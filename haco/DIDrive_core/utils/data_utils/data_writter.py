@@ -1,7 +1,7 @@
-import os
 import json
+import os
+
 import lmdb
-import shutil
 import numpy as np
 
 

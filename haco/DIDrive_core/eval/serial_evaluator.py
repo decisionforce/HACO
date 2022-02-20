@@ -1,14 +1,11 @@
-import os
 import numpy as np
 from collections import defaultdict
 import torch
-from typing import Dict, Any, List, Optional, Callable, Tuple
+from typing import Dict, Any, Optional, Callable, Tuple
 
 from .base_evaluator import BaseEvaluator
-from haco.DIDrive_core.data.benchmark import ALL_SUITES
 from ding.envs import BaseEnvManager
 from ding.torch_utils.data_helper import to_tensor
-from ding.utils import build_logger, EasyTimer
 
 
 class SerialEvaluator(BaseEvaluator):

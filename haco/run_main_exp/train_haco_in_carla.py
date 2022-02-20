@@ -1,4 +1,5 @@
 import os
+
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 import datetime
 from typing import Dict
@@ -51,7 +52,6 @@ class CARLACallBack(DefaultCallbacks):
             episode.user_data["total_native_cost"] += info["native_cost"]
             episode.user_data["cost"] += info["cost"] if "cost" in info else info["native_cost"]
 
-
     def on_episode_end(
             self, worker: RolloutWorker, base_env: BaseEnv, policies: Dict[str, Policy], episode: MultiAgentEpisode,
             **kwargs) -> None:
@@ -86,7 +86,6 @@ class CARLACallBack(DefaultCallbacks):
 
         episode.custom_metrics["cost"] = float(episode.user_data["cost"])
 
-
     def on_train_result(self, *, trainer, result: dict, **kwargs):
         result["success"] = np.nan
         result["crash"] = np.nan
@@ -108,10 +107,9 @@ class CARLACallBack(DefaultCallbacks):
 
     # turn on overtake stata only in evaluation
 
+
 def get_time_str():
     return datetime.datetime.now().strftime("%y%m%d-%H%M%S")
-
-
 
 
 if __name__ == '__main__':

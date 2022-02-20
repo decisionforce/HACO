@@ -1,11 +1,10 @@
 # from pgdrive.scene_creator.vehicle_module import PIDController
-from ray.rllib.models.modelv2 import restore_original_dimensions
-from ray.rllib.models import ModelCatalog
-from ray.rllib.utils.framework import try_import_tf, \
-    try_import_tfp
-
 from haco.algo.haco.visual_model import VisualConstrainedSACModel
 from haco.algo.sac_lag.sac_lag_model import ConstrainedSACModel
+from ray.rllib.models import ModelCatalog
+from ray.rllib.models.modelv2 import restore_original_dimensions
+from ray.rllib.utils.framework import try_import_tf, \
+    try_import_tfp
 
 tf, _, _ = try_import_tf()
 tf1 = tf
@@ -26,13 +25,13 @@ TAKEOVER = "takeover"
 # HACO Romve the Lagrangian Multiplier from SACLag. Instead, it directly minimizes the takeover cost
 HACOConfig = merge_dicts(SACPIDConfig,
                          {
-                                    "info_cost_key": "takeover_cost",
-                                    "info_total_cost_key": "total_takeover_cost",
-                                    "takeover_data_discard": False,  # useless
-                                    "alpha": 10.0,
-                                    "no_reward": True,  # this will disable the native reward from env
-                                    "image_obs": False
-                                })
+                             "info_cost_key": "takeover_cost",
+                             "info_total_cost_key": "total_takeover_cost",
+                             "takeover_data_discard": False,  # useless
+                             "alpha": 10.0,
+                             "no_reward": True,  # this will disable the native reward from env
+                             "image_obs": False
+                         })
 
 
 def validate_saver_config(config):
@@ -265,7 +264,7 @@ def sac_actor_critic_loss(policy, model, _, train_batch):
             model.alpha * log_pis_t - q_t_det_policy)
         cost_loss = tf.reduce_mean(c_q_t_det_policy)
         actor_loss = tf.reduce_mean(
-            model.alpha * log_pis_t - q_t_det_policy +  c_q_t_det_policy)
+            model.alpha * log_pis_t - q_t_det_policy + c_q_t_det_policy)
 
     # save for stats function
     policy.policy_t = policy_t

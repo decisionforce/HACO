@@ -3,9 +3,8 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
-from easydict import EasyDict
 from ding.utils import set_pkg_seed
-
+from easydict import EasyDict
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from haco.DIDrive_core.policy import AutoPIDPolicy

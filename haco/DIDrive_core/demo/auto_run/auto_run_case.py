@@ -1,11 +1,10 @@
-import os
 import argparse
 from argparse import RawTextHelpFormatter
-from easydict import EasyDict
 
+from ding.utils import set_pkg_seed
+from easydict import EasyDict
 from haco.DIDrive_core.envs import CarlaEnvWrapper, ScenarioCarlaEnv
 from haco.DIDrive_core.policy import AutoPIDPolicy
-from ding.utils import set_pkg_seed
 from haco.DIDrive_core.simulators.srunner.tools.route_parser import RouteParser
 from haco.DIDrive_core.simulators.srunner.tools.scenario_parser import ScenarioConfigurationParser
 
@@ -14,7 +13,7 @@ casezoo_config = dict(
         simulator=dict(
             planner=dict(type='behavior', ),
             n_vehicles=20,
-            #n_pedestrians=25,
+            # n_pedestrians=25,
             disable_two_wheels=True,
             obs=(
                 dict(
@@ -32,9 +31,9 @@ casezoo_config = dict(
                 ),
             ),
             waypoint_num=50,
-            #debug=True,
+            # debug=True,
         ),
-        #no_rendering=True,
+        # no_rendering=True,
         visualize=dict(
             type='rgb',
             outputs=['show']
@@ -88,7 +87,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description=description,
                                      formatter_class=RawTextHelpFormatter)
-    parser.add_argument('--route', help='Run a route as a scenario (input:(route_file,scenario_file,[route id]))', nargs='+', type=str)
+    parser.add_argument('--route', help='Run a route as a scenario (input:(route_file,scenario_file,[route id]))',
+                        nargs='+', type=str)
     parser.add_argument('--scenario', help='Run a single scenario (input: scenario name)', type=str)
     parser.add_argument('--host', default='localhost',
                         help='IP of the host server (default: localhost)')

@@ -1,12 +1,9 @@
-import torch
+from typing import Any
+
 import numpy as np
-from typing import Dict, Any
-import math
-import gym
-
-from haco.DIDrive_core.envs import CarlaEnvWrapper, BenchmarkEnvWrapper
+import torch
 from ding.torch_utils.data_helper import to_ndarray
-
+from haco.DIDrive_core.envs import BenchmarkEnvWrapper
 
 DEFAULT_ACC_LIST = [
     (0, 1),

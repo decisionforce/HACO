@@ -1,9 +1,8 @@
-import re
 import os
+import re
 
 
 def static_vars(**kwargs):
-
     def decorate(func):
         for k in kwargs:
             setattr(func, k, kwargs[k])
@@ -20,7 +19,6 @@ def tryint(s):
 
 
 def command_number_to_index(command_vector):
-
     return command_vector - 2
 
 
@@ -63,7 +61,6 @@ def create_exp_path(exp_batch_name, experiment_name):
 
 
 def erase_logs(exp_batch_name):
-
     root_path = '_logs'
 
     experiments = os.listdir(os.path.join(root_path, exp_batch_name))
@@ -72,6 +69,6 @@ def erase_logs(exp_batch_name):
         if os.path.isdir(os.path.join(root_path, exp_batch_name, exp)):
             experiments_logs = os.listdir(os.path.join(root_path, exp_batch_name, exp))
             for log in experiments_logs:
-                if not os.path.isdir(os.path.join(root_path, exp_batch_name, exp, log))\
+                if not os.path.isdir(os.path.join(root_path, exp_batch_name, exp, log)) \
                         and '.csv' not in log:
                     os.remove(os.path.join(root_path, exp_batch_name, exp, log))

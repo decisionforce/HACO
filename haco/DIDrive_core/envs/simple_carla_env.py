@@ -1,17 +1,16 @@
-import os
 import time
+from typing import Any, Dict, Optional, Tuple
+
 import carla
 import numpy as np
-from typing import Any, Dict, Optional, Tuple
 from gym import spaces
-from collections import defaultdict
+from haco.DIDrive_core.simulators import CarlaSimulator
+from haco.DIDrive_core.utils.env_utils.stuck_detector import StuckDetector
+from haco.DIDrive_core.utils.others.visualizer import Visualizer
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import lane_mid_distance
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
 
 from .base_carla_env import BaseCarlaEnv
-from haco.DIDrive_core.simulators import CarlaSimulator
-from haco.DIDrive_core.utils.others.visualizer import Visualizer
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
-from haco.DIDrive_core.utils.env_utils.stuck_detector import StuckDetector
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import lane_mid_distance
 
 
 class SimpleCarlaEnv(BaseCarlaEnv):
@@ -111,7 +110,7 @@ class SimpleCarlaEnv(BaseCarlaEnv):
     def _init_carla_simulator(self) -> None:
         if not self._use_local_carla:
             print("------ Run Carla on Port: %d, GPU: %d ------" % (self._carla_port, 0))
-            #self.carla_process = subprocess.Popen()
+            # self.carla_process = subprocess.Popen()
             self._simulator = CarlaSimulator(
                 cfg=self._simulator_cfg,
                 client=None,
@@ -441,7 +440,7 @@ class SimpleCarlaEnv(BaseCarlaEnv):
         reward_info['failure_reward'] = failure_reward
 
         total_reward = goal_reward + distance_reward + speed_reward + angle_reward + steer_reward + lane_reward \
-            + failure_reward
+                       + failure_reward
 
         return total_reward, reward_info
 

@@ -2,13 +2,11 @@
 Copyright 2021 OpenDILab. All Rights Reserved:
 Description: Base simulator.
 '''
-import os
-import sys
-from abc import ABC, abstractmethod
-from typing import Any, Dict
-from easydict import EasyDict
 import copy
+from abc import ABC, abstractmethod
+from typing import Dict
 
+from easydict import EasyDict
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 
 

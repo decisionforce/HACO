@@ -1,12 +1,9 @@
 import os
 from functools import partial
 
-import numpy as np
 from ding.envs import SyncSubprocessEnvManager
 from ding.utils.default_helper import deep_merge_dicts
 from easydict import EasyDict
-from tqdm import tqdm
-
 from haco.DIDrive_core.data import CarlaBenchmarkCollector, BenchmarkDatasetSaver
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.policy import AutoPIDPolicy

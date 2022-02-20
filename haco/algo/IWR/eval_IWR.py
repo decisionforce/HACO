@@ -4,11 +4,10 @@ import time
 
 import numpy as np
 import pandas as pd
-
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.algo.HG_Dagger.model import Ensemble
 from haco.utils.config import baseline_eval_config
 from haco.utils.eval_IWR_HG_Dagger import pretty_print, RecorderEnv
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
 EVAL_ENV_START = 1000
 

@@ -1,10 +1,10 @@
 import copy
 
 from haco.utils.callback import HACOCallbacks
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.config import baseline_eval_config
-from haco.utils.train_utils import get_train_parser
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.train import train
+from haco.utils.train_utils import get_train_parser
 from ray.rllib.agents.sac.sac import SACTrainer
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}

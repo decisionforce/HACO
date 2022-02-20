@@ -6,6 +6,7 @@ from metadrive.engine.core.onscreen_message import ScreenMessage
 from metadrive.envs.safe_metadrive_env import SafeMetaDriveEnv
 from metadrive.policy.manual_control_policy import TakeoverPolicy
 from metadrive.utils.math_utils import safe_clip
+
 ScreenMessage.SCALE = 0.1
 
 
@@ -29,7 +30,7 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "main_exp": True,
                 "random_spawn": True,
                 "cos_similarity": True,
-                "in_replay":False
+                "in_replay": False
             },
             allow_add_new_key=True
         )
@@ -50,7 +51,7 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
     def _get_step_return(self, actions, engine_info):
         o, r, d, engine_info = super(HumanInTheLoopEnv, self)._get_step_return(actions, engine_info)
         if self.config["in_replay"]:
-            return o,r,d,engine_info
+            return o, r, d, engine_info
         controller = self.engine.get_policy(self.vehicle.id)
         last_t = self.t_o
         self.t_o = controller.takeover if hasattr(controller, "takeover") else False
@@ -87,8 +88,8 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "Total Cost": self.episode_cost,
                 "Takeover Cost": self.total_takeover_cost,
                 "Takeover": self.t_o,
-                "COST" : ret[-1]["takeover_cost"],
-                "Stop (Press E)":""
+                "COST": ret[-1]["takeover_cost"],
+                "Stop (Press E)": ""
             })
         return ret
 
@@ -101,8 +102,8 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
 
     def get_takeover_cost(self, info):
         if not self.config["cos_similarity"]:
-            return  1
-        takeover_action = safe_clip(np.array(info["raw_action"]),-1, 1)
+            return 1
+        takeover_action = safe_clip(np.array(info["raw_action"]), -1, 1)
         agent_action = safe_clip(np.array(self.input_action), -1, 1)
         # cos_dist = (agent_action[0] * takeover_action[0] + agent_action[1] * takeover_action[1]) / 1e-6 +(
         #         np.linalg.norm(takeover_action) * np.linalg.norm(agent_action))
@@ -118,7 +119,8 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
 
 
 if __name__ == "__main__":
-    env = HumanInTheLoopEnv({"manual_control": True, "disable_model_compression": True, "use_render": True, "main_exp": True})
+    env = HumanInTheLoopEnv(
+        {"manual_control": True, "disable_model_compression": True, "use_render": True, "main_exp": True})
     env.reset()
     while True:
         env.step([0, 0])

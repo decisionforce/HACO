@@ -12,8 +12,9 @@ import glob
 import os
 import xml.etree.ElementTree as ET
 
-from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ScenarioConfiguration, ActorConfigurationData
 from haco.DIDrive_core.simulators.srunner.scenarioconfigs.route_scenario_configuration import RouteConfiguration
+from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ScenarioConfiguration, \
+    ActorConfigurationData
 
 
 def get_casezoo_dir():
@@ -90,7 +91,6 @@ class ScenarioConfigurationParser(object):
                     new_config.weather.wetness = float(weather.attrib.get("wetness", 0.0))
 
                 for ego_vehicle in scenario.iter("ego_vehicle"):
-
                     new_config.ego_vehicles.append(ActorConfigurationData.parse_from_node(ego_vehicle, 'hero'))
                     new_config.trigger_points.append(new_config.ego_vehicles[-1].transform)
 

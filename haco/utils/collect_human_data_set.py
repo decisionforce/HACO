@@ -1,9 +1,9 @@
 import json
 
 import numpy as np
-from ray.rllib.policy.sample_batch import SampleBatch
-from metadrive.policy.manual_control_policy import ManualControlPolicy
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from metadrive.policy.manual_control_policy import ManualControlPolicy
+from ray.rllib.policy.sample_batch import SampleBatch
 
 
 def process_info(info):

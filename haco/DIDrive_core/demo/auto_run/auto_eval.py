@@ -5,11 +5,10 @@ Description:
 
 from functools import partial
 
-from easydict import EasyDict
 from ding.envs import SyncSubprocessEnvManager
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-
+from easydict import EasyDict
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
 from haco.DIDrive_core.policy import AutoPIDPolicy

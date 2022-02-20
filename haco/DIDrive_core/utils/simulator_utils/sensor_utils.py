@@ -1,17 +1,16 @@
-import os
 import copy
 import logging
-import time
-import numpy as np
-import carla
 import math
+import time
 import weakref
-import shapely.geometry
-from enum import Enum
-from easydict import EasyDict
 from collections import deque
-from typing import Any, Dict, List, Optional, Tuple, Union
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
 
+import carla
+import numpy as np
+import shapely.geometry
+from easydict import EasyDict
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 

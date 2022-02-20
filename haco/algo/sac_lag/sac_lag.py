@@ -1,12 +1,11 @@
 # Update penalty
 
 
-
-
 import logging
-from ray.rllib.agents.dqn.dqn import calculate_rr_weights
 
+from haco.algo.sac_lag.sac_lag_policy import SACPIDConfig, SACPIDPolicy, UpdatePenalty
 from ray.rllib.agents.dqn.dqn import GenericOffPolicyTrainer
+from ray.rllib.agents.dqn.dqn import calculate_rr_weights
 from ray.rllib.evaluation.worker_set import WorkerSet
 from ray.rllib.execution.concurrency_ops import Concurrently
 from ray.rllib.execution.metric_ops import StandardMetricsReporting
@@ -17,8 +16,6 @@ from ray.rllib.execution.train_ops import TrainOneStep, UpdateTargetNetwork
 from ray.rllib.policy.policy import LEARNER_STATS_KEY
 from ray.rllib.utils.typing import TrainerConfigDict
 from ray.util.iter import LocalIterator
-
-from haco.algo.sac_lag.sac_lag_policy import SACPIDConfig, SACPIDPolicy, UpdatePenalty
 
 logger = logging.getLogger(__name__)
 

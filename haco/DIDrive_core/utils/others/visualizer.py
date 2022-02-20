@@ -1,12 +1,12 @@
+import copy
 import os
 from typing import Any, Dict, Optional
+
 import cv2
 import numpy as np
 from easydict import EasyDict
-import copy
-
-from haco.DIDrive_core.utils.others.image_helper import GifMaker, VideoMaker, show_image, check_image
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
+from haco.DIDrive_core.utils.others.image_helper import GifMaker, VideoMaker, show_image
 
 
 class Visualizer(object):

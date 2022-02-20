@@ -11,7 +11,6 @@ This module provides an example longitudinal control for vehicles
 import math
 
 import carla
-
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
 
 

@@ -1,11 +1,14 @@
 import math
-import torch.nn as nn
+
 import torch
+import torch.nn as nn
+
 
 def normal_log_density(x, mean, log_std, std):
     var = std.pow(2)
     log_density = -(x - mean).pow(2) / (2 * var) - 0.5 * math.log(2 * math.pi) - log_std
     return log_density.sum(1, keepdim=True)
+
 
 class Policy(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_size=(128, 256, 128), activation='tanh', log_std=0):
@@ -71,6 +74,7 @@ class Policy(nn.Module):
             param_count += param.view(-1).shape[0]
             id += 1
         return cov_inv.detach(), mean, {'std_id': std_id, 'std_index': std_index}
+
 
 class Value(nn.Module):
     def __init__(self, state_dim, hidden_size=(128, 128), activation='tanh'):

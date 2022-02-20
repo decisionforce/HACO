@@ -1,11 +1,11 @@
 import os
-import lmdb
+from typing import Any
+
 import cv2
+import lmdb
 import numpy as np
-from typing import Any, Dict
-import torch
-from torchvision import transforms
 from torch.utils.data import Dataset
+from torchvision import transforms
 
 PIXEL_OFFSET = 10
 
@@ -72,7 +72,7 @@ class BeVVAEDataset(Dataset):
         # random cropping
         center_x, center_y = 160, 260 - self._crop_size // 2
         birdview = birdview[dy + center_y - self._crop_size // 2:dy + center_y + self._crop_size // 2,
-                            dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
+                   dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
 
         birdview = self.bird_view_transform(birdview)
 

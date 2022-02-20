@@ -1,5 +1,6 @@
-import numpy as np
 from enum import Enum
+
+import numpy as np
 
 Orders = Enum("Order", "Follow_Lane Straight Right Left ChangelaneLeft ChangelaneRight")
 

@@ -1,7 +1,7 @@
+from typing import Dict, List
+
 import torch
 import torch.nn as nn
-import numpy as np
-from typing import Dict, Tuple, List, Any
 from torch.nn import functional as F
 
 
@@ -137,7 +137,7 @@ class VanillaVAE(nn.Module):
         """
         mu, log_var = self.encode(input)
         z = self.reparameterize(mu, log_var)
-        #z = mu
+        # z = mu
         return [self.decode(z), input, mu, log_var]
 
     def loss_function(self, *args, **kwargs) -> Dict:
@@ -154,7 +154,7 @@ class VanillaVAE(nn.Module):
         mu = args[2]
         log_var = args[3]
 
-        #kld_weight = kwargs['M_N']  # Account for the minibatch samples from the dataset
+        # kld_weight = kwargs['M_N']  # Account for the minibatch samples from the dataset
         kld_weight = self.kld_weight
 
         recons_loss = 0

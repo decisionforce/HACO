@@ -1,13 +1,11 @@
-import os
 from typing import Any, Dict, List, Optional
 
 import carla
-
-from haco.DIDrive_core.simulators.carla_simulator import CarlaSimulator
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.simulators.carla_simulator import CarlaSimulator
 
-from .srunner.scenarios.route_scenario import RouteScenario, SCENARIO_CLASS_DICT
 from .srunner.scenariomanager.scenario_manager import ScenarioManager
+from .srunner.scenarios.route_scenario import RouteScenario, SCENARIO_CLASS_DICT
 
 
 class CarlaScenarioSimulator(CarlaSimulator):

@@ -1,16 +1,13 @@
-import os
 import torch
-from easydict import EasyDict
-
-from haco.DIDrive_core.envs import BenchmarkEnvWrapper
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from ding.policy import DQNPolicy
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-
+from easydict import EasyDict
 from haco.DIDrive_core.demo.latent_rl.latent_rl_env import CarlaLatentEvalEnv
 from haco.DIDrive_core.demo.latent_rl.model import LatentDQNRLModel
+from haco.DIDrive_core.envs import BenchmarkEnvWrapper
+from haco.DIDrive_core.eval import SingleCarlaEvaluator
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 eval_config = dict(
     env=dict(

@@ -1,12 +1,12 @@
 import copy
 
-from haco.utils.callback import HACOCallbacks
-from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
-from haco.utils.config import baseline_eval_config
-from haco.algo.ppo_lag.ppo_lag import PPOLag
-from haco.utils.train_utils import get_train_parser
-from haco.utils.train import train
 import ray
+from haco.algo.ppo_lag.ppo_lag import PPOLag
+from haco.utils.callback import HACOCallbacks
+from haco.utils.config import baseline_eval_config
+from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from haco.utils.train import train
+from haco.utils.train_utils import get_train_parser
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 
@@ -57,4 +57,3 @@ if __name__ == '__main__':
         # test_mode=True,
         # local_mode=True
     )
-

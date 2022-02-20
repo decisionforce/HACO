@@ -239,4 +239,4 @@ ALL_SUITES_ALIASES = {
 }
 
 ALL_SUITES_ALIASES['all'] = ALL_SUITES_ALIASES['town1'] + \
-    ALL_SUITES_ALIASES['town2']
+                            ALL_SUITES_ALIASES['town2']

@@ -1,7 +1,7 @@
-import numpy as np
-from numpy import linalg
-from scipy.optimize import minimize
 from typing import Dict, List
+
+import numpy as np
+from scipy.optimize import minimize
 
 
 class FollowState:

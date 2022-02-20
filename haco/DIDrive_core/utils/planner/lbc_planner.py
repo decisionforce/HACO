@@ -1,16 +1,15 @@
+from typing import Dict
+
 import carla
-from collections import deque
 import numpy as np
-from typing import Any, Dict
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import draw_waypoints
 
 from .basic_planner import AgentState, BasicPlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import draw_waypoints
 
 
 class LBCPlannerNew(BasicPlanner):
-
     config = dict(
         min_distance=5.0,
         resolution=15,

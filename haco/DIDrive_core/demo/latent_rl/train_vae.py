@@ -1,17 +1,15 @@
 import os
-import numpy as np
+
 import torch
-from torch.utils.data import DataLoader
-from torch import optim
 import torchvision.utils as vutils
-from tensorboardX import SummaryWriter
 from easydict import EasyDict
-from tqdm import tqdm
-
-from haco.DIDrive_core.models import VanillaVAE
 from haco.DIDrive_core.data import BeVVAEDataset
+from haco.DIDrive_core.models import VanillaVAE
 from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
-
+from tensorboardX import SummaryWriter
+from torch import optim
+from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 config = dict(
     exp_name='vae_naive_train',
@@ -52,7 +50,7 @@ def _preprocess_image(x):
         bev = torch.Tensor(bev.transpose(2, 0, 1))
         ret.append(bev)
     x = torch.stack(ret)
-    #x = torch.nn.functional.interpolate(x, 128, mode='nearest')
+    # x = torch.nn.functional.interpolate(x, 128, mode='nearest')
     x = vutils.make_grid(ret, padding=2, normalize=True, nrow=4)
     x = x.cpu().numpy()
 
@@ -63,7 +61,8 @@ def main(cfg):
     train_dataset = BeVVAEDataset(**cfg.data.train)
     train_dataloader = DataLoader(train_dataset, batch_size=cfg.learn.batch_size, num_workers=12, pin_memory=True)
     val_dataset = BeVVAEDataset(**cfg.data.val)
-    val_dataloader = DataLoader(val_dataset, batch_size=cfg.learn.batch_size, num_workers=12, pin_memory=True, drop_last=True, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=cfg.learn.batch_size, num_workers=12, pin_memory=True,
+                                drop_last=True, shuffle=True)
 
     model = VanillaVAE(**cfg.model)
     model.cuda()

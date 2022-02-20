@@ -1,7 +1,6 @@
 from collections import defaultdict
 import os
 import numpy as np
-from ding.utils.data.collate_fn import default_collate, default_decollate
 from easydict import EasyDict
 from tqdm import tqdm
 import torch

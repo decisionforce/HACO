@@ -1,19 +1,20 @@
 import os
+from collections import deque
+from itertools import product
+from typing import Dict, Any, Callable, Optional
+
 import numpy as np
 import pandas as pd
-from collections import deque
-from tqdm import tqdm
-from itertools import product
 import torch
-from typing import Dict, Any, List, Callable, Optional
-from tensorboardX import SummaryWriter
-
-from .base_evaluator import BaseEvaluator
-from haco.DIDrive_core.data.benchmark import ALL_SUITES
-from haco.DIDrive_core.data.benchmark.benchmark_utils import get_suites_list, gather_results, read_pose_txt, get_benchmark_dir
 from ding.envs import BaseEnvManager
 from ding.torch_utils.data_helper import to_tensor
-from ding.utils import build_logger
+from haco.DIDrive_core.data.benchmark import ALL_SUITES
+from haco.DIDrive_core.data.benchmark.benchmark_utils import get_suites_list, gather_results, read_pose_txt, \
+    get_benchmark_dir
+from tensorboardX import SummaryWriter
+from tqdm import tqdm
+
+from .base_evaluator import BaseEvaluator
 
 
 class CarlaBenchmarkEvaluator(BaseEvaluator):

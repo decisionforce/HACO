@@ -1,18 +1,16 @@
-import os
 import torch
-import cv2
-import numpy as np
-from easydict import EasyDict
-from torch.utils.data import DataLoader
-from tensorboardX import SummaryWriter
-from tqdm import tqdm
 import time
 
-from haco.DIDrive_core.policy import LBCBirdviewPolicy
+import cv2
+import numpy as np
+import torch
+from easydict import EasyDict
 from haco.DIDrive_core.data import LBCBirdViewDataset
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
+from haco.DIDrive_core.policy import LBCBirdviewPolicy
 from haco.DIDrive_core.utils.learner_utils.log_saver_utils import Experiment
-
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import visualize_birdview
+from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 lbc_config = dict(
     exp_name='lbc_bev_train',
@@ -59,21 +57,21 @@ def get_log_visualization(birdview, command, loss, locations, locations_pred, si
         _bev = birdview[i].detach().cpu().numpy().copy()
         canvas = np.uint8(_bev * 255).copy()
         canvas = visualize_birdview(canvas)
-        rows = [x * (canvas.shape[0] // 10) for x in range(10+1)]
-        cols = [x * (canvas.shape[1] // 10) for x in range(10+1)]
+        rows = [x * (canvas.shape[0] // 10) for x in range(10 + 1)]
+        cols = [x * (canvas.shape[1] // 10) for x in range(10 + 1)]
 
         def _write(text, i, j):
             cv2.putText(
-                    canvas, text, (cols[j], rows[i]),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 1)
+                canvas, text, (cols[j], rows[i]),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 1)
 
         def _dot(i, j, color, radius=2):
             x, y = int(j), int(i)
-            canvas[x-radius:x+radius+1, y-radius:y+radius+1] = color
+            canvas[x - radius:x + radius + 1, y - radius:y + radius + 1] = color
 
         _command = {
-                1: 'LEFT', 2: 'RIGHT',
-                3: 'STRAIGHT', 4: 'FOLLOW'}.get(torch.argmax(command[i]).item()+1, '???')
+            1: 'LEFT', 2: 'RIGHT',
+            3: 'STRAIGHT', 4: 'FOLLOW'}.get(torch.argmax(command[i]).item() + 1, '???')
 
         _dot(0, 0, WHITE)
 
@@ -121,7 +119,7 @@ def train_or_eval(policy, loader, optim, is_train, config, is_first_epoch, log_s
             log_saver.scalar(is_train=is_train, loss_mean=loss_mean.item())
             log_saver.image(is_train=is_train, birdview=images)
 
-        log_saver.scalar(is_train=is_train, fps=1.0/(time.time() - tick))
+        log_saver.scalar(is_train=is_train, fps=1.0 / (time.time() - tick))
 
         tick = time.time()
 
@@ -147,14 +145,14 @@ def main(cfg):
     log_saver = Experiment(log_dir='./log/{}/'.format(cfg.exp_name))
     optim = torch.optim.Adam(lbc_policy._model.parameters(), lr=cfg.policy.learn.lr)
 
-    for epoch in tqdm(range(cfg.policy.learn.epoches+1), desc='Epoch'):
+    for epoch in tqdm(range(cfg.policy.learn.epoches + 1), desc='Epoch'):
         train_or_eval(lbc_policy.learn_mode, train_dataloader, optim, True, cfg, epoch == 0, log_saver)
         train_or_eval(lbc_policy.learn_mode, val_dataloader, optim, False, cfg, epoch == 0, log_saver)
 
         if epoch in [1, 2, 4, 8, 16, 32, 64, 128, 256, 384, 512, 768, 1000]:
             torch.save(
-                    lbc_policy.learn_mode.state_dict(),
-                    './log/{}/model-{}.th'.format(cfg.exp_name, epoch))
+                lbc_policy.learn_mode.state_dict(),
+                './log/{}/model-{}.th'.format(cfg.exp_name, epoch))
 
         log_saver.end_epoch()
 

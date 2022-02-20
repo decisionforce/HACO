@@ -9,7 +9,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
-
 from haco.utils.config import baseline_eval_config, baseline_train_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 
@@ -23,7 +22,6 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 import datetime
 
-
 import os
 
 """
@@ -36,8 +34,10 @@ create -n haco-gail python version=3.7
 PPO in this implement didn't use Advantage
 """
 
+
 def get_time_str():
     return datetime.datetime.now().strftime("%y%m%d-%H%M%S")
+
 
 exp_log = Experiment()
 N_STEP = 5
@@ -47,7 +47,6 @@ expert_data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath
 
 training_config = baseline_train_config
 eval_config = baseline_eval_config
-
 
 
 def make_env(env_cls, rank, config, seed=0):
@@ -86,7 +85,7 @@ class Learner:
         self._load_expert_traj()
         tm_stamp = "%s-%s-%s-%s-%s-%s" % (tm.tm_year, tm.tm_mon, tm.tm_mday, \
                                           tm.tm_hour, tm.tm_min, tm.tm_sec)
-        self.cfg.log_dir = os.path.join("gail_{}".format(get_time_str()),tm_stamp)
+        self.cfg.log_dir = os.path.join("gail_{}".format(get_time_str()), tm_stamp)
         self.policy_net = Policy(state_dim=259, action_dim=2).to(self.cfg.device).float()
         self.value_net = Value(state_dim=259 + 2).to(self.cfg.device).float()
         self.eval_env = HumanInTheLoopEnv(eval_config)
@@ -123,7 +122,7 @@ class Learner:
         episode_cost_mean = [0 for _ in range(self.env_num)]
         total_episode_reward = 0
         total_episode_cost = 0
-        total_episode_velocity=[]
+        total_episode_velocity = []
         for i in range(self.buffer_length):
             obs = torch.tensor(obs).to(self.cfg.device).float()
             with torch.no_grad():
@@ -134,7 +133,7 @@ class Learner:
             obs, reward, dones, info, = self.env.step(action.cpu().numpy())
             batch_reward.append(torch.tensor(reward))
 
-            total_episode_velocity+=[info[idx]["velocity"] for idx in range(self.env_num)]
+            total_episode_velocity += [info[idx]["velocity"] for idx in range(self.env_num)]
             episode_reward_mean = [episode_reward_mean[i] + reward[i] for i in range(self.env_num)]
             episode_cost_mean = [episode_cost_mean[i] + info[i]["native_cost"] for i in range(self.env_num)]
 
@@ -176,9 +175,9 @@ class Learner:
         success_num = 0
         episode_num = 0
         episode_cost = 0
-        velocity=[]
+        velocity = []
         state = env.reset()
-        episode_overtake=[]
+        episode_overtake = []
         while episode_num < evaluation_episode_num:
             state = torch.tensor([state]).to(self.cfg.device).float()
             with torch.no_grad():

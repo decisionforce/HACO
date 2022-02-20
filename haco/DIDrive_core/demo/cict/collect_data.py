@@ -1,16 +1,16 @@
 import os
 from functools import partial
-from tqdm import tqdm
-from easydict import EasyDict
-from ding.utils.default_helper import deep_merge_dicts
 
+from cict_datasaver import CICTBenchmarkDatasetSaver
+from ding.envs import SyncSubprocessEnvManager
+from ding.utils.default_helper import deep_merge_dicts
+from easydict import EasyDict
 from haco.DIDrive_core.data import CarlaBenchmarkCollector
 from haco.DIDrive_core.envs import SimpleCarlaEnv, CarlaEnvWrapper
 from haco.DIDrive_core.policy import AutoPIDPolicy
 from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from ding.envs import SyncSubprocessEnvManager
 from post import destination, destination2, save_as_npy, config
-from cict_datasaver import CICTBenchmarkDatasetSaver
+from tqdm import tqdm
 
 main_config = EasyDict(config)
 
@@ -61,7 +61,8 @@ def main(cfg, seed=0):
         os.makedirs(cfg.policy.collect.dir_path)
 
     collected_episodes = 0
-    saver = CICTBenchmarkDatasetSaver(cfg.policy.collect.dir_path, cfg.env.simulator.obs, post_process_fn=cict_post_process_fn)
+    saver = CICTBenchmarkDatasetSaver(cfg.policy.collect.dir_path, cfg.env.simulator.obs,
+                                      post_process_fn=cict_post_process_fn)
     saver.make_dataset_path(cfg.policy.collect)
     while collected_episodes < cfg.policy.collect.n_episode:
         # Sampling data from environments

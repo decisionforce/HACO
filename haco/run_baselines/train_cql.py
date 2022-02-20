@@ -3,15 +3,14 @@ import os
 
 import ray
 from haco.algo.cql.cql import CQLTrainer
-from ray import tune
-from ray.rllib.offline.shuffled_input import ShuffledInput
-
 from haco.utils.callback import ILCallBack
 from haco.utils.config import baseline_eval_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.input_reader import HumanDataInputReader
 from haco.utils.train import train
 from haco.utils.train_utils import get_train_parser
+from ray import tune
+from ray.rllib.offline.shuffled_input import ShuffledInput
 
 data_set_file_path = expert_value_weights = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
                                                          "human_traj_100_new.json")

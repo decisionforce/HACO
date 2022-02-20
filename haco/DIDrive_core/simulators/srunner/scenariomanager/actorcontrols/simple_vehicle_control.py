@@ -13,15 +13,14 @@ Limitations:
 - Can only consider obstacles in forward facing reaching (i.e. in tight corners obstacles may be ignored).
 """
 
-from distutils.util import strtobool
 import math
-import cv2
-import numpy as np
+from distutils.util import strtobool
 
 import carla
-
-from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
+import cv2
+import numpy as np
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.basic_control import BasicControl
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
 
 

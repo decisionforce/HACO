@@ -1,14 +1,13 @@
 import copy
 from abc import abstractmethod
 from typing import Any, Dict
-from easydict import EasyDict
 
-from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 from ding.utils import EasyTimer
+from easydict import EasyDict
+from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 
 
 class BaseCollector(object):
-
     config = dict()
 
     def __init__(

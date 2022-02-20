@@ -4,12 +4,11 @@
 # For a copy, see <https://opensource.org/licenses/MIT>.
 """ This module contains PID controllers to perform lateral and longitudinal control. """
 
-from collections import deque
 import math
+from collections import deque
 from typing import Dict, List
+
 import numpy as np
-import carla
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 
 
 class VehiclePIDController():
@@ -35,12 +34,12 @@ class VehiclePIDController():
     """
 
     def __init__(
-        self,
-        args_lateral: Dict,
-        args_longitudinal: Dict,
-        max_throttle: float = 0.75,
-        max_brake: float = 0.3,
-        max_steering: float = 0.8
+            self,
+            args_lateral: Dict,
+            args_longitudinal: Dict,
+            max_throttle: float = 0.75,
+            max_brake: float = 0.3,
+            max_steering: float = 0.8
     ):
         """
         Constructor method.
@@ -215,7 +214,7 @@ class RWPFLateralController():
         ty = np.sin(target_state['theta'])
 
         e = dx * ty - dy * tx
-        #theta_e = self.rad_lim(current_state['theta'] - target_state['theta'])
+        # theta_e = self.rad_lim(current_state['theta'] - target_state['theta'])
         theta_e = self.rad_lim(-target_state['theta'])
 
         w1 = self.k_k * target_state['v'] * target_state['k'] * np.cos(theta_e)
@@ -227,19 +226,19 @@ class RWPFLateralController():
         else:
             steer = np.arctan2(w * self.L, current_state['v']) * 2 / np.pi
 
-        #print(e, w, steer)
+        # print(e, w, steer)
         return steer
 
 
 class VehicleCapacController():
 
     def __init__(
-        self,
-        args_lateral: Dict,
-        args_longitudinal: Dict,
-        max_throttle: float = 0.8,
-        max_brake: float = 0.5,
-        max_steering: float = 0.8
+            self,
+            args_lateral: Dict,
+            args_longitudinal: Dict,
+            max_throttle: float = 0.8,
+            max_brake: float = 0.5,
+            max_steering: float = 0.8
     ):
         """
         Constructor method.
@@ -269,7 +268,7 @@ class VehicleCapacController():
             current_steering = self.past_steering - 0.1
 
         steering = np.clip(current_steering, -self.max_steer, self.max_steer)
-        #print(steering, self.past_steering)
+        # print(steering, self.past_steering)
 
         control['steer'] = steering
         if control['throttle'] > 0 and abs(current_state['v']) < 0.1 and abs(target_state['v']) < 0.1:

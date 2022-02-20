@@ -11,10 +11,9 @@ bad road conditions, etc. and checks to see if the vehicle
 regains control and corrects it's course.
 """
 
+import carla
 import numpy.random as random
 import py_trees
-import carla
-
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import ChangeNoiseParameters, \
     ActorTransformSetter
@@ -34,7 +33,7 @@ class ControlLoss(BasicScenario):
     """
 
     def __init__(
-        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario
@@ -129,7 +128,6 @@ class ControlLoss(BasicScenario):
         )
         start_condition = InTriggerDistanceToLocation(self.ego_vehicles[0], self.first_loc_prev, self._trigger_dist)
         for _ in range(self._no_of_jitter):
-
             # change the current noise to be applied
             turn = ChangeNoiseParameters(
                 self._current_steer_noise, self._current_throttle_noise, self._noise_mean, self._noise_std,

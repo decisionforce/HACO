@@ -4,6 +4,7 @@ from collections import deque
 
 import numpy as np
 from gym.spaces import Box, Discrete
+from haco.algo.sac_lag.sac_lag_model import ConstrainedSACModel
 from ray.rllib.agents.ddpg.ddpg_tf_policy import ComputeTDErrorMixin, \
     TargetNetworkMixin
 from ray.rllib.agents.dqn.dqn_tf_policy import postprocess_nstep_and_prio
@@ -16,8 +17,6 @@ from ray.rllib.policy.tf_policy_template import build_tf_policy
 from ray.rllib.utils.error import UnsupportedSpaceException
 from ray.rllib.utils.framework import try_import_tf, \
     try_import_tfp
-
-from haco.algo.sac_lag.sac_lag_model import ConstrainedSACModel
 
 tf, _, _ = try_import_tf()
 tf1 = tf
@@ -527,11 +526,11 @@ class UpdatePenaltyMixin:
 
                 pid_result = self.pid_controller.get_result(self.new_error)
                 print("PIDRESULT: {}, Error {}, P {}, I {}, D {}".format(pid_result,
-                        self.new_error,
-                        self.pid_controller.p_error,
-                        self.pid_controller.i_error,
-                        self.pid_controller.d_error,
-                    ))
+                                                                         self.new_error,
+                                                                         self.pid_controller.p_error,
+                                                                         self.pid_controller.i_error,
+                                                                         self.pid_controller.d_error,
+                                                                         ))
 
                 new_lambda = np.log(np.exp(-pid_result)[0] + 1)
                 assign_op = self.lambda_value.assign(new_lambda)

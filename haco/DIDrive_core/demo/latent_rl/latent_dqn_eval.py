@@ -1,18 +1,16 @@
-import os
 from functools import partial
-import torch
-from easydict import EasyDict
 
-from haco.DIDrive_core.envs import CarlaEnvWrapper
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
-from ding.envs import AsyncSubprocessEnvManager, BaseEnvManager
+import torch
+from ding.envs import AsyncSubprocessEnvManager
 from ding.policy import DQNPolicy
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-
+from easydict import EasyDict
 from haco.DIDrive_core.demo.latent_rl.latent_rl_env import CarlaLatentEvalEnv
 from haco.DIDrive_core.demo.latent_rl.model import LatentDQNRLModel
+from haco.DIDrive_core.envs import CarlaEnvWrapper
+from haco.DIDrive_core.eval import CarlaBenchmarkEvaluator
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 eval_config = dict(
     env=dict(

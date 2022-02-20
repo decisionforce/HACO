@@ -1,9 +1,6 @@
-import os
-import sys
-
-from haco.DIDrive_core.utils.model_utils import common
-import torch.nn as nn
 import torch
+import torch.nn as nn
+from haco.DIDrive_core.utils.model_utils import common
 
 STEPS = 5
 COMMANDS = 4

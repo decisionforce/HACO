@@ -1,11 +1,11 @@
 """
 PyTorch policy class used for CQL.
 """
-import numpy as np
-import gym
 import logging
 from typing import Dict, List, Tuple, Type, Union
 
+import gym
+import numpy as np
 import ray
 import ray.experimental.tf_utils
 from ray.rllib.agents.sac.sac_tf_policy import postprocess_trajectory, \
@@ -13,16 +13,16 @@ from ray.rllib.agents.sac.sac_tf_policy import postprocess_trajectory, \
 from ray.rllib.agents.sac.sac_torch_policy import _get_dist_class, stats, \
     build_sac_model_and_action_dist, optimizer_fn, ComputeTDErrorMixin, \
     TargetNetworkMixin, setup_late_mixins, action_distribution_fn
-from ray.rllib.models.torch.torch_action_dist import TorchDistributionWrapper
-from ray.rllib.policy.policy_template import build_policy_class
 from ray.rllib.models.modelv2 import ModelV2
+from ray.rllib.models.torch.torch_action_dist import TorchDistributionWrapper
 from ray.rllib.policy.policy import Policy
+from ray.rllib.policy.policy_template import build_policy_class
 from ray.rllib.policy.sample_batch import SampleBatch
 from ray.rllib.utils.framework import try_import_torch
-from ray.rllib.utils.typing import LocalOptimizer, TensorType, \
-    TrainerConfigDict
 from ray.rllib.utils.torch_ops import apply_grad_clipping, \
     convert_to_torch_tensor
+from ray.rllib.utils.typing import LocalOptimizer, TensorType, \
+    TrainerConfigDict
 
 torch, nn = try_import_torch()
 F = nn.functional
@@ -146,7 +146,7 @@ def cql_loss(policy: Policy, model: ModelV2,
 
     # compute RHS of bellman equation
     q_t_target = (
-        rewards + (discount**policy.config["n_step"]) * q_tp1).detach()
+            rewards + (discount ** policy.config["n_step"]) * q_tp1).detach()
 
     # Compute the TD-error (potentially clipped), for priority replay buffer
     base_td_error = torch.abs(q_t - q_t_target)
@@ -181,7 +181,7 @@ def cql_loss(policy: Policy, model: ModelV2,
         q2_next_actions = q_values_repeat(
             model, model_out_t, next_actions, twin=True)
 
-    random_density = np.log(0.5**curr_actions.shape[-1])
+    random_density = np.log(0.5 ** curr_actions.shape[-1])
     cat_q1 = torch.cat([
         q1_rand - random_density, q1_next_actions - next_logp.detach(),
         q1_curr_actions - curr_logp.detach()

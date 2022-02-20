@@ -1,12 +1,14 @@
-import numpy as np
 from typing import Dict, List, Tuple
+
 import carla
+import numpy as np
+from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
+from haco.DIDrive_core.utils.planner.planner_utils import get_next_until_junction, generate_change_lane_route
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.types_behavior import Cautious, Aggressive, Normal
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance, compute_distance, \
+    positive
 
 from .basic_planner import AgentState, BasicPlanner, RoadOption
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.types_behavior import Cautious, Aggressive, Normal
-from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance, compute_distance, positive
-from haco.DIDrive_core.utils.planner.planner_utils import get_next_until_junction, generate_change_lane_route
 
 
 class BehaviorPlanner(BasicPlanner):
@@ -95,7 +97,6 @@ class BehaviorPlanner(BasicPlanner):
             if is_within_distance(target_vehicle_loc, self._vehicle_location,
                                   self._hero_vehicle.get_transform().rotation.yaw, proximity_th, up_angle_th,
                                   low_angle_th):
-
                 return (True, target_vehicle, compute_distance(target_vehicle_loc, self._vehicle_location))
 
         return (False, None, -1)

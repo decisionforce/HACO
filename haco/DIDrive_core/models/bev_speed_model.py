@@ -1,8 +1,7 @@
+from typing import Dict, Tuple, List
+
 import torch
 import torch.nn as nn
-from typing import Dict, Optional, Tuple, List, Union
-
-from ding.torch_utils import MLP
 
 
 class BEVSpeedConvEncoder(nn.Module):

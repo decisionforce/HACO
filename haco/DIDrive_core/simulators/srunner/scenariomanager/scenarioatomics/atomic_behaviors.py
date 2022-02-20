@@ -19,26 +19,24 @@ import math
 import operator
 import os
 import random
-import time
 import subprocess
-
-import numpy as np
-import py_trees
-from py_trees.blackboard import Blackboard
+import time
 
 import carla
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.basic_agent import BasicAgent, LocalPlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner import RoadOption
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import GlobalRoutePlannerDAO
-
+import numpy as np
+import py_trees
+from haco.DIDrive_core.simulators import srunner
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.actorcontrols.actor_control import ActorControl
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import GameTime
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import detect_lane_obstacle
 from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import generate_target_waypoint_list_multilane
-
-from haco.DIDrive_core.simulators import srunner
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.basic_agent import BasicAgent, LocalPlanner
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner import GlobalRoutePlanner
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.global_route_planner_dao import \
+    GlobalRoutePlannerDAO
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner import RoadOption
+from py_trees.blackboard import Blackboard
 
 EPSILON = 0.001
 
@@ -410,17 +408,17 @@ class ChangeActorTargetSpeed(AtomicBehavior):
     """
 
     def __init__(
-        self,
-        actor,
-        target_speed,
-        init_speed=False,
-        duration=None,
-        distance=None,
-        relative_actor=None,
-        value=None,
-        value_type=None,
-        continuous=False,
-        name="ChangeActorTargetSpeed"
+            self,
+            actor,
+            target_speed,
+            init_speed=False,
+            duration=None,
+            distance=None,
+            relative_actor=None,
+            value=None,
+            value_type=None,
+            continuous=False,
+            name="ChangeActorTargetSpeed"
     ):
         """
         Setup parameters
@@ -716,12 +714,12 @@ class ChangeActorLateralMotion(AtomicBehavior):
     """
 
     def __init__(
-        self,
-        actor,
-        direction='left',
-        distance_lane_change=25,
-        distance_other_lane=100,
-        name="ChangeActorLateralMotion"
+            self,
+            actor,
+            direction='left',
+            distance_lane_change=25,
+            distance_other_lane=100,
+            name="ChangeActorLateralMotion"
     ):
         """
         Setup parameters
@@ -953,14 +951,14 @@ class AccelerateToCatchUp(AtomicBehavior):
     """
 
     def __init__(
-        self,
-        actor,
-        other_actor,
-        throttle_value=1,
-        delta_velocity=10,
-        trigger_distance=5,
-        max_distance=500,
-        name="AccelerateToCatchUp"
+            self,
+            actor,
+            other_actor,
+            throttle_value=1,
+            delta_velocity=10,
+            trigger_distance=5,
+            max_distance=500,
+            name="AccelerateToCatchUp"
     ):
         """
         Setup parameters
@@ -1345,14 +1343,14 @@ class ChangeNoiseParameters(AtomicBehavior):
     """
 
     def __init__(
-        self,
-        new_steer_noise,
-        new_throttle_noise,
-        noise_mean,
-        noise_std,
-        dynamic_mean_for_steer,
-        dynamic_mean_for_throttle,
-        name="ChangeJittering"
+            self,
+            new_steer_noise,
+            new_throttle_noise,
+            noise_mean,
+            noise_std,
+            dynamic_mean_for_steer,
+            dynamic_mean_for_throttle,
+            name="ChangeJittering"
     ):
         """
         Setup actor , maximum steer value and throttle value
@@ -1510,13 +1508,13 @@ class WaypointFollower(AtomicBehavior):
     """
 
     def __init__(
-        self,
-        actor,
-        target_speed=None,
-        plan=None,
-        blackboard_queue_name=None,
-        avoid_collision=False,
-        name="FollowWaypoints"
+            self,
+            actor,
+            target_speed=None,
+            plan=None,
+            blackboard_queue_name=None,
+            avoid_collision=False,
+            name="FollowWaypoints"
     ):
         """
         Set up actor and local planner
@@ -1722,14 +1720,14 @@ class LaneChange(WaypointFollower):
     """
 
     def __init__(
-        self,
-        actor,
-        speed=10,
-        direction='left',
-        distance_same_lane=5,
-        distance_other_lane=100,
-        distance_lane_change=25,
-        name='LaneChange'
+            self,
+            actor,
+            speed=10,
+            direction='left',
+            distance_same_lane=5,
+            distance_other_lane=100,
+            distance_lane_change=25,
+            name='LaneChange'
     ):
 
         self._direction = direction
@@ -1786,7 +1784,6 @@ class SetInitSpeed(AtomicBehavior):
     """
 
     def __init__(self, actor, init_speed=10, name='SetInitSpeed'):
-
         self._init_speed = init_speed
         self._terminate = None
         self._actor = actor
@@ -2394,7 +2391,7 @@ class ScenarioTriggerer(AtomicBehavior):
     WINDOWS_SIZE = 5
 
     def __init__(
-        self, actor, route, blackboard_list, distance, repeat_scenarios=False, debug=False, name="ScenarioTriggerer"
+            self, actor, route, blackboard_list, distance, repeat_scenarios=False, debug=False, name="ScenarioTriggerer"
     ):
         """
         Setup class members

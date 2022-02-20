@@ -1,14 +1,13 @@
 import torch
-from easydict import EasyDict
-
-from haco.DIDrive_core.envs import SimpleCarlaEnv
-from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
-from haco.DIDrive_core.eval import SingleCarlaEvaluator
 from ding.policy import PPOPolicy
 from ding.utils import set_pkg_seed
 from ding.utils.default_helper import deep_merge_dicts
-from haco.DIDrive_core.demo.simple_rl.model import PPORLModel
+from easydict import EasyDict
 from haco.DIDrive_core.demo.simple_rl.env_wrapper import ContinuousBenchmarkEnvWrapper
+from haco.DIDrive_core.demo.simple_rl.model import PPORLModel
+from haco.DIDrive_core.envs import SimpleCarlaEnv
+from haco.DIDrive_core.eval import SingleCarlaEvaluator
+from haco.DIDrive_core.utils.others.tcp_helper import parse_carla_tcp
 
 eval_config = dict(
     env=dict(
@@ -36,7 +35,7 @@ eval_config = dict(
         ignore_light=True,
         visualize=dict(type='birdview', outputs=['show']),
     ),
-    model=dict(action_shape=2,),
+    model=dict(action_shape=2, ),
     policy=dict(
         cuda=True,
         ckpt_path='',

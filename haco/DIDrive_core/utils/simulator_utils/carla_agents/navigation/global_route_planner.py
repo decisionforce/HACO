@@ -7,10 +7,10 @@ This module provides GlobalRoutePlanner implementation.
 """
 
 import math
-import numpy as np
-import networkx as nx
 
 import carla
+import networkx as nx
+import numpy as np
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.local_planner import RoadOption
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import vector
 
@@ -118,7 +118,7 @@ class GlobalRoutePlanner(object):
             exit_xyz = segment['exitxyz']
             road_id, section_id, lane_id = end_wp.road_id, end_wp.section_id, end_wp.lane_id
             if road_id in self._road_id_to_edge and section_id in self._road_id_to_edge[
-                    road_id] and lane_id in self._road_id_to_edge[road_id][section_id]:
+                road_id] and lane_id in self._road_id_to_edge[road_id][section_id]:
                 pass
             else:
                 count_loose_ends += 1
@@ -132,7 +132,7 @@ class GlobalRoutePlanner(object):
                 next_wp = end_wp.next(hop_resolution)
                 path = []
                 while next_wp is not None and next_wp and next_wp[0].road_id == road_id and next_wp[
-                        0].section_id == section_id and next_wp[0].lane_id == lane_id:
+                    0].section_id == section_id and next_wp[0].lane_id == lane_id:
                     path.append(next_wp[0])
                     next_wp = next_wp[0].next(hop_resolution)
                 if path:
@@ -286,8 +286,8 @@ class GlobalRoutePlanner(object):
         next_edge = self._graph.edges[current_node, next_node]
         if index > 0:
             if self._previous_decision != RoadOption.VOID and self._intersection_end_node > 0 and \
-                self._intersection_end_node != previous_node and next_edge[
-                    'type'] == RoadOption.LANEFOLLOW and next_edge['intersection']:
+                    self._intersection_end_node != previous_node and next_edge[
+                'type'] == RoadOption.LANEFOLLOW and next_edge['intersection']:
                 decision = self._previous_decision
             else:
                 self._intersection_end_node = -1

@@ -9,7 +9,6 @@ This module provides the key configuration parameters for a route-based scenario
 """
 
 import carla
-from haco.DIDrive_core.utils.planner import RoadOption
 
 from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ScenarioConfiguration
 

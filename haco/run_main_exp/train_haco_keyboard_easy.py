@@ -1,9 +1,10 @@
-from haco.utils.callback import HACOCallbacks
+import datetime
+
 from haco.algo.haco.haco import HACOTrainer
+from haco.utils.callback import HACOCallbacks
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.train import train
 from haco.utils.train_utils import get_train_parser
-import datetime
 
 
 def get_time_str():
@@ -25,7 +26,7 @@ if __name__ == '__main__':
             "window_size": (1600, 1100),
             "cos_similarity": True,
             "map": "COrT",
-            "environment_num":1,
+            "environment_num": 1,
         },
 
         # ===== Training =====

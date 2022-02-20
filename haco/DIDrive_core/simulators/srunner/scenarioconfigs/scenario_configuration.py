@@ -17,17 +17,17 @@ class ActorConfigurationData(object):
     """
 
     def __init__(
-        self,
-        model,
-        transform,
-        rolename='other',
-        speed=0,
-        autopilot=False,
-        random=False,
-        color=None,
-        category="car",
-        direction=None,
-        args=None
+            self,
+            model,
+            transform,
+            rolename='other',
+            speed=0,
+            autopilot=False,
+            random=False,
+            color=None,
+            category="car",
+            direction=None,
+            args=None
     ):
         self.model = model
         self.rolename = rolename

@@ -1,17 +1,16 @@
-from collections import namedtuple
-import os
-from ding.torch_utils.data_helper import to_device, to_dtype, to_tensor
-import torch
-from torchvision import transforms
-import numpy as np
 from typing import Dict, List, Any, Optional
 
-from .base_carla_policy import BaseCarlaPolicy
+import numpy as np
+import torch
+from ding.torch_utils.data_helper import to_dtype
+from ding.utils.data import default_collate
 from haco.DIDrive_core.models import PIDController, CustomController
 from haco.DIDrive_core.models.lbc_model import LBCBirdviewModel, LBCImageModel
-from haco.DIDrive_core.utils.model_utils import common
-from ding.utils.data import default_collate, default_decollate
 from haco.DIDrive_core.utils.learner_utils.loss_utils import LocationLoss
+from haco.DIDrive_core.utils.model_utils import common
+from torchvision import transforms
+
+from .base_carla_policy import BaseCarlaPolicy
 
 STEPS = 5
 SPEED_STEPS = 3

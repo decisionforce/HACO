@@ -1,12 +1,11 @@
 from __future__ import print_function
 
-from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
-
 from haco.algo.HG_Dagger.exp_saver import Experiment
 from haco.algo.HG_Dagger.model import Ensemble
 from haco.algo.HG_Dagger.utils import *
 from haco.utils.config import baseline_eval_config, baseline_train_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
 """
 requirement for IWR/HG-Dagger/GAIl:

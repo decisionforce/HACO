@@ -12,10 +12,9 @@ moving along the road and encounters a cyclist ahead after taking a right or lef
 from __future__ import print_function
 
 import math
-import py_trees
 
 import carla
-
+import py_trees
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider
 from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic_behaviors import (
     ActorTransformSetter, ActorDestroy, KeepVelocity, HandBrakeVehicle
@@ -26,7 +25,8 @@ from haco.DIDrive_core.simulators.srunner.scenariomanager.scenarioatomics.atomic
 )
 from haco.DIDrive_core.simulators.srunner.scenariomanager.timer import TimeOut
 from haco.DIDrive_core.simulators.srunner.scenarios.basic_scenario import BasicScenario
-from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import generate_target_waypoint, generate_target_waypoint_in_route
+from haco.DIDrive_core.simulators.srunner.tools.scenario_helper import generate_target_waypoint, \
+    generate_target_waypoint_in_route
 
 
 def get_opponent_transform(added_dist, waypoint, trigger_location):
@@ -115,7 +115,7 @@ class VehicleTurningRight(BasicScenario):
     """
 
     def __init__(
-        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario
@@ -283,7 +283,7 @@ class VehicleTurningLeft(BasicScenario):
     """
 
     def __init__(
-        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario
@@ -452,7 +452,7 @@ class VehicleTurningRoute(BasicScenario):
     """
 
     def __init__(
-        self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
+            self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True, timeout=60
     ):
         """
         Setup all relevant parameters and create scenario

@@ -1,19 +1,16 @@
-import time
-import os
 import copy
+import time
+from collections import deque, namedtuple
 from enum import Enum
-from pathlib import Path
-from collections import deque, namedtuple, OrderedDict
 
-import numpy as np
 import carla
+import numpy as np
 import torch
-
-from haco.DIDrive_core.simulators import CarlaSimulator
-from haco.DIDrive_core.envs.base_carla_env import BaseCarlaEnv
-from models import ImplicitSupervisedModel
-from ding.envs import BaseEnv, BaseEnvTimestep
+from ding.envs import BaseEnvTimestep
 from ding.torch_utils import to_ndarray, to_tensor
+from haco.DIDrive_core.envs.base_carla_env import BaseCarlaEnv
+from haco.DIDrive_core.simulators import CarlaSimulator
+from models import ImplicitSupervisedModel
 from utils import adapt_order, compute_angle, compute_point_line_dis, compute_cirle, compute_speed
 
 Orders = Enum("Order", "Follow_Lane Straight Right Left ChangelaneLeft ChangelaneRight")
@@ -232,7 +229,7 @@ class ImplicitCarlaEnv(BaseCarlaEnv):
         rgb = np.rollaxis(rgb, 2, 0)
         self.RGB_image_buffer.append(rgb)
 
-        #speed = np.linalg.norm(observations["velocity"])
+        # speed = np.linalg.norm(observations["velocity"])
         speed = compute_speed(self._simulator.hero_player.get_velocity())
 
         order = adapt_order(int(observations["command"]))

@@ -1,7 +1,8 @@
+import json
+
+import numpy as np
 from ray.rllib.offline.input_reader import InputReader
 from ray.rllib.policy.sample_batch import SampleBatch
-import json
-import numpy as np
 
 
 class HumanDataInputReader(InputReader):

@@ -1,7 +1,6 @@
-from ding.torch_utils.data_helper import to_tensor
-import numpy as np
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, Tuple, Any, Optional
 
+import numpy as np
 from haco.DIDrive_core.envs import SimpleCarlaEnv
 from haco.DIDrive_core.utils.model_utils import common
 

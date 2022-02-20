@@ -1,12 +1,13 @@
 from typing import Dict, Union, Optional, Type, List
 
 import numpy as np
+from haco.algo.ppo_lag.ppo_lag_model import CostValueNetwork, CostValueNetworkMixin
 from ray.rllib.agents.ppo.ppo import validate_config as original_validate_config, PPOTrainer, \
     DEFAULT_CONFIG as ppo_default_config, warn_about_bad_reward_scales, UpdateKL
 from ray.rllib.agents.ppo.ppo_tf_policy import setup_mixins, ValueNetworkMixin, KLCoeffMixin, EntropyCoeffSchedule, \
     PPOTFPolicy, kl_and_loss_stats, LearningRateSchedule, postprocess_ppo_gae
-from ray.rllib.evaluation.episode import MultiAgentEpisode
 from ray.rllib.evaluation import postprocessing as rllib_post
+from ray.rllib.evaluation.episode import MultiAgentEpisode
 from ray.rllib.evaluation.worker_set import WorkerSet
 from ray.rllib.execution.common import _get_shared_metrics
 from ray.rllib.execution.metric_ops import StandardMetricsReporting
@@ -21,8 +22,6 @@ from ray.rllib.utils import try_import_tf
 from ray.rllib.utils.typing import AgentID, TensorType, TrainerConfigDict
 from ray.tune.utils.util import merge_dicts
 from ray.util.iter import LocalIterator
-
-from haco.algo.ppo_lag.ppo_lag_model import CostValueNetwork, CostValueNetworkMixin
 
 if hasattr(rllib_post, "discount_cumsum"):
     discount = rllib_post.discount_cumsum

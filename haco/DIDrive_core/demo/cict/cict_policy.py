@@ -1,17 +1,15 @@
 import numpy as np
 from typing import List, Dict, Optional
 import copy
-import scipy.misc
 import torch
 import torchvision.transforms as transforms
 import PIL.Image as Image
-from ding.utils.data import default_collate, default_decollate
-from ding.torch_utils import to_device
 
 from haco.DIDrive_core.models import VehicleCapacController
 from haco.DIDrive_core.policy.base_carla_policy import BaseCarlaPolicy
 from haco.DIDrive_core.demo.cict_demo.cict_model import CICTModel
-from haco.DIDrive_core.demo.cict_demo.post import get_map, get_nav, draw_destination, CollectPerspectiveImage, params, Sensor,\
+from haco.DIDrive_core.demo.cict_demo.post import get_map, get_nav, draw_destination, CollectPerspectiveImage, params, \
+    Sensor, \
     find_dest_with_fix_length
 
 
@@ -52,7 +50,7 @@ class CICTPolicy(BaseCarlaPolicy):
             ]
         )
 
-        #print(data['rgb'].shape, data['rgb'].numpy().shape)
+        # print(data['rgb'].shape, data['rgb'].numpy().shape)
         img = Image.fromarray(np.uint8(data['rgb'].numpy()[:, :, ::-1]))
         img = img_transforms(img)
 
@@ -69,7 +67,7 @@ class CICTPolicy(BaseCarlaPolicy):
             zero = np.zeros((3, 1))
             zero[:2, 0] = dest_loc
             dest = self.collect_perspective.drawDestInImage(zero, location, rotation)
-            #print(location, rotation, dest_loc)
+            # print(location, rotation, dest_loc)
 
         dest = Image.fromarray(dest)
         dest = dest_transforms(dest)
@@ -104,7 +102,7 @@ class CICTPolicy(BaseCarlaPolicy):
         self.CapacController.reset()
 
     def _forward_eval(self, data: Dict) -> dict:
-        #print(data.keys())
+        # print(data.keys())
         obs = self._process_data(data[list(data.keys())[0]])
 
         output = self._eval_model.run_step(obs)

@@ -1,6 +1,5 @@
 import copy
 import json
-import os
 from typing import NoReturn, Optional, List
 
 import yaml
@@ -55,11 +54,11 @@ def deep_merge_dicts(original: dict, new_dict: dict) -> dict:
 
 
 def deep_update(
-    original: dict,
-    new_dict: dict,
-    new_keys_allowed: bool = False,
-    whitelist: Optional[List[str]] = None,
-    override_all_if_type_changes: Optional[List[str]] = None
+        original: dict,
+        new_dict: dict,
+        new_keys_allowed: bool = False,
+        whitelist: Optional[List[str]] = None,
+        override_all_if_type_changes: Optional[List[str]] = None
 ):
     """
     Overview:

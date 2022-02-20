@@ -1,23 +1,21 @@
+import glob
+import json
 import os
 import time
-import json
-import glob
 
 import torch
 import torch.optim as optim
-from torch.autograd import grad
 import torchvision.transforms as transforms
-from easydict import EasyDict
 from PIL import Image
-from torch.utils.data import DataLoader, WeightedRandomSampler
-from torchvision.utils import save_image
-
+from easydict import EasyDict
 from haco.DIDrive_core.data.cict_dataset import PathDataset
 from haco.DIDrive_core.demo.cict_demo.cict_model import ModelGRU
-#from haco.DIDrive_core.utils.learner_utils.loss_utils import Loss
-#from haco.DIDrive_core.utils.learner_utils.optim_utils import adjust_learning_rate_auto
-from haco.DIDrive_core.utils.others.checkpoint_helper import is_ready_to_save, get_latest_saved_checkpoint
+# from haco.DIDrive_core.utils.learner_utils.loss_utils import Loss
+# from haco.DIDrive_core.utils.learner_utils.optim_utils import adjust_learning_rate_auto
+from haco.DIDrive_core.utils.others.checkpoint_helper import get_latest_saved_checkpoint
 from haco.DIDrive_core.utils.others.general_helper import create_log_folder, create_exp_path, erase_logs
+from torch.autograd import grad
+from torch.utils.data import DataLoader, WeightedRandomSampler
 
 train_config = dict(
     NUMBER_OF_LOADING_WORKERS=4,
@@ -54,7 +52,6 @@ train_config = dict(
 
 
 def write_params(log_path, config):
-
     with open(os.path.join(log_path, 'params.json'), 'w+') as f:
         json.dump('# Params', f)
         json.dump(config, f)
@@ -107,7 +104,7 @@ def execute(cfg):
     ipm_transforms = [
         transforms.Resize((cfg.IMG_HEIGHT, cfg.IMG_WIDTH), Image.BICUBIC),
         transforms.ToTensor(),
-        transforms.Normalize((0.5, ), (0.5, ))
+        transforms.Normalize((0.5,), (0.5,))
     ]
 
     dataset = PathDataset(full_dataset, cfg, transform=ipm_transforms)
@@ -148,7 +145,7 @@ def execute(cfg):
         for data in data_loader:
             iteration += 1
 
-            #if iteration % 1000 == 0:
+            # if iteration % 1000 == 0:
             #    adjust_learning_rate_auto(
             #        optimizer, loss_window, cfg.LEARNING_RATE, cfg.LEARNING_RATE_THRESHOLD,
             #        cfg.LEARNING_RATE_DECAY_LEVEL
@@ -169,12 +166,12 @@ def execute(cfg):
 
             pred_vx = grad(pred_xy[:, :, 0].sum(), t, create_graph=True)[0] * (cfg.MAX_DIST / cfg.MAX_T)
             pred_vy = grad(pred_xy[:, :, 1].sum(), t, create_graph=True)[0] * (cfg.MAX_DIST / cfg.MAX_T)
-            #print(pred_vx.shape)
+            # print(pred_vx.shape)
             pred_vxy = torch.cat([pred_vx.unsqueeze(-1), pred_vy.unsqueeze(-1)], dim=-1)
 
             pred_ax = grad(pred_vx.sum(), t, create_graph=True)[0] / cfg.MAX_T
             pred_ay = grad(pred_vy.sum(), t, create_graph=True)[0] / cfg.MAX_T
-            #print(pred_ax.shape)
+            # print(pred_ax.shape)
             pred_axy = torch.cat([pred_ax.unsqueeze(-1), pred_ay.unsqueeze(-1)], dim=-1)
 
             loss_xy = criterion(pred_xy, label_xy)

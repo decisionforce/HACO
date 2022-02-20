@@ -1,5 +1,6 @@
-import numpy as np
 from typing import Any, Callable, Dict, Optional
+
+import numpy as np
 
 
 class SteerNoiseWrapper(object):

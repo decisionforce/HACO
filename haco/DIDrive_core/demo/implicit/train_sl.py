@@ -1,18 +1,15 @@
-import os
-import sys
-import time
-import random
 import logging
+import os
+import random
+from pathlib import Path
 
 import numpy as np
 import torch
 import torch.nn as nn
 import tqdm
-from pathlib import Path
-from tensorboardX import SummaryWriter
-
 from dataset import get_dataloader
 from models import ImplicitSupervisedModel
+from tensorboardX import SummaryWriter
 
 config = dict(
     model=dict(hidden_size=1024, ),

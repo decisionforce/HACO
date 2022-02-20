@@ -4,7 +4,6 @@ from ray.rllib.models.tf.misc import normc_initializer
 from ray.rllib.models.tf.tf_modelv2 import TFModelV2
 from ray.rllib.utils.framework import try_import_tf
 
-
 tf, _, _ = try_import_tf()
 
 SCALE_DIAG_MIN_MAX = (-20, 2)
@@ -69,12 +68,12 @@ class VisualConstrainedSACModel(TFModelV2):
 
         # build image model
         self.img_input = tf.keras.layers.Input(
-            shape=(84,84,5), name="model_out"
+            shape=(84, 84, 5), name="model_out"
         )
         self.conv_out = self.conv_nets(self.img_input, "relu", "feature_abstract")
 
         # concat speed
-        self.model_out =tf.keras.layers.Input(
+        self.model_out = tf.keras.layers.Input(
             shape=(257,), name="model_out"
         )
 
@@ -272,7 +271,6 @@ class VisualConstrainedSACModel(TFModelV2):
         conv_out = self.conv_model(bird_v)
         return tf.concat([conv_out, speed], axis=1)
 
-
     def conv_nets(self, image_inputs, activation, name):
         # conv 1
         conv_model = tf.keras.Sequential([
@@ -330,7 +328,6 @@ class VisualConstrainedSACModel(TFModelV2):
             # flatten
             tf.keras.layers.Flatten(data_format="channels_last")])
         conv_net = conv_model(image_inputs)
-        self.conv_model=conv_model
+        self.conv_model = conv_model
         self.register_variables(conv_model.variables)
         return conv_net
-

@@ -1,10 +1,9 @@
-import numpy as np
 from typing import List, Dict, Optional
 
-from .base_carla_policy import BaseCarlaPolicy
-from haco.DIDrive_core.models import VehiclePIDController, SteerNoiseWrapper, MPCController
-from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 from ding.torch_utils.data_helper import to_ndarray
+from haco.DIDrive_core.models import VehiclePIDController, SteerNoiseWrapper, MPCController
+
+from .base_carla_policy import BaseCarlaPolicy
 
 DEFAULT_LATERAL_DICT = {'K_P': 1, 'K_D': 0.1, 'K_I': 0, 'dt': 0.1}
 DEFAULT_LONGITUDINAL_DICT = {'K_P': 1.0, 'K_D': 0, 'K_I': 0.05, 'dt': 0.1}

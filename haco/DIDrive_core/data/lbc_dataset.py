@@ -1,14 +1,14 @@
 import os
-import lmdb
-import cv2
-import numpy as np
-from typing import Any, Dict
-import torch
-from torchvision import transforms
-from torch.utils.data import Dataset
+from typing import Any
 
-from haco.DIDrive_core.utils.others.image_helper import read_image, draw_msra_gaussian
+import cv2
+import lmdb
+import numpy as np
+import torch
 from haco.DIDrive_core.utils.data_utils import augmenter
+from haco.DIDrive_core.utils.others.image_helper import read_image, draw_msra_gaussian
+from torch.utils.data import Dataset
+from torchvision import transforms
 
 PIXEL_OFFSET = 10
 PIXELS_PER_METER = 5
@@ -84,8 +84,8 @@ class LBCBirdViewDataset(Dataset):
         birdview = np.frombuffer(lmdb_txn.get(('birdview_%05d' % episode_index).encode()),
                                  np.uint8).reshape(320, 320, 7)
         measurement = np.frombuffer(lmdb_txn.get(('measurements_%05d' % episode_index).encode()), np.float32)
-        #print(png_file)
-        #rgb_image = read_image(png_file).reshape(160, 384, 3)
+        # print(png_file)
+        # rgb_image = read_image(png_file).reshape(160, 384, 3)
         vector = measurement[2:4]
         location = measurement[7:10]
         speed = measurement[10] / 3.6
@@ -114,7 +114,7 @@ class LBCBirdViewDataset(Dataset):
         # random cropping
         center_x, center_y = 160, 260 - self._crop_size // 2
         birdview = birdview[dy + center_y - self._crop_size // 2:dy + center_y + self._crop_size // 2,
-                            dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
+                   dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
 
         angle = np.arctan2(ori_oy, ori_ox) + np.deg2rad(delta_angle)
         ori_ox, ori_oy = np.cos(angle), np.sin(angle)
@@ -142,7 +142,7 @@ class LBCBirdViewDataset(Dataset):
             locations.append([pixel_x, pixel_y])
             orientations.append([ori_dx, ori_dy])
 
-        #birdview = self.bird_view_transform(birdview)
+        # birdview = self.bird_view_transform(birdview)
 
         # Create mask
         output_size = self._crop_size // self._down_ratio
@@ -165,20 +165,20 @@ class LBCBirdViewDataset(Dataset):
 class LBCImageDataset(Dataset):
 
     def __init__(
-        self,
-        root_dir,
-        rgb_shape=(160, 384, 3),
-        img_size=320,
-        crop_size=192,
-        gap=5,
-        n_step=5,
-        gaussian_radius=1.,
-        down_ratio=4,
-        # rgb_mean=[0.29813555, 0.31239682, 0.33620676],
-        # rgb_std=[0.0668446, 0.06680295, 0.07329721],
-        augment_strategy=None,
-        batch_read_number=819200,
-        batch_aug=1,
+            self,
+            root_dir,
+            rgb_shape=(160, 384, 3),
+            img_size=320,
+            crop_size=192,
+            gap=5,
+            n_step=5,
+            gaussian_radius=1.,
+            down_ratio=4,
+            # rgb_mean=[0.29813555, 0.31239682, 0.33620676],
+            # rgb_std=[0.0668446, 0.06680295, 0.07329721],
+            augment_strategy=None,
+            batch_read_number=819200,
+            batch_aug=1,
     ) -> None:
         self._root_dir = root_dir
         self._img_size = img_size
@@ -230,7 +230,7 @@ class LBCImageDataset(Dataset):
         birdview = np.frombuffer(lmdb_txn.get(('birdview_%05d' % episode_index).encode()),
                                  np.uint8).reshape(320, 320, 7)
         measurement = np.frombuffer(lmdb_txn.get(('measurements_%05d' % episode_index).encode()), np.float32)
-        #print(png_file)
+        # print(png_file)
         rgb_image = read_image(png_file).reshape(160, 384, 3)
 
         if self.augmenter:
@@ -265,7 +265,7 @@ class LBCImageDataset(Dataset):
         center_x, center_y = 160, 260 - self._crop_size // 2
 
         birdview = birdview[dy + center_y - self._crop_size // 2:dy + center_y + self._crop_size // 2,
-                            dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
+                   dx + center_x - self._crop_size // 2:dx + center_x + self._crop_size // 2]
 
         angle = np.arctan2(ori_oy, ori_ox) + np.deg2rad(delta_angle)
         ori_ox, ori_oy = np.cos(angle), np.sin(angle)
@@ -273,7 +273,6 @@ class LBCImageDataset(Dataset):
         locations = []
 
         for dt in range(self._gap, self._gap * (self._n_step + 1), self._gap):
-
             f_index = episode_index + dt
 
             f_measurement = np.frombuffer(lmdb_txn.get(('measurements_%05d' % f_index).encode()), np.float32)

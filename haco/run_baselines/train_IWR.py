@@ -1,12 +1,11 @@
 from __future__ import print_function
 
-from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
-
 from haco.algo.IWR.exp_saver import Experiment
 from haco.algo.IWR.model import Ensemble
 from haco.algo.IWR.utils import *
 from haco.utils.config import baseline_eval_config, baseline_train_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
+from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv
 
 """
 requirement for IWR/HG-Dagger/GAIl:
@@ -25,7 +24,7 @@ def IWR_balance_sample(agent_samples, human_samples):
     human_y = human_samples["action"]
 
     agent_sample_num = len(agent_y)
-    human_sample_num = len(human_y)+1
+    human_sample_num = len(human_y) + 1
     ratio = int(agent_sample_num / human_sample_num)
 
     # according to the practical experience reported in paper, repeat the human samples to mix in same proportion

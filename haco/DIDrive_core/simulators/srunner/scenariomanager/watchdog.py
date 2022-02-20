@@ -11,6 +11,7 @@ It is for example used in the ScenarioManager
 from __future__ import print_function
 
 from threading import Timer
+
 try:
     import thread
 except ImportError:

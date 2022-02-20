@@ -6,13 +6,13 @@
 waypoints and avoiding other vehicles.
 The agent also responds to traffic lights. """
 
-import sys
 import math
-
+import sys
 from enum import Enum
 
 import carla
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance_ahead, is_within_distance, \
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance_ahead, \
+    is_within_distance, \
     compute_distance
 
 
@@ -132,7 +132,7 @@ class Agent(object):
         return carla.Location(point_location.x, point_location.y, point_location.z)
 
     def _bh_is_vehicle_hazard(
-        self, ego_wpt, ego_loc, vehicle_list, proximity_th, up_angle_th, low_angle_th=0, lane_offset=0
+            self, ego_wpt, ego_loc, vehicle_list, proximity_th, up_angle_th, low_angle_th=0, lane_offset=0
     ):
         """
         Check if a given vehicle is an obstacle in our way. To this end we take
@@ -184,7 +184,6 @@ class Agent(object):
 
             if is_within_distance(target_vehicle_loc, ego_loc, self._vehicle.get_transform().rotation.yaw, proximity_th,
                                   up_angle_th, low_angle_th):
-
                 return (True, target_vehicle, compute_distance(target_vehicle_loc, ego_loc))
 
         return (False, None, -1)

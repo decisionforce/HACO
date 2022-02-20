@@ -3,13 +3,13 @@ Copyright 2021 OpenDILab. All Rights Reserved:
 Description:
 '''
 
-from abc import ABC, abstractmethod
-from typing import Any, Dict
 import copy
-from easydict import EasyDict
-import gym
-from gym import utils
+from abc import abstractmethod
+from typing import Any, Dict
 
+import gym
+from easydict import EasyDict
+from gym import utils
 from haco.DIDrive_core.utils.others.config_helper import deep_merge_dicts
 
 

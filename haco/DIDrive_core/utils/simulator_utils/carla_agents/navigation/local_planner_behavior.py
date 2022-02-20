@@ -9,11 +9,11 @@
 low-level waypoint following based on PID controllers. """
 
 from collections import deque
-from enum import Enum
 
 import carla
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation.controller import VehiclePIDController
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import distance_vehicle, draw_waypoints
+
 from .local_planner import RoadOption
 
 
@@ -62,7 +62,7 @@ class LocalPlanner(object):
     def reset_vehicle(self):
         """Reset the ego-vehicle"""
         self._vehicle = None
-        #print("Resetting ego-vehicle!")
+        # print("Resetting ego-vehicle!")
 
     def _init_controller(self):
         """

@@ -3,8 +3,8 @@
 # COiLTRAiNE itself is under MIT License                                                              #
 #######################################################################################################
 
-import imgaug as ia
 from imgaug import augmenters as iaa
+
 
 # def custom(image_iteration, batch_size=32):
 
@@ -12,7 +12,6 @@ from imgaug import augmenters as iaa
 
 
 def medium(image_iteration):
-
     iteration = image_iteration / (32 * 1.5)
     frequency_factor = 0.05 + float(iteration) / 1000000.0
     color_factor = float(iteration) / 1000000.0
@@ -28,7 +27,7 @@ def medium(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 500000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 500000.0)
 
-    #print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
+    # print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg
 
     augmenter = iaa.Sequential(
@@ -67,7 +66,6 @@ def medium(image_iteration):
 
 
 def soft(image_iteration):
-
     iteration = image_iteration / (32 * 1.5)
     frequency_factor = 0.05 + float(iteration) / 1200000.0
     color_factor = float(iteration) / 1200000.0
@@ -83,7 +81,7 @@ def soft(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 800000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 800000.0)
 
-    #print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
+    # print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg)
 
     augmenter = iaa.Sequential(
@@ -122,7 +120,6 @@ def soft(image_iteration):
 
 
 def high(image_iteration):
-
     iteration = image_iteration / (32 * 1.5)
     frequency_factor = 0.05 + float(iteration) / 800000.0
     color_factor = float(iteration) / 800000.0
@@ -138,7 +135,7 @@ def high(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 350000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 400000.0)
 
-    #print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
+    # print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg)
 
     augmenter = iaa.Sequential(
@@ -177,7 +174,6 @@ def high(image_iteration):
 
 
 def medium_harder(image_iteration):
-
     iteration = image_iteration / (32)
     frequency_factor = 0.05 + float(iteration) / 1000000.0
     color_factor = float(iteration) / 1000000.0
@@ -193,7 +189,7 @@ def medium_harder(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 500000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 500000.0)
 
-    #print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
+    # print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg
 
     augmenter = iaa.Sequential(
@@ -251,7 +247,7 @@ def super_hard(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 500000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 500000.0)
 
-    #print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
+    # print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg
 
     augmenter = iaa.Sequential(
@@ -311,7 +307,7 @@ def custom(image_iteration):
     contrast_factor_pos = 1 + (0.2 * iteration / 500000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 500000.0)
 
-    #print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
+    # print 'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,\
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg
 
     augmenter = iaa.Sequential(
@@ -344,7 +340,6 @@ def custom(image_iteration):
 
 
 def soft_harder(image_iteration):
-
     iteration = image_iteration / (32)
     frequency_factor = 0.05 + float(iteration) / 1200000.0
     color_factor = float(iteration) / 1200000.0
@@ -360,7 +355,7 @@ def soft_harder(image_iteration):
     contrast_factor_pos = 1 + (0.5 * iteration / 800000.0)
     contrast_factor_neg = 1 - (0.5 * iteration / 800000.0)
 
-    #print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
+    # print ('iteration',iteration,'Augment Status ',frequency_factor,color_factor,dropout_factor,blur_factor,add_factor,
     #    multiply_factor_pos,multiply_factor_neg,contrast_factor_pos,contrast_factor_neg)
 
     augmenter = iaa.Sequential(

@@ -1,12 +1,12 @@
 import copy
 
+import ray
 from haco.algo.sac_lag.sac_lag import SACLagTrainer
 from haco.utils.callback import HACOCallbacks
 from haco.utils.config import baseline_eval_config
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.train import train
 from haco.utils.train_utils import get_train_parser
-import ray
 
 evaluation_config = {"env_config": copy.deepcopy(baseline_eval_config)}
 

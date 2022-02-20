@@ -12,14 +12,13 @@ import logging
 import os
 import xml.etree.ElementTree as ET
 
-import xmlschema
-
 import carla
-
-# pylint: disable=line-too-long
-from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ActorConfigurationData, ScenarioConfiguration
+import xmlschema
 # pylint: enable=line-too-long
 from haco.DIDrive_core.simulators.carla_data_provider import CarlaDataProvider  # workaround
+# pylint: disable=line-too-long
+from haco.DIDrive_core.simulators.srunner.scenarioconfigs.scenario_configuration import ActorConfigurationData, \
+    ScenarioConfiguration
 from haco.DIDrive_core.simulators.srunner.tools.openscenario_parser import OpenScenarioParser
 
 

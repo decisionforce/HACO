@@ -1,15 +1,14 @@
-import re
 import math
-import numpy as np
-from six import iteritems
+import re
 from typing import Any, Dict, List, Optional, Tuple
 
 import carla
+import numpy as np
 import shapely
-
-from haco.DIDrive_core.utils.simulator_utils.carla_utils import calculate_speed, convert_waypoint_to_transform
-from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance_ahead
 from haco.DIDrive_core.utils.simulator_utils.carla_agents.navigation import RoadOption
+from haco.DIDrive_core.utils.simulator_utils.carla_agents.tools.misc import is_within_distance_ahead
+from haco.DIDrive_core.utils.simulator_utils.carla_utils import calculate_speed, convert_waypoint_to_transform
+from six import iteritems
 
 
 def _numpy(carla_vector, normalize=False):
@@ -720,7 +719,7 @@ class CarlaDataProvider(object):
         SetAutopilot = carla.command.SetAutopilot  # pylint: disable=invalid-name
         FutureActor = carla.command.FutureActor  # pylint: disable=invalid-name
 
-        #CarlaDataProvider._generate_spawn_points()
+        # CarlaDataProvider._generate_spawn_points()
 
         batch = []
 

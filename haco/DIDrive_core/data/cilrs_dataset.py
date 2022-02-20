@@ -1,10 +1,10 @@
 import os
-import numpy as np
-from typing import Any, Dict
-import torch
-from torch.utils.data import Dataset
+from typing import Any
 
+import numpy as np
+import torch
 from haco.DIDrive_core.utils.others.image_helper import read_image
+from torch.utils.data import Dataset
 
 
 class CILRSDataset(Dataset):
