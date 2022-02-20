@@ -22,28 +22,15 @@ if __name__ == '__main__':
             "manual_control": True,
             "use_render": True,
             "window_size": (1600, 1100),
-            "only_takeover_start_cost": True,
             "cos_similarity": True,
         },
 
         # ===== Training =====
         takeover_data_discard=False,
-        recent_episode_num=3,
-        normalize=True,
         twin_cost_q=True,
-        k_i=0.01,
-        k_p=5,
-        # search > 0
-        k_d=0.1,
-        # k_i=tune.grid_search([0.01, 0.005, 0.001]),
         alpha=10,
         no_reward=True,  # need reward
-        # search me
-        use_td_takeover_mask=False,
         explore=False,
-
-        # expected max takeover num
-        cost_limit=-1,
         optimization=dict(actor_learning_rate=1e-4, critic_learning_rate=1e-4, entropy_learning_rate=1e-4),
         prioritized_replay=False,
         horizon=1000,

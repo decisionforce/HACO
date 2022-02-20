@@ -19,11 +19,11 @@ from haco.algo.sac_lag.sac_lag import SACLagTrainer, validate_config
 from haco.algo.sac_lag.sac_lag_policy import SACPIDConfig, SACPIDPolicy, get_dist_class
 
 # Update penalty
-#
 
 NEWBIE_ACTION = "newbie_action"
 TAKEOVER = "takeover"
 
+# HACO Romve the Lagrangian Multiplier from SACLag. Instead, it directly minimizes the takeover cost
 HACOConfig = merge_dicts(SACPIDConfig,
                          {
                                     "info_cost_key": "takeover_cost",
@@ -32,7 +32,6 @@ HACOConfig = merge_dicts(SACPIDConfig,
                                     "alpha": 10.0,
                                     "no_reward": True,  # this will disable the native reward from env
                                     "image_obs": False
-
                                 })
 
 
@@ -79,7 +78,7 @@ def postprocess_trajectory(policy,
 def sac_actor_critic_loss(policy, model, _, train_batch):
     _ = train_batch[policy.config["info_total_cost_key"]]  # Touch this item, this is helpful in ray 1.2.0
     takeover_mask = (tf.cast(train_batch[TAKEOVER], tf.float32))
-    # Setup the lambda multiplier.
+    # Setup the lambda multiplier. useless, just for compatibility
     with tf.variable_scope('lambda'):
         param_init = 1e-8
         lambda_param = tf.get_variable(
@@ -262,21 +261,11 @@ def sac_actor_critic_loss(policy, model, _, train_batch):
         alpha_loss = -tf.reduce_mean(
             model.log_alpha *
             tf.stop_gradient(log_pis_t + model.target_entropy))
-        if policy.config["only_evaluate_cost"]:
-            actor_loss = tf.reduce_mean(
-                model.alpha * log_pis_t - q_t_det_policy)
-            cost_loss = 0
-            reward_loss = actor_loss
-        else:
-            reward_loss = tf.reduce_mean(
-                model.alpha * log_pis_t - q_t_det_policy)
-            c_q_t_det_policy -= -policy.config["cost_limit"]
-            if policy.config["cost_limit"] != -1:
-                c_q_t_det_policy *= policy.lambda_value
-            cost_loss = tf.reduce_mean(c_q_t_det_policy)
-            actor_loss = tf.reduce_mean(
-                model.alpha * log_pis_t - q_t_det_policy + policy.lambda_value * c_q_t_det_policy)
-        actor_loss = actor_loss / (1 + policy.lambda_value) if policy.config["normalize"] else actor_loss
+        reward_loss = tf.reduce_mean(
+            model.alpha * log_pis_t - q_t_det_policy)
+        cost_loss = tf.reduce_mean(c_q_t_det_policy)
+        actor_loss = tf.reduce_mean(
+            model.alpha * log_pis_t - q_t_det_policy +  c_q_t_det_policy)
 
     # save for stats function
     policy.policy_t = policy_t

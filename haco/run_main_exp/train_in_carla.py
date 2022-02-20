@@ -126,23 +126,9 @@ if __name__ == '__main__':
         env_config={},
 
         # ===== Training =====
-        takeover_data_discard=False,
-        recent_episode_num=3,
-        normalize=True,
-        twin_cost_q=True,
-        k_i=0.01,
-        k_p=5,
-        # search > 0
-        k_d=0.1,
-        # k_i=tune.grid_search([0.01, 0.005, 0.001]),
         alpha=10,
         no_reward=True,  # need reward
-        # search me
-        use_td_takeover_mask=False,
         image_obs=True,
-
-        # expected max takeover num
-        cost_limit=-1,
         explore=False,
         optimization=dict(actor_learning_rate=1e-5, critic_learning_rate=1e-4, entropy_learning_rate=1e-4),
         prioritized_replay=True,
