@@ -21,6 +21,7 @@ if __name__ == '__main__':
         env_config={
             "manual_control": True,
             "use_render": True,
+            # "controller": "keyboard",  # use keyboard or not
             "window_size": (1600, 1100),
             "cos_similarity": True,
         },
