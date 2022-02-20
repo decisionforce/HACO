@@ -25,7 +25,7 @@ pip install -e .
 # Now you can run the training script of HACO.
 ```
 ## Training HACO
-
+CARLA port xxx/MetaDrive ....
 ```bash
 cd haco/training_script/
 python train_haco.py

@@ -7,7 +7,7 @@ import numpy as np
 from ray.rllib.env import BaseEnv
 from ray.rllib.evaluation import MultiAgentEpisode, RolloutWorker
 from ray.rllib.policy import Policy
-from core.haco_env import HACOEnv
+from haco.DIDrive_core.haco_env import HACOEnv
 
 from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
 from haco.utils.train import train
