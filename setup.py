@@ -11,7 +11,7 @@ setup(
         "tensorflow==2.3.1",
         "tensorflow-probability==0.11.1",
         "tensorboardX",
-        "metadrive-simulator==0.2.3",
+        "metadrive-simulator==0.2.4",
         "imageio",
         "easydict",
         "tensorboardX",
