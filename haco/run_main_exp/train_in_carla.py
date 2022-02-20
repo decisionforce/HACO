@@ -9,7 +9,7 @@ from ray.rllib.evaluation import MultiAgentEpisode, RolloutWorker
 from ray.rllib.policy import Policy
 from haco.DIDrive_core.haco_env import HACOEnv
 
-from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
+from haco.algo.haco.haco import HACOTrainer
 from haco.utils.train import train
 from haco.utils.train_utils import get_train_parser
 
@@ -163,7 +163,7 @@ if __name__ == '__main__':
     )
 
     train(
-        SACPIDSaverTrainer,
+        HACOTrainer,
         exp_name=exp_name,
         keep_checkpoints_num=None,
         checkpoint_freq=1,

@@ -1,5 +1,5 @@
 from haco.utils.callback import HACOCallbacks
-from drivingforce.expert_in_the_loop.egpo.sac_pid_saver import SACPIDSaverTrainer
+from haco.algo.haco.haco import HACOTrainer
 from haco.utils.human_in_the_loop_env import HumanInTheLoopEnv
 from haco.utils.train import train
 from haco.utils.train_utils import get_train_parser
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     )
 
     train(
-        SACPIDSaverTrainer,
+        HACOTrainer,
         exp_name=exp_name,
         keep_checkpoints_num=None,
         checkpoint_freq=1,
