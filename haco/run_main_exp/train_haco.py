@@ -30,7 +30,7 @@ if __name__ == '__main__':
         twin_cost_q=True,
         alpha=10,
         no_reward=True,  # need reward
-        explore=False,
+        explore=True,
         optimization=dict(actor_learning_rate=1e-4, critic_learning_rate=1e-4, entropy_learning_rate=1e-4),
         prioritized_replay=False,
         horizon=1000,

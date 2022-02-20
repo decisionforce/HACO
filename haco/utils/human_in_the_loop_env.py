@@ -87,7 +87,8 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "Total Cost": self.episode_cost,
                 "Takeover Cost": self.total_takeover_cost,
                 "Takeover": self.t_o,
-                "COST" : ret[-1]["takeover_cost"]
+                "COST" : ret[-1]["takeover_cost"],
+                "Stop (Press E)":""
             })
         return ret
 
@@ -96,7 +97,7 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
 
     def setup_engine(self):
         super(HumanInTheLoopEnv, self).setup_engine()
-        self.engine.accept("s", self.stop)
+        self.engine.accept("e", self.stop)
 
     def get_takeover_cost(self, info):
         if not self.config["cos_similarity"]:

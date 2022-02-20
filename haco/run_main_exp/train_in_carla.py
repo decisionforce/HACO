@@ -129,7 +129,7 @@ if __name__ == '__main__':
         alpha=10,
         no_reward=True,  # need reward
         image_obs=True,
-        explore=False,
+        explore=True,
         optimization=dict(actor_learning_rate=1e-5, critic_learning_rate=1e-4, entropy_learning_rate=1e-4),
         prioritized_replay=True,
         horizon=1500,
