@@ -95,6 +95,7 @@ Human demonstration is required to run Imitation Learning (IL). You can collect 
 cd haco/utils
 python collect_human_data_set.py
 ```
+or you can use the data collected by our human expert [here](https://github.com/decisionforce/HACO/releases/tag/haco-0.0.0)
 
 ### CQL/BC
 If you wish to run CQL, extra setting is required as follows:
