@@ -74,7 +74,7 @@ After all these steps, launch the CARLA experiment through:
 python train_haco_in_carla.py --num-gpus=1
 ```
 Currently, a steering wheel controller is default to reproduce the CARLA Experiment. 
-We also provide keyboard interface for controlling vehicles in CARLA, which can be truned on by setting
+We also provide keyboard interface for controlling vehicles in CARLA, which can be turned on by setting
 ```keyboard_control:True``` in the training script.
 
 
