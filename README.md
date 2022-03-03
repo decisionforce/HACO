@@ -26,6 +26,11 @@ conda install cudatoolkit=10.1 cudnn
 # Now you can run the training script of HACO in MetaDrive Environment.
 ```
 ## Training HACO
+HACO is designed for teaching AI to learn a generalizable autonomous driving policy efficiently and safely.
+Supported by [MetaDrive](https://github.com/decisionforce/metadrive), the concrete goal of driving tasks is to drive the vehicle to the destination with as fewer collision as possible. 
+Also, to prevent driving out of the road which will terminate the episode, please follow the yellow checkpoints indicating navigation information when you are training HACO.
+
+**Note:** we mask the reward signal for HACO agent, so it is a reward-free method.
 
 ### Quick Start
 Since the main experiment of HACO takes one hour and requires a steering wheel (Logitech G29), we further provide an 
@@ -55,7 +60,7 @@ After installation, launch CARLA server by:
 ```
 
 For the interacting with CARLA core, we utilize the CARLA client wrapper implemented in [DI-Drive](https://github.com/opendilab/DI-drive), so new dependencies
-is needed. We recommend to initialize a **new** conda environment by:
+is needed. We recommend initializing a **new** conda environment by:
 ```bash
 # Create new virtual environment
 conda create -n haco-carla python=3.7
@@ -76,7 +81,7 @@ python train_haco_in_carla.py --num-gpus=1
 Currently, a steering wheel controller is default to reproduce the CARLA Experiment. 
 We also provide keyboard interface for controlling vehicles in CARLA, which can be turned on by setting
 ```keyboard_control:True``` in the training script.
-
+For providing navigation information, there is a status, namely ```command:```, at the upper-left of the interface.
 
 ## Training baselines
 ### RL baselines 
@@ -85,7 +90,7 @@ For SAC/PPO/PPO-Lag/SAC-Lag, there is no additional requirement to run the train
 # use previous haco environment
 conda activate haco  
 cd haco/run_baselines
-# lanuch baseline experimennt
+# launch baseline experiment
 python train_[ppo/sac/sac_lag/ppo_lag].py --num-gpus=[your_gpu_num]
 ```
 
@@ -103,7 +108,7 @@ If you wish to run CQL, extra setting is required as follows:
 # ray needs to be updated to 1.2.0
 pip install ray==1.2.0
 cd haco/run_baselines
-# lanuch baseline experimennt
+# launch baseline experiment
 python train_cql.py --num-gpus=0 # do not use gpu
 ```
 For BC training, modify the config ```bc_iter=1000000``` in ```train_cql.py``` to convert the CQL into BC, and re-run this script.  
