@@ -6,7 +6,8 @@
 [**Code**](https://github.com/decisionforce/HACO) | 
 [**Video**](https://decisionforce.github.io/HACO/#video) |
 [**Talk**](https://youtu.be/PiJv4wtp8T8) |
-[**Paper**](https://arxiv.org/pdf/2202.10341.pdf) 
+[**Paper**](https://arxiv.org/pdf/2202.10341.pdf) |
+[**Poster**](https://github.com/decisionforce/HACO/docs/iclr_poster.pdf) 
 
 
 
