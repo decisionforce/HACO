@@ -16,7 +16,7 @@ setup(
         "easydict",
         "tensorboardX",
         "pyyaml",
-        "gym==0.18.0",
+        "gym==0.19.0",
         "ray==1.0.0",
         "stable_baselines3",
         'ephem',

@@ -69,10 +69,11 @@ is needed. We recommend initializing a **new** conda environment by:
 conda create -n haco-carla python=3.7
 conda activate haco-carla
 
-# Install basic dependency
-pip install -e .
 # install DI-Engine
 pip install di-engine==0.2.0 markupsafe==2.0.1
+
+# Install basic dependency
+pip install -e .
 
 conda install cudatoolkit=10.1 cudnn
 # Now you can run the training script of HACO in CARLA Environment.
