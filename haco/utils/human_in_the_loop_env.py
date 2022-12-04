@@ -30,6 +30,7 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "main_exp": True,
                 "random_spawn": True,
                 "cos_similarity": True,
+                "out_of_route_done": True,
                 "in_replay": False
             },
             allow_add_new_key=True
@@ -45,7 +46,8 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
         if self.config["random_spawn"]:
             self.config["vehicle_config"]["spawn_lane_index"] = (FirstPGBlock.NODE_1, FirstPGBlock.NODE_2,
                                                                  self.engine.np_random.randint(3))
-        self.vehicle.update_config({"max_speed": 40})
+        # keyboard is not as good as steering wheel, so set a small speed limit
+        self.vehicle.update_config({"max_speed": 25 if self.config["controller"] == "keyboard" else 40})
         return ret
 
     def _get_step_return(self, actions, engine_info):
