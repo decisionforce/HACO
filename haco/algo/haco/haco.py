@@ -430,5 +430,5 @@ HACOTrainer = SACLagTrainer.with_updates(name="HACO",
                                          default_policy=HACOPolicy,
                                          get_policy_class=lambda config: HACOPolicy,
                                          validate_config=validate_config,
-                                         execution_plan=execution_plan
+                                         # execution_plan=execution_plan
                                          )
