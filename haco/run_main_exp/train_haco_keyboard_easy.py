@@ -27,6 +27,7 @@ if __name__ == '__main__':
             "cos_similarity": True,
             "map": "COX",
             "environment_num": 1,
+            "start_seed": 100,
         },
 
         # ===== Training =====
@@ -43,7 +44,7 @@ if __name__ == '__main__':
         metrics_smoothing_episodes=10,
         learning_starts=100,
         clip_actions=False,
-        train_batch_size=1024,
+        train_batch_size=256,
 
         normalize_actions=True,
         num_cpus_for_driver=0.5,
