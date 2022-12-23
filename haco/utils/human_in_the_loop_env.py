@@ -2,12 +2,41 @@ import copy
 
 import numpy as np
 from metadrive.component.pgblock.first_block import FirstPGBlock
+from metadrive.engine.core.manual_controller import KeyboardController, SteeringWheelController
 from metadrive.engine.core.onscreen_message import ScreenMessage
+from metadrive.engine.engine_utils import get_global_config
 from metadrive.envs.safe_metadrive_env import SafeMetaDriveEnv
 from metadrive.policy.manual_control_policy import TakeoverPolicy
 from metadrive.utils.math_utils import safe_clip
 
 ScreenMessage.SCALE = 0.1
+
+class MyKeyboardController(KeyboardController):
+    # Update Parameters
+    STEERING_INCREMENT = 0.05
+    STEERING_DECAY = 0.5
+
+    THROTTLE_INCREMENT = 0.5
+    THROTTLE_DECAY = 1
+
+    BRAKE_INCREMENT = 0.5
+    BRAKE_DECAY = 1
+
+class MyTakeoverPolicy(TakeoverPolicy):
+    """
+    Record the takeover signal
+    """
+    def __init__(self, obj, seed):
+        super(TakeoverPolicy, self).__init__(obj, seed)
+        config = get_global_config()
+        if config["manual_control"] and config["use_render"]:
+            if config["controller"] == "joystick":
+                self.controller = SteeringWheelController()
+            elif config["controller"] == "keyboard":
+                self.controller = MyKeyboardController(False)
+            else:
+                raise ValueError("Unknown Policy: {}".format(config["controller"]))
+        self.takeover = False
 
 
 class HumanInTheLoopEnv(SafeMetaDriveEnv):
@@ -25,7 +54,7 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "traffic_density": 0.06,
                 "manual_control": False,
                 "controller": "joystick",
-                "agent_policy": TakeoverPolicy,
+                "agent_policy": MyTakeoverPolicy,
                 "only_takeover_start_cost": True,
                 "main_exp": True,
                 "random_spawn": False,

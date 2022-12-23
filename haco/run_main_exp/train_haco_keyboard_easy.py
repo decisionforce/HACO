@@ -25,9 +25,9 @@ if __name__ == '__main__':
             "controller": "keyboard",
             "window_size": (1600, 1100),
             "cos_similarity": True,
-            "map": "COX",
+            "map": "CTO",
             "environment_num": 1,
-            "start_seed": 100,
+            "start_seed": 15,
         },
 
         # ===== Training =====
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         metrics_smoothing_episodes=10,
         learning_starts=100,
         clip_actions=False,
-        train_batch_size=256,
+        train_batch_size=1024,
 
         normalize_actions=True,
         num_cpus_for_driver=0.5,
