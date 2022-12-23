@@ -25,8 +25,9 @@ if __name__ == '__main__':
             "controller": "keyboard",
             "window_size": (1600, 1100),
             "cos_similarity": True,
-            "map": "COX",
+            "map": "CTO",
             "environment_num": 1,
+            "start_seed": 15,
         },
 
         # ===== Training =====

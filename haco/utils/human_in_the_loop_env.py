@@ -2,19 +2,19 @@ import copy
 
 import numpy as np
 from metadrive.component.pgblock.first_block import FirstPGBlock
+from metadrive.engine.core.manual_controller import KeyboardController, SteeringWheelController
 from metadrive.engine.core.onscreen_message import ScreenMessage
+from metadrive.engine.engine_utils import get_global_config
 from metadrive.envs.safe_metadrive_env import SafeMetaDriveEnv
 from metadrive.policy.manual_control_policy import TakeoverPolicy
-from metadrive.engine.engine_utils import get_global_config
-from metadrive.engine.core.manual_controller import KeyboardController, SteeringWheelController, XboxController
 from metadrive.utils.math_utils import safe_clip
 
 ScreenMessage.SCALE = 0.1
 
 class MyKeyboardController(KeyboardController):
     # Update Parameters
-    STEERING_INCREMENT = 0.1
-    STEERING_DECAY = 0.25
+    STEERING_INCREMENT = 0.05
+    STEERING_DECAY = 0.5
 
     THROTTLE_INCREMENT = 0.5
     THROTTLE_DECAY = 1
@@ -34,8 +34,6 @@ class MyTakeoverPolicy(TakeoverPolicy):
                 self.controller = SteeringWheelController()
             elif config["controller"] == "keyboard":
                 self.controller = MyKeyboardController(False)
-            elif config["controller"] == "xboxController":
-                self.controller = XboxController()
             else:
                 raise ValueError("Unknown Policy: {}".format(config["controller"]))
         self.takeover = False
@@ -59,10 +57,13 @@ class HumanInTheLoopEnv(SafeMetaDriveEnv):
                 "agent_policy": MyTakeoverPolicy,
                 "only_takeover_start_cost": True,
                 "main_exp": True,
-                "random_spawn": True,
+                "random_spawn": False,
                 "cos_similarity": True,
                 "out_of_route_done": True,
-                "in_replay": False
+                "in_replay": False,
+                "random_spawn_lane_index": False,
+                "target_vehicle_configs": {
+                    "default_agent": {"spawn_lane_index": (FirstPGBlock.NODE_1, FirstPGBlock.NODE_2, 1)}}
             },
             allow_add_new_key=True
         )
